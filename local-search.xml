@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>get_cli安装和使用</title>
+    <link href="/posts/40222/"/>
+    <url>/posts/40222/</url>
+    
+    <content type="html"><![CDATA[<h1 id="get-cli安装和使用"><a href="#get-cli安装和使用" class="headerlink" title="get_cli安装和使用"></a>get_cli安装和使用</h1><h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><p>运行命令:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">flutter pub global activate get_cli<br></code></pre></td></tr></table></figure><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs maxima">C:\Users\x&gt;flutter pub global <span class="hljs-built_in">activate</span> get_cli<br>Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!<br>Package get_cli <span class="hljs-built_in">is</span> currently active <span class="hljs-built_in">at</span> version <span class="hljs-number">1.8</span><span class="hljs-number">.4</span>.<br>Resolving <span class="hljs-built_in">dependencies</span>...<br>The package get_cli <span class="hljs-built_in">is</span> already activated <span class="hljs-built_in">at</span> newest available version.<br>To recompile executables, <span class="hljs-built_in">first</span> run `flutter pub global <span class="hljs-built_in">deactivate</span> get_cli`.<br>Installed executables <span class="hljs-built_in">get</span> <span class="hljs-keyword">and</span> getx.<br>Warning: Pub installs executables into C:\Users\x\AppData\Local\Pub\Cache\bin, which <span class="hljs-built_in">is</span> <span class="hljs-keyword">not</span> on your path.<br>You can <span class="hljs-built_in">fix</span> that by adding that <span class="hljs-built_in">directory</span> to your <span class="hljs-built_in">system</span>&#x27;s <span class="hljs-string">&quot;Path&quot;</span> environment variable.<br>A web search <span class="hljs-keyword">for</span> <span class="hljs-string">&quot;configure windows path&quot;</span> will <span class="hljs-built_in">show</span> you how.<br>Activated get_cli <span class="hljs-number">1.8</span><span class="hljs-number">.4</span>.<br><br>Windows:将 C:\Users\x\AppData\Local\Pub\Cache\bin 添加进环境变量 Path里<br></code></pre></td></tr></table></figure><h2 id="2-验证安装"><a href="#2-验证安装" class="headerlink" title="2. 验证安装"></a>2. 验证安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">C:\Users\x&gt;get -v<br>░██████╗░███████╗████████╗   ░█████╗░██╗░░░░░░██╗<br>██╔════╝░██╔════╝╚══██╔══╝   ██╔══██╗██║░░░░░░██║<br>██║░░██╗░█████╗░░░░░██║░░░   ██║░░╚═╝██║░░░░░░██║<br>██║░░╚██╗██╔══╝░░░░░██║░░░   ██║░░██╗██║░░░░░░██║<br>╚██████╔╝███████╗░░░██║░░░   ╚█████╔╝███████╗ ██║<br>░╚═════╝░╚══════╝░░░╚═╝░░░   ░╚════╝░╚══════╝ ╚═╝<br><br>Version: 1.8.4<br><br>Time: 66 Milliseconds<br></code></pre></td></tr></table></figure><h2 id="3-使用"><a href="#3-使用" class="headerlink" title="3. 使用"></a>3. 使用</h2><table><thead><tr><th>功能</th><th>命令</th><th>备注</th></tr></thead><tbody><tr><td>新建项目</td><td>get create project</td><td>新建一个项目，执行期间会选择几个属性，一路下去就行了</td></tr><tr><td>初始化</td><td>get init</td><td>新建项目里也会执行这步，清空lib文件夹内容，填充为初始的目录结构</td></tr><tr><td>创建页面</td><td>get create page:页面名字</td><td>会创建view, controller ，binding 和 routes</td></tr><tr><td>创建控制器</td><td>get create controller:test</td><td>指定文件夹不用写完整路径末级名字就行</td></tr><tr><td>创建控制器</td><td>get create controller:auth</td><td>用模版或者url创建控制器</td></tr><tr><td>创建view</td><td>get create view:name</td><td>创建view</td></tr><tr><td>国际化</td><td>get generate locales assets&#x2F;locales</td><td>需要在指定目录创建对应json文件</td></tr><tr><td>创建实体类</td><td>get generate model on home with assets&#x2F;models&#x2F;user.json</td><td>需要在指定目录创建对应json文件</td></tr></tbody></table><p>其他命令可参考官方文档: <a href="https://github.com/jonataslaw/get_cli/blob/master/README-zh_CN.md">get_cli中文官方文档</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>前端</category>
+      
+      <category>Flutter</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Flutter</tag>
+      
+      <tag>Getx</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Flutter GetX 实战&lt;小米商城&gt;</title>
     <link href="/posts/64979/"/>
     <url>/posts/64979/</url>
