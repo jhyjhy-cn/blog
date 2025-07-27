@@ -11,6 +11,18 @@
     <content type="html"><![CDATA[<h1 id="修改-Cursor-插件栏改为纵向"><a href="#修改-Cursor-插件栏改为纵向" class="headerlink" title="修改 Cursor 插件栏改为纵向"></a>修改 Cursor 插件栏改为纵向</h1><ol><li><code>Ctrl+Shift+P</code>打开搜索<code>Open User Settings</code></li><li>设置中搜索：<code>workbench.activityBar.orientation</code>，修改为 <code>vertical</code> 即可。</li></ol>]]></content>
     
     
+    <categories>
+      
+      <category>前端</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Cursor</tag>
+      
+    </tags>
     
   </entry>
   
