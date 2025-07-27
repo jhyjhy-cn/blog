@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Cursor插件栏改为纵向</title>
+    <link href="/posts/32536/"/>
+    <url>/posts/32536/</url>
+    
+    <content type="html"><![CDATA[<h1 id="修改-Cursor-插件栏改为纵向"><a href="#修改-Cursor-插件栏改为纵向" class="headerlink" title="修改 Cursor 插件栏改为纵向"></a>修改 Cursor 插件栏改为纵向</h1><ol><li><code>Ctrl+Shift+P</code>打开搜索<code>Open User Settings</code></li><li>设置中搜索：<code>workbench.activityBar.orientation</code>，修改为 <code>vertical</code> 即可。</li></ol>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Flutter不同终端屏幕适配</title>
     <link href="/posts/33879/"/>
     <url>/posts/33879/</url>
