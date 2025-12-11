@@ -19,16 +19,16 @@
   <meta name="author" content="Hongyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode">
+    <meta name="description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 企业级权限管理系统数据库设计 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode_ci;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级权限管理系统数据库设计-MySQL版本">
 <meta property="og:url" content="https://jhyjhy.cn/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-MySQL%E7%89%88%E6%9C%AC/30189/index.html">
 <meta property="og:site_name" content="Hongyu&#39;s Blog">
-<meta property="og:description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode">
+<meta property="og:description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 企业级权限管理系统数据库设计 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode_ci;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
 <meta property="article:published_time" content="2025-12-10T13:11:30.000Z">
-<meta property="article:modified_time" content="2025-12-11T03:44:38.495Z">
+<meta property="article:modified_time" content="2025-12-11T05:19:33.546Z">
 <meta property="article:author" content="Hongyu">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="RBAC">
@@ -230,7 +230,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.6k 字
+          3.7k 字
         
       </span>
     
@@ -293,7 +293,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="企业级权限管理系统数据库设计-MySQL版本"><a href="#企业级权限管理系统数据库设计-MySQL版本" class="headerlink" title="企业级权限管理系统数据库设计-MySQL版本"></a>企业级权限管理系统数据库设计-MySQL版本</h1><p>本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。</p>
+                <h1 id="企业级权限管理系统数据库设计-MySQL版本"><a href="#企业级权限管理系统数据库设计-MySQL版本" class="headerlink" title="企业级权限管理系统数据库设计-MySQL版本"></a>企业级权限管理系统数据库设计-MySQL版本</h1><p>本文档基于 <a href="/posts/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1.html">企业级权限管理系统数据库设计</a> 中的设计，提供 MySQL 8.0+ 版本的建表语句。</p>
 <h2 id="1-数据库创建"><a href="#1-数据库创建" class="headerlink" title="1. 数据库创建"></a>1. 数据库创建</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建数据库</span><br><span class="hljs-keyword">CREATE</span> DATABASE IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> `rbac_system`<br><span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARACTER SET</span> utf8mb4<br><span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;<br><br>USE `rbac_system`;<br></code></pre></td></tr></table></figure>
 
 <h2 id="2-核心业务表"><a href="#2-核心业务表" class="headerlink" title="2. 核心业务表"></a>2. 核心业务表</h2><h3 id="2-1-部门表-sys-dept"><a href="#2-1-部门表-sys-dept" class="headerlink" title="2.1 部门表 (sys_dept)"></a>2.1 部门表 (sys_dept)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_dept` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;部门ID&#x27;</span>,<br>  `dept_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;部门名称&#x27;</span>,<br>  `dept_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;部门编码&#x27;</span>,<br>  `parent_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;父部门ID&#x27;</span>,<br>  `leader_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人用户ID&#x27;</span>,<br>  `leader_phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人联系电话&#x27;</span>,<br>  `leader_email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人邮箱&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_dept_code` (`dept_code`, `tenant_id`),<br>  KEY `idx_parent_id` (`parent_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;部门表&#x27;</span>;<br></code></pre></td></tr></table></figure>
@@ -336,11 +336,11 @@
 
 <h2 id="9-完整SQL脚本"><a href="#9-完整SQL脚本" class="headerlink" title="9. 完整SQL脚本"></a>9. 完整SQL脚本</h2><p>完整的MySQL建表脚本已保存为：</p>
 <ul>
-<li>[[企业级权限管理系统数据库设计-MySQL版本-complete.sql]] - 可直接执行的完整SQL脚本</li>
+<li><a href="/assets/sql/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-MySQL%E7%89%88%E6%9C%AC-complete.sql">企业级权限管理系统数据库设计-MySQL版本-complete.sql</a> - 可直接执行的完整SQL脚本</li>
 </ul>
 <h2 id="10-相关链接"><a href="#10-相关链接" class="headerlink" title="10. 相关链接"></a>10. 相关链接</h2><ul>
-<li>[[企业级权限管理系统数据库设计]] - 主设计文档</li>
-<li>[[企业级权限管理系统数据库设计-PostgreSQL版本]] - PostgreSQL版本</li>
+<li><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/">企业级权限管理系统数据库设计</a> - [[企业级权限管理系统数据库设计]]</li>
+<li><a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-PostgreSQL%E7%89%88%E6%9C%AC/61171/">企业级权限管理系统数据库设计-PostgreSQL版本</a> - [[企业级权限管理系统数据库设计-PostgreSQL版本]]</li>
 </ul>
 
                 
@@ -440,8 +440,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-PostgreSQL%E7%89%88%E6%9C%AC/61171/" title="企业级权限管理系统数据库设计-PostgreSQL版本">
-                        <span class="hidden-mobile">企业级权限管理系统数据库设计-PostgreSQL版本</span>
+                      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/" title="企业级权限管理系统数据库设计">
+                        <span class="hidden-mobile">企业级权限管理系统数据库设计</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
