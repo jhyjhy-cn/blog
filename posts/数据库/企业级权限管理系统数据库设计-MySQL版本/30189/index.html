@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en-US,default" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hongyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业级权限管理系统数据库设计-MySQL版本">
+<meta property="og:url" content="https://jhyjhy.cn/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-MySQL%E7%89%88%E6%9C%AC/30189/index.html">
+<meta property="og:site_name" content="Hongyu&#39;s Blog">
+<meta property="og:description" content="企业级权限管理系统数据库设计-MySQL版本本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。 1. 数据库创建123456-- 创建数据库CREATE DATABASE IF NOT EXISTS &#96;rbac_system&#96;DEFAULT CHARACTER SET utf8mb4DEFAULT COLLATE utf8mb4_unicode">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+<meta property="article:published_time" content="2025-12-10T13:11:30.000Z">
+<meta property="article:modified_time" content="2025-12-11T03:44:38.495Z">
+<meta property="article:author" content="Hongyu">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="RBAC">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>企业级权限管理系统数据库设计-MySQL版本 - Hongyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jhyjhy.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hongyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/assets/images/index/index.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="企业级权限管理系统数据库设计-MySQL版本"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-10 21:11" pubdate>
+          2025年12月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">企业级权限管理系统数据库设计-MySQL版本</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="企业级权限管理系统数据库设计-MySQL版本"><a href="#企业级权限管理系统数据库设计-MySQL版本" class="headerlink" title="企业级权限管理系统数据库设计-MySQL版本"></a>企业级权限管理系统数据库设计-MySQL版本</h1><p>本文档基于 [[企业级权限管理系统数据库设计]] 中的设计，提供 MySQL 8.0+ 版本的建表语句。</p>
+<h2 id="1-数据库创建"><a href="#1-数据库创建" class="headerlink" title="1. 数据库创建"></a>1. 数据库创建</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建数据库</span><br><span class="hljs-keyword">CREATE</span> DATABASE IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> `rbac_system`<br><span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARACTER SET</span> utf8mb4<br><span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;<br><br>USE `rbac_system`;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-核心业务表"><a href="#2-核心业务表" class="headerlink" title="2. 核心业务表"></a>2. 核心业务表</h2><h3 id="2-1-部门表-sys-dept"><a href="#2-1-部门表-sys-dept" class="headerlink" title="2.1 部门表 (sys_dept)"></a>2.1 部门表 (sys_dept)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_dept` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;部门ID&#x27;</span>,<br>  `dept_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;部门名称&#x27;</span>,<br>  `dept_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;部门编码&#x27;</span>,<br>  `parent_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;父部门ID&#x27;</span>,<br>  `leader_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人用户ID&#x27;</span>,<br>  `leader_phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人联系电话&#x27;</span>,<br>  `leader_email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;负责人邮箱&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_dept_code` (`dept_code`, `tenant_id`),<br>  KEY `idx_parent_id` (`parent_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;部门表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-岗位表-sys-post"><a href="#2-2-岗位表-sys-post" class="headerlink" title="2.2 岗位表 (sys_post)"></a>2.2 岗位表 (sys_post)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_post` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;岗位ID&#x27;</span>,<br>  `post_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;岗位名称&#x27;</span>,<br>  `post_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;岗位编码&#x27;</span>,<br>  `dept_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;所属部门ID&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_post_code` (`post_code`, `tenant_id`),<br>  KEY `idx_dept_id` (`dept_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;岗位表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-用户表-sys-user"><a href="#2-3-用户表-sys-user" class="headerlink" title="2.3 用户表 (sys_user)"></a>2.3 用户表 (sys_user)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_user` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;用户ID&#x27;</span>,<br>  `username` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;用户名&#x27;</span>,<br>  `password` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;密码&#x27;</span>,<br>  `nickname` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;昵称&#x27;</span>,<br>  `real_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;真实姓名&#x27;</span>,<br>  `email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;邮箱&#x27;</span>,<br>  `phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;手机号&#x27;</span>,<br>  `avatar` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;头像地址&#x27;</span>,<br>  `sex` <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;0&#x27;</span> COMMENT <span class="hljs-string">&#x27;性别：0-未知，1-男，2-女&#x27;</span>,<br>  `birthday` <span class="hljs-type">DATE</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;生日&#x27;</span>,<br>  `dept_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;部门ID&#x27;</span>,<br>  `post_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;岗位ID&#x27;</span>,<br>  `address` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;地址&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `last_login_time` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;最后登录时间&#x27;</span>,<br>  `last_login_ip` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;最后登录IP&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_username` (`username`, `tenant_id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_email` (`email`, `tenant_id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_phone` (`phone`, `tenant_id`),<br>  KEY `idx_dept_id` (`dept_id`),<br>  KEY `idx_post_id` (`post_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;用户表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-角色表-sys-role"><a href="#2-4-角色表-sys-role" class="headerlink" title="2.4 角色表 (sys_role)"></a>2.4 角色表 (sys_role)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_role` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;角色ID&#x27;</span>,<br>  `role_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;角色名称&#x27;</span>,<br>  `role_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;角色编码&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  `data_scope` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;数据权限：1-全部，2-本部门，3-本部门及下级，4-自定义&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_role_code` (`role_code`, `tenant_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_data_scope` (`data_scope`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;角色表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-菜单表-sys-menu"><a href="#2-5-菜单表-sys-menu" class="headerlink" title="2.5 菜单表 (sys_menu)"></a>2.5 菜单表 (sys_menu)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_menu` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;菜单ID&#x27;</span>,<br>  `menu_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;菜单名称&#x27;</span>,<br>  `menu_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;菜单编码/权限标识&#x27;</span>,<br>  `parent_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;父菜单ID&#x27;</span>,<br>  `menu_type` TINYINT <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;菜单类型：1-目录，2-菜单，3-按钮&#x27;</span>,<br>  `path` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;路由路径&#x27;</span>,<br>  `component` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;组件路径&#x27;</span>,<br>  `icon` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;图标&#x27;</span>,<br>  `permission` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;权限标识&#x27;</span>,<br>  `target` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;_self&#x27;</span> COMMENT <span class="hljs-string">&#x27;打开方式：_self-当前页，_blank-新页&#x27;</span>,<br>  `is_cache` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否缓存：0-否，1-是&#x27;</span>,<br>  `is_visible` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;是否显示：0-否，1-是&#x27;</span>,<br>  `is_external` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否外链：0-否，1-是&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_menu_code` (`menu_code`, `tenant_id`),<br>  KEY `idx_parent_id` (`parent_id`),<br>  KEY `idx_menu_type` (`menu_type`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_tenant_id` (`tenant_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;菜单表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-关联表"><a href="#3-关联表" class="headerlink" title="3. 关联表"></a>3. 关联表</h2><h3 id="3-1-用户角色关联表-sys-user-role"><a href="#3-1-用户角色关联表-sys-user-role" class="headerlink" title="3.1 用户角色关联表 (sys_user_role)"></a>3.1 用户角色关联表 (sys_user_role)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_user_role` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;主键ID&#x27;</span>,<br>  `user_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;用户ID&#x27;</span>,<br>  `role_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;角色ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_user_role` (`user_id`, `role_id`),<br>  KEY `idx_user_id` (`user_id`),<br>  KEY `idx_role_id` (`role_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;用户角色关联表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-角色菜单关联表-sys-role-menu"><a href="#3-2-角色菜单关联表-sys-role-menu" class="headerlink" title="3.2 角色菜单关联表 (sys_role_menu)"></a>3.2 角色菜单关联表 (sys_role_menu)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_role_menu` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;主键ID&#x27;</span>,<br>  `role_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;角色ID&#x27;</span>,<br>  `menu_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;菜单ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_role_menu` (`role_id`, `menu_id`),<br>  KEY `idx_role_id` (`role_id`),<br>  KEY `idx_menu_id` (`menu_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;角色菜单关联表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-角色部门关联表-sys-role-dept"><a href="#3-3-角色部门关联表-sys-role-dept" class="headerlink" title="3.3 角色部门关联表 (sys_role_dept)"></a>3.3 角色部门关联表 (sys_role_dept)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_role_dept` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;主键ID&#x27;</span>,<br>  `role_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;角色ID&#x27;</span>,<br>  `dept_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;部门ID&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_role_dept` (`role_id`, `dept_id`),<br>  KEY `idx_role_id` (`role_id`),<br>  KEY `idx_dept_id` (`dept_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;角色部门关联表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-日志表"><a href="#4-日志表" class="headerlink" title="4. 日志表"></a>4. 日志表</h2><h3 id="4-1-登录日志表-sys-login-log"><a href="#4-1-登录日志表-sys-login-log" class="headerlink" title="4.1 登录日志表 (sys_login_log)"></a>4.1 登录日志表 (sys_login_log)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_login_log` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;日志ID&#x27;</span>,<br>  `username` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;用户名&#x27;</span>,<br>  `user_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;用户ID&#x27;</span>,<br>  `ipaddr` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;登录IP地址&#x27;</span>,<br>  `login_location` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;登录地点&#x27;</span>,<br>  `browser` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;浏览器类型&#x27;</span>,<br>  `os` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;操作系统&#x27;</span>,<br>  `device` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;设备类型&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;登录状态：0-失败，1-成功&#x27;</span>,<br>  `msg` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;提示信息&#x27;</span>,<br>  `login_time` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;登录时间&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  KEY `idx_user_id` (`user_id`),<br>  KEY `idx_username` (`username`),<br>  KEY `idx_login_time` (`login_time`),<br>  KEY `idx_username_time` (`username`, `login_time`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;登录日志表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-操作日志表-sys-operation-log"><a href="#4-2-操作日志表-sys-operation-log" class="headerlink" title="4.2 操作日志表 (sys_operation_log)"></a>4.2 操作日志表 (sys_operation_log)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_operation_log` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;日志ID&#x27;</span>,<br>  `title` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;操作模块&#x27;</span>,<br>  `business_type` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;业务类型（0-其他 1-新增 2-修改 3-删除）&#x27;</span>,<br>  `business_type_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;业务类型名称&#x27;</span>,<br>  `<span class="hljs-keyword">method</span>` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;请求方式&#x27;</span>,<br>  `request_method` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;请求类型&#x27;</span>,<br>  `operator_type` TINYINT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;操作类别（0-其它 1-后台用户 2-手机端用户）&#x27;</span>,<br>  `operator_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;操作人员&#x27;</span>,<br>  `dept_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;部门名称&#x27;</span>,<br>  `operation_url` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;请求URL&#x27;</span>,<br>  `operation_ip` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;操作地址&#x27;</span>,<br>  `operation_location` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;操作地点&#x27;</span>,<br>  `operation_param` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;请求参数&#x27;</span>,<br>  `json_result` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;返回参数&#x27;</span>,<br>  `operation_status` TINYINT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;操作状态：0-正常，1-异常&#x27;</span>,<br>  `error_msg` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">2000</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;错误消息&#x27;</span>,<br>  `operation_time` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;操作时间&#x27;</span>,<br>  `cost_time` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;消耗时间&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  KEY `idx_user_id` (`operator_name`),<br>  KEY `idx_operation_time` (`operation_time`),<br>  KEY `idx_business_type` (`business_type`),<br>  KEY `idx_operation_status` (`operation_status`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;操作日志表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-错误日志表-sys-error-log"><a href="#4-3-错误日志表-sys-error-log" class="headerlink" title="4.3 错误日志表 (sys_error_log)"></a>4.3 错误日志表 (sys_error_log)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_error_log` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;日志ID&#x27;</span>,<br>  `title` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;错误标题&#x27;</span>,<br>  `request_uri` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;请求URL&#x27;</span>,<br>  `request_method` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;请求方式&#x27;</span>,<br>  `request_params` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;请求参数&#x27;</span>,<br>  `user_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;用户ID&#x27;</span>,<br>  `username` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;用户名&#x27;</span>,<br>  `user_ip` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">128</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;操作IP地址&#x27;</span>,<br>  `user_agent` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;用户代理&#x27;</span>,<br>  `exception_info` TEXT <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;错误消息&#x27;</span>,<br>  `exception_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;异常名称&#x27;</span>,<br>  `stack_trace` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;错误堆栈&#x27;</span>,<br>  `line_number` <span class="hljs-type">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;错误行号&#x27;</span>,<br>  `class_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;Java类名&#x27;</span>,<br>  `method_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;方法名&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;状态&#x27;</span>,<br>  `process_user_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;处理人ID&#x27;</span>,<br>  `process_user_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;处理人&#x27;</span>,<br>  `process_remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;处理备注&#x27;</span>,<br>  `process_time` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;处理时间&#x27;</span>,<br>  `create_time` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  KEY `idx_user_id` (`user_id`),<br>  KEY `idx_create_time` (`create_time`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_exception_name` (`exception_name`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;错误日志表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-租户管理表"><a href="#5-租户管理表" class="headerlink" title="5. 租户管理表"></a>5. 租户管理表</h2><h3 id="5-1-租户表-sys-tenant"><a href="#5-1-租户表-sys-tenant" class="headerlink" title="5.1 租户表 (sys_tenant)"></a>5.1 租户表 (sys_tenant)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_tenant` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  `tenant_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;租户名称&#x27;</span>,<br>  `tenant_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;租户编码&#x27;</span>,<br>  `contact_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;联系人&#x27;</span>,<br>  `contact_phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;联系电话&#x27;</span>,<br>  `contact_email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;联系邮箱&#x27;</span>,<br>  `company_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;企业名称&#x27;</span>,<br>  `domain` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;域名&#x27;</span>,<br>  `address` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;地址&#x27;</span>,<br>  `phone` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;电话&#x27;</span>,<br>  `email` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;邮箱&#x27;</span>,<br>  `package_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;套餐ID&#x27;</span>,<br>  `expire_time` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;到期时间&#x27;</span>,<br>  `account_count` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;账号数量&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_tenant_code` (`tenant_code`),<br>  KEY `idx_package_id` (`package_id`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`),<br>  KEY `idx_expire_time` (`expire_time`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;租户表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-租户套餐表-sys-tenant-package"><a href="#5-2-租户套餐表-sys-tenant-package" class="headerlink" title="5.2 租户套餐表 (sys_tenant_package)"></a>5.2 租户套餐表 (sys_tenant_package)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_tenant_package` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;套餐ID&#x27;</span>,<br>  `package_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;套餐名称&#x27;</span>,<br>  `package_code` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;套餐编码&#x27;</span>,<br>  `max_users` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">10</span> COMMENT <span class="hljs-string">&#x27;最大用户数&#x27;</span>,<br>  `max_storage` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1073741824</span> COMMENT <span class="hljs-string">&#x27;最大存储空间（字节）&#x27;</span>,<br>  `price` <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0.00</span> COMMENT <span class="hljs-string">&#x27;价格&#x27;</span>,<br>  `cycle_unit` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;计费周期：1-月，2-季，3-年&#x27;</span>,<br>  `features` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;功能特性（JSON格式）&#x27;</span>,<br>  `description` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;套餐描述&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态：0-禁用，1-正常&#x27;</span>,<br>  `sort_order` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_package_code` (`package_code`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;租户套餐表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-租户配置表-sys-tenant-config"><a href="#5-3-租户配置表-sys-tenant-config" class="headerlink" title="5.3 租户配置表 (sys_tenant_config)"></a>5.3 租户配置表 (sys_tenant_config)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_tenant_config` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;配置ID&#x27;</span>,<br>  `tenant_id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;租户ID&#x27;</span>,<br>  `config_key` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;配置键&#x27;</span>,<br>  `config_value` TEXT <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;配置值&#x27;</span>,<br>  `config_type` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;系统内置（0-否 1-是）&#x27;</span>,<br>  `is_encrypted` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否加密（0-否 1-是）&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_tenant_key` (`tenant_id`, `config_key`),<br>  KEY `idx_tenant_id` (`tenant_id`),<br>  KEY `idx_config_key` (`config_key`),<br>  KEY `idx_config_type` (`config_type`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;租户配置表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-系统配置表"><a href="#6-系统配置表" class="headerlink" title="6. 系统配置表"></a>6. 系统配置表</h2><h3 id="6-1-字典类型表-sys-dict-type"><a href="#6-1-字典类型表-sys-dict-type" class="headerlink" title="6.1 字典类型表 (sys_dict_type)"></a>6.1 字典类型表 (sys_dict_type)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_dict_type` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;字典主键&#x27;</span>,<br>  `dict_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;字典名称&#x27;</span>,<br>  `dict_type` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;字典类型&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态（0正常 1停用）&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_dict_type` (`dict_type`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;字典类型表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-字典数据表-sys-dict-data"><a href="#6-2-字典数据表-sys-dict-data" class="headerlink" title="6.2 字典数据表 (sys_dict_data)"></a>6.2 字典数据表 (sys_dict_data)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_dict_data` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;数据编号&#x27;</span>,<br>  `dict_sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;字典排序&#x27;</span>,<br>  `dict_label` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;字典标签&#x27;</span>,<br>  `dict_value` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;字典键值&#x27;</span>,<br>  `dict_type` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;字典类型&#x27;</span>,<br>  `css_class` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;表格回显样式&#x27;</span>,<br>  `list_class` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;表格列表样式&#x27;</span>,<br>  `is_default` <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;N&#x27;</span> COMMENT <span class="hljs-string">&#x27;是否默认（Y是 N否）&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态（0正常 1停用）&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  KEY `idx_dict_type_status` (`dict_type`, `status`),<br>  KEY `idx_dict_sort` (`dict_sort`),<br>  KEY `idx_delete_flag` (`delete_flag`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;字典数据表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-参数配置表-sys-params"><a href="#6-3-参数配置表-sys-params" class="headerlink" title="6.3 参数配置表 (sys_params)"></a>6.3 参数配置表 (sys_params)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE TABLE</span> `sys_params` (<br>  `id` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span> AUTO_INCREMENT COMMENT <span class="hljs-string">&#x27;参数ID&#x27;</span>,<br>  `param_name` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;参数名称&#x27;</span>,<br>  `param_key` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span> COMMENT <span class="hljs-string">&#x27;参数键名&#x27;</span>,<br>  `param_value` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;参数键值&#x27;</span>,<br>  `is_system` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;系统内置（0-否 1-是）&#x27;</span>,<br>  `is_encrypted` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否加密（0-否 1-是）&#x27;</span>,<br>  `sort` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;排序&#x27;</span>,<br>  `status` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;状态（0正常 1停用）&#x27;</span>,<br>  `remark` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;备注&#x27;</span>,<br>  `create_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;创建时间&#x27;</span>,<br>  `creator` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;创建人ID&#x27;</span>,<br>  `update_at` DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> COMMENT <span class="hljs-string">&#x27;更新时间&#x27;</span>,<br>  `updater` <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;更新人ID&#x27;</span>,<br>  `delete_flag` TINYINT <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span> COMMENT <span class="hljs-string">&#x27;是否删除：0-否，1-是&#x27;</span>,<br>  `delete_at` DATETIME <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span> COMMENT <span class="hljs-string">&#x27;删除时间&#x27;</span>,<br>  `version` <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">1</span> COMMENT <span class="hljs-string">&#x27;乐观锁版本号&#x27;</span>,<br>  <span class="hljs-keyword">PRIMARY KEY</span> (`id`),<br>  <span class="hljs-keyword">UNIQUE</span> KEY `uk_param_key` (`param_key`),<br>  KEY `idx_is_system` (`is_system`),<br>  KEY `idx_status` (`status`),<br>  KEY `idx_delete_flag` (`delete_flag`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_unicode_ci COMMENT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;参数配置表&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-外键约束"><a href="#7-外键约束" class="headerlink" title="7. 外键约束"></a>7. 外键约束</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 部门表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_dept` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_dept_leader`<br><span class="hljs-keyword">FOREIGN KEY</span> (`leader_id`) <span class="hljs-keyword">REFERENCES</span> `sys_user` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>;<br><br><span class="hljs-comment">-- 岗位表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_post` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_post_dept`<br><span class="hljs-keyword">FOREIGN KEY</span> (`dept_id`) <span class="hljs-keyword">REFERENCES</span> `sys_dept` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><br><span class="hljs-comment">-- 用户表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_user` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_user_dept`<br><span class="hljs-keyword">FOREIGN KEY</span> (`dept_id`) <span class="hljs-keyword">REFERENCES</span> `sys_dept` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>;<br><span class="hljs-keyword">ALTER TABLE</span> `sys_user` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_user_post`<br><span class="hljs-keyword">FOREIGN KEY</span> (`post_id`) <span class="hljs-keyword">REFERENCES</span> `sys_post` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>;<br><br><span class="hljs-comment">-- 用户角色关联表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_user_role` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_ur_user`<br><span class="hljs-keyword">FOREIGN KEY</span> (`user_id`) <span class="hljs-keyword">REFERENCES</span> `sys_user` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><span class="hljs-keyword">ALTER TABLE</span> `sys_user_role` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_ur_role`<br><span class="hljs-keyword">FOREIGN KEY</span> (`role_id`) <span class="hljs-keyword">REFERENCES</span> `sys_role` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><br><span class="hljs-comment">-- 角色菜单关联表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_role_menu` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_rm_role`<br><span class="hljs-keyword">FOREIGN KEY</span> (`role_id`) <span class="hljs-keyword">REFERENCES</span> `sys_role` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><span class="hljs-keyword">ALTER TABLE</span> `sys_role_menu` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_rm_menu`<br><span class="hljs-keyword">FOREIGN KEY</span> (`menu_id`) <span class="hljs-keyword">REFERENCES</span> `sys_menu` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><br><span class="hljs-comment">-- 角色部门关联表外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_role_dept` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_rd_role`<br><span class="hljs-keyword">FOREIGN KEY</span> (`role_id`) <span class="hljs-keyword">REFERENCES</span> `sys_role` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><span class="hljs-keyword">ALTER TABLE</span> `sys_role_dept` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_rd_dept`<br><span class="hljs-keyword">FOREIGN KEY</span> (`dept_id`) <span class="hljs-keyword">REFERENCES</span> `sys_dept` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><br><span class="hljs-comment">-- 租户相关外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_tenant` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_tenant_package`<br><span class="hljs-keyword">FOREIGN KEY</span> (`package_id`) <span class="hljs-keyword">REFERENCES</span> `sys_tenant_package` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>;<br><span class="hljs-keyword">ALTER TABLE</span> `sys_tenant_config` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_config_tenant`<br><span class="hljs-keyword">FOREIGN KEY</span> (`tenant_id`) <span class="hljs-keyword">REFERENCES</span> `sys_tenant` (`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br><br><span class="hljs-comment">-- 字典数据外键</span><br><span class="hljs-keyword">ALTER TABLE</span> `sys_dict_data` <span class="hljs-keyword">ADD CONSTRAINT</span> `fk_data_type`<br><span class="hljs-keyword">FOREIGN KEY</span> (`dict_type`) <span class="hljs-keyword">REFERENCES</span> `sys_dict_type` (`dict_type`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-初始化数据"><a href="#8-初始化数据" class="headerlink" title="8. 初始化数据"></a>8. 初始化数据</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 默认超级管理员</span><br><span class="hljs-keyword">INSERT INTO</span> `sys_user` (`id`, `username`, `password`, `nickname`, `real_name`, `email`, `status`)<br><span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;$2a$10$7JB720yubVSOfvVtlWGIH.9wNHNl.WPs4F9QDmHtzvpZf4MxOb8.K&#x27;</span>, <span class="hljs-string">&#x27;超级管理员&#x27;</span>, <span class="hljs-string">&#x27;系统管理员&#x27;</span>, <span class="hljs-string">&#x27;admin@example.com&#x27;</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">-- 默认角色</span><br><span class="hljs-keyword">INSERT INTO</span> `sys_role` (`id`, `role_name`, `role_code`, `remark`, `data_scope`)<br><span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;超级管理员&#x27;</span>, <span class="hljs-string">&#x27;ROLE_ADMIN&#x27;</span>, <span class="hljs-string">&#x27;系统超级管理员&#x27;</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">-- 用户角色关联</span><br><span class="hljs-keyword">INSERT INTO</span> `sys_user_role` (`user_id`, `role_id`) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">-- 默认部门</span><br><span class="hljs-keyword">INSERT INTO</span> `sys_dept` (`id`, `dept_name`, `dept_code`, `parent_id`, `status`)<br><span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;总公司&#x27;</span>, <span class="hljs-string">&#x27;ROOT&#x27;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">-- 更新超级管理员部门</span><br><span class="hljs-keyword">UPDATE</span> `sys_user` <span class="hljs-keyword">SET</span> `dept_id` <span class="hljs-operator">=</span> <span class="hljs-number">1</span> <span class="hljs-keyword">WHERE</span> `id` <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><br><span class="hljs-comment">-- 默认菜单数据</span><br><span class="hljs-keyword">INSERT INTO</span> `sys_menu` (`menu_name`, `menu_code`, `parent_id`, `menu_type`, `path`, `icon`, `sort`) <span class="hljs-keyword">VALUES</span><br>(<span class="hljs-string">&#x27;系统管理&#x27;</span>, <span class="hljs-string">&#x27;system&#x27;</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;/system&#x27;</span>, <span class="hljs-string">&#x27;system&#x27;</span>, <span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;用户管理&#x27;</span>, <span class="hljs-string">&#x27;system:user&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;user&#x27;</span>, <span class="hljs-string">&#x27;user&#x27;</span>, <span class="hljs-number">1</span>),<br>(<span class="hljs-string">&#x27;角色管理&#x27;</span>, <span class="hljs-string">&#x27;system:role&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;role&#x27;</span>, <span class="hljs-string">&#x27;role&#x27;</span>, <span class="hljs-number">2</span>),<br>(<span class="hljs-string">&#x27;菜单管理&#x27;</span>, <span class="hljs-string">&#x27;system:menu&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;menu&#x27;</span>, <span class="hljs-string">&#x27;menu&#x27;</span>, <span class="hljs-number">3</span>),<br>(<span class="hljs-string">&#x27;部门管理&#x27;</span>, <span class="hljs-string">&#x27;system:dept&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;dept&#x27;</span>, <span class="hljs-string">&#x27;dept&#x27;</span>, <span class="hljs-number">4</span>),<br>(<span class="hljs-string">&#x27;岗位管理&#x27;</span>, <span class="hljs-string">&#x27;system:post&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;post&#x27;</span>, <span class="hljs-string">&#x27;post&#x27;</span>, <span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-完整SQL脚本"><a href="#9-完整SQL脚本" class="headerlink" title="9. 完整SQL脚本"></a>9. 完整SQL脚本</h2><p>完整的MySQL建表脚本已保存为：</p>
+<ul>
+<li>[[企业级权限管理系统数据库设计-MySQL版本-complete.sql]] - 可直接执行的完整SQL脚本</li>
+</ul>
+<h2 id="10-相关链接"><a href="#10-相关链接" class="headerlink" title="10. 相关链接"></a>10. 相关链接</h2><ul>
+<li>[[企业级权限管理系统数据库设计]] - 主设计文档</li>
+<li>[[企业级权限管理系统数据库设计-PostgreSQL版本]] - PostgreSQL版本</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+        <a href="/tags/RBAC/" class="print-no-link">#RBAC</a>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>企业级权限管理系统数据库设计-MySQL版本</div>
+      <div>https://jhyjhy.cn/posts/数据库/企业级权限管理系统数据库设计-MySQL版本/30189/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hongyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-PostgreSQL%E7%89%88%E6%9C%AC/61171/" title="企业级权限管理系统数据库设计-PostgreSQL版本">
+                        <span class="hidden-mobile">企业级权限管理系统数据库设计-PostgreSQL版本</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://jhyjhy.cn/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-MySQL%E7%89%88%E6%9C%AC/30189/';
+          this.page.identifier = '/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-MySQL%E7%89%88%E6%9C%AC/30189/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2024115712号
+    </a>
+  </span>
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

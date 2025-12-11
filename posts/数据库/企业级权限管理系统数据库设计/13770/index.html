@@ -1,0 +1,3769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en-US,default" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hongyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="企业级权限管理系统数据库设计本文档介绍了一个完整的企业级权限管理系统数据库设计，采用 RBAC (Role-Based Access Control) 模型，并扩展了组织架构管理功能，适用于中大型企业管理系统。 1. 表结构概览1.1 核心业务表   表名 表说明 作用    sys_user 用户表 存储系统用户的基本信息，包含部门、岗位关联   sys_role 角色表 定义系统中的各种角色，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业级权限管理系统数据库设计">
+<meta property="og:url" content="https://jhyjhy.cn/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/index.html">
+<meta property="og:site_name" content="Hongyu&#39;s Blog">
+<meta property="og:description" content="企业级权限管理系统数据库设计本文档介绍了一个完整的企业级权限管理系统数据库设计，采用 RBAC (Role-Based Access Control) 模型，并扩展了组织架构管理功能，适用于中大型企业管理系统。 1. 表结构概览1.1 核心业务表   表名 表说明 作用    sys_user 用户表 存储系统用户的基本信息，包含部门、岗位关联   sys_role 角色表 定义系统中的各种角色，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+<meta property="article:published_time" content="2025-12-10T13:11:30.000Z">
+<meta property="article:modified_time" content="2025-12-11T03:16:45.065Z">
+<meta property="article:author" content="Hongyu">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="RBAC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>企业级权限管理系统数据库设计 - Hongyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jhyjhy.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hongyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/assets/images/index/index.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="企业级权限管理系统数据库设计"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-10 21:11" pubdate>
+          2025年12月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">企业级权限管理系统数据库设计</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="企业级权限管理系统数据库设计"><a href="#企业级权限管理系统数据库设计" class="headerlink" title="企业级权限管理系统数据库设计"></a>企业级权限管理系统数据库设计</h1><p>本文档介绍了一个完整的企业级权限管理系统数据库设计，采用 RBAC (Role-Based Access Control) 模型，并扩展了组织架构管理功能，适用于中大型企业管理系统。</p>
+<h2 id="1-表结构概览"><a href="#1-表结构概览" class="headerlink" title="1. 表结构概览"></a>1. 表结构概览</h2><h3 id="1-1-核心业务表"><a href="#1-1-核心业务表" class="headerlink" title="1.1 核心业务表"></a>1.1 核心业务表</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>表说明</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>sys_user</strong></td>
+<td>用户表</td>
+<td>存储系统用户的基本信息，包含部门、岗位关联</td>
+</tr>
+<tr>
+<td><strong>sys_role</strong></td>
+<td>角色表</td>
+<td>定义系统中的各种角色，包含数据权限配置</td>
+</tr>
+<tr>
+<td><strong>sys_menu</strong></td>
+<td>菜单表</td>
+<td>管理系统的菜单结构和权限点</td>
+</tr>
+<tr>
+<td><strong>sys_dept</strong></td>
+<td>部门表</td>
+<td>组织架构管理，支持树形结构</td>
+</tr>
+<tr>
+<td><strong>sys_post</strong></td>
+<td>岗位表</td>
+<td>职位管理，与部门关联</td>
+</tr>
+<tr>
+<td><strong>sys_tenant</strong></td>
+<td>租户表</td>
+<td>多租户系统租户信息</td>
+</tr>
+<tr>
+<td><strong>sys_tenant_package</strong></td>
+<td>租户套餐表</td>
+<td>租户套餐配置</td>
+</tr>
+<tr>
+<td><strong>sys_tenant_config</strong></td>
+<td>租户配置表</td>
+<td>租户个性化配置</td>
+</tr>
+<tr>
+<td><strong>sys_dict_type</strong></td>
+<td>字典类型表</td>
+<td>系统字典类型管理</td>
+</tr>
+<tr>
+<td><strong>sys_dict_data</strong></td>
+<td>字典数据表</td>
+<td>字典具体数据</td>
+</tr>
+<tr>
+<td><strong>sys_params</strong></td>
+<td>参数表</td>
+<td>系统参数配置</td>
+</tr>
+<tr>
+<td><strong>sys_login_log</strong></td>
+<td>登录日志表</td>
+<td>记录用户登录登出日志</td>
+</tr>
+<tr>
+<td><strong>sys_operation_log</strong></td>
+<td>操作日志表</td>
+<td>记录用户关键操作日志</td>
+</tr>
+<tr>
+<td><strong>sys_error_log</strong></td>
+<td>错误日志表</td>
+<td>记录系统错误和异常日志</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-关联表"><a href="#1-2-关联表" class="headerlink" title="1.2 关联表"></a>1.2 关联表</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>表说明</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>sys_user_role</strong></td>
+<td>用户角色关联表</td>
+<td>建立用户和角色之间的多对多关系</td>
+</tr>
+<tr>
+<td><strong>sys_role_menu</strong></td>
+<td>角色菜单关联表</td>
+<td>建立角色和菜单之间的多对多关系</td>
+</tr>
+<tr>
+<td><strong>sys_role_dept</strong></td>
+<td>角色部门关联表</td>
+<td>建立角色和数据权限部门的关系</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-统一字段规范"><a href="#1-3-统一字段规范" class="headerlink" title="1.3 统一字段规范"></a>1.3 统一字段规范</h3><p>所有业务表（非关联表）都包含以下统一字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>主键ID，自增</td>
+<td>-</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME&#x2F;TIMESTAMP</td>
+<td>创建时间</td>
+<td>CURRENT_TIMESTAMP</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>创建人ID</td>
+<td>-</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME&#x2F;TIMESTAMP</td>
+<td>更新时间</td>
+<td>CURRENT_TIMESTAMP</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>更新人ID</td>
+<td>-</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT&#x2F;SMALLINT</td>
+<td>是否删除：0-否，1-是</td>
+<td>0</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME&#x2F;TIMESTAMP</td>
+<td>删除时间</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>排序</td>
+<td>0</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>状态: 0-禁用，1-正常</td>
+<td>0</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>乐观锁版本号</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h3 id="1-4-额外统一字段规范"><a href="#1-4-额外统一字段规范" class="headerlink" title="1.4 额外统一字段规范"></a>1.4 额外统一字段规范</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dept_id</td>
+<td>BIGINT</td>
+<td>部门ID</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>BIGINT</td>
+<td>角色ID</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>租户ID</td>
+<td>NULL</td>
+</tr>
+</tbody></table>
+<h2 id="2-表关系图"><a href="#2-表关系图" class="headerlink" title="2. 表关系图"></a>2. 表关系图</h2><pre><code class=" mermaid">erDiagram
+    %% 核心业务关系
+    sys_dept ||--o&#123; sys_user : &quot;所属部门&quot;
+    sys_dept ||--o&#123; sys_post : &quot;部门岗位&quot;
+    sys_post &#125;o--|| sys_user : &quot;用户岗位&quot;
+
+    sys_user &#125;o--o&#123; sys_user_role : &quot;用户角色&quot;
+    sys_role ||--o&#123; sys_user_role : &quot;角色用户&quot;
+    sys_role ||--o&#123; sys_role_menu : &quot;角色菜单&quot;
+    sys_menu ||--o&#123; sys_role_menu : &quot;菜单角色&quot;
+    sys_role ||--o&#123; sys_role_dept : &quot;角色数据权限&quot;
+    sys_dept ||--o&#123; sys_role_dept : &quot;数据权限部门&quot;
+
+    %% 日志表关系
+    sys_user ||--o&#123; sys_login_log : &quot;用户登录日志&quot;
+    sys_user ||--o&#123; sys_operation_log : &quot;用户操作日志&quot;
+    sys_user ||--o&#123; sys_error_log : &quot;用户错误日志&quot;
+
+    %% 系统配置表关系
+    sys_tenant_package ||--o&#123; sys_tenant : &quot;租户套餐&quot;
+    sys_tenant ||--o&#123; sys_tenant_config : &quot;租户配置&quot;
+
+    sys_dict_type ||--o&#123; sys_dict_data : &quot;字典数据&quot;
+
+    %% 核心业务表
+    sys_dept &#123;
+        bigint id PK
+        varchar dept_name
+        varchar dept_code
+        bigint parent_id
+        bigint leader_id FK
+        varchar leader_phone
+        varchar leader_email
+        tinyint status
+        int sort_order
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_post &#123;
+        bigint id PK
+        varchar post_name
+        varchar post_code
+        bigint dept_id FK
+        int sort_order
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_user &#123;
+        bigint id PK
+        varchar username
+        varchar password
+        varchar nickname
+        varchar real_name
+        varchar email
+        varchar phone
+        varchar avatar
+        char sex
+        date birthday
+        bigint dept_id FK
+        bigint post_id FK
+        varchar address
+        varchar remark
+        tinyint status
+        datetime last_login_time
+        varchar last_login_ip
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_role &#123;
+        bigint id PK
+        varchar role_name
+        varchar role_code
+        varchar description
+        tinyint data_scope
+        int sort_order
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_menu &#123;
+        bigint id PK
+        varchar menu_name
+        varchar menu_code
+        bigint parent_id
+        tinyint menu_type
+        varchar path
+        varchar component
+        varchar icon
+        varchar permission
+        varchar target
+        tinyint is_cache
+        tinyint is_visible
+        tinyint is_external
+        int sort_order
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    %% 日志表
+    sys_login_log &#123;
+        bigint id PK
+        varchar username
+        bigint user_id FK
+        varchar ipaddr
+        varchar login_location
+        varchar browser
+        varchar os
+        varchar device
+        tinyint status
+        varchar message
+        datetime login_time
+    &#125;
+
+    sys_operation_log &#123;
+        bigint id PK
+        varchar title
+        tinyint business_type
+        varchar business_type_name
+        varchar method
+        varchar request_method
+        tinyint operator_type
+        varchar operator_name
+        varchar dept_name
+        varchar operation_url
+        varchar operation_ip
+        varchar operation_location
+        text operation_param
+        text json_result
+        tinyint operation_status
+        varchar error_msg
+        datetime operation_time
+        bigint cost_time
+    &#125;
+
+    sys_error_log &#123;
+        bigint id PK
+        varchar title
+        varchar request_uri
+        varchar request_method
+        text request_params
+        bigint user_id FK
+        varchar username
+        varchar user_ip
+        varchar user_agent
+        text exception_info
+        varchar exception_name
+        text stack_trace
+        int line_number
+        varchar class_name
+        varchar method_name
+        tinyint status
+        bigint process_user_id FK
+        varchar process_user_name
+        varchar process_remark
+        datetime process_time
+        datetime create_time
+    &#125;
+
+    %% 系统配置表
+    sys_tenant &#123;
+        bigint id PK
+        varchar tenant_name
+        varchar tenant_code
+        varchar contact_name
+        varchar contact_phone
+        varchar contact_email
+        varchar domain
+        bigint package_id FK
+        datetime expire_time
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_tenant_package &#123;
+        bigint id PK
+        varchar package_name
+        varchar package_code
+        varchar description
+        int max_users
+        int max_roles
+        int max_menus
+        bigint max_storage
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_tenant_config &#123;
+        bigint id PK
+        bigint tenant_id FK
+        varchar config_key
+        text config_value
+        tinyint config_type
+        varchar remark
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_dict_type &#123;
+        bigint id PK
+        varchar dict_name
+        varchar dict_type
+        varchar description
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_dict_data &#123;
+        bigint id PK
+        int dict_sort
+        varchar dict_label
+        varchar dict_value
+        varchar dict_type
+        varchar css_class
+        varchar list_class
+        tinyint is_default
+        tinyint status
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    sys_params &#123;
+        bigint id PK
+        varchar param_name
+        varchar param_key
+        text param_value
+        tinyint is_system
+        varchar remark
+        datetime create_at
+        bigint creator
+        datetime update_at
+        bigint updater
+        tinyint delete_flag
+        datetime delete_at
+        int version
+    &#125;
+
+    %% 关联表
+    sys_user_role &#123;
+        bigint id PK
+        bigint user_id FK
+        bigint role_id FK
+    &#125;
+
+    sys_role_menu &#123;
+        bigint id PK
+        bigint role_id FK
+        bigint menu_id FK
+    &#125;
+
+    sys_role_dept &#123;
+        bigint id PK
+        bigint role_id FK
+        bigint dept_id FK
+    &#125;
+</code></pre>
+
+<h2 id="3-表字段详细说明"><a href="#3-表字段详细说明" class="headerlink" title="3. 表字段详细说明"></a>3. 表字段详细说明</h2><h3 id="3-1-部门表-sys-dept"><a href="#3-1-部门表-sys-dept" class="headerlink" title="3.1 部门表 (sys_dept)"></a>3.1 部门表 (sys_dept)</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>部门ID</td>
+</tr>
+<tr>
+<td>dept_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>部门名称</td>
+</tr>
+<tr>
+<td>dept_code</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>部门编码</td>
+</tr>
+<tr>
+<td>parent_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>父部门ID</td>
+</tr>
+<tr>
+<td>leader_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>负责人用户ID</td>
+</tr>
+<tr>
+<td>leader_phone</td>
+<td>VARCHAR</td>
+<td>20</td>
+<td>YES</td>
+<td>NULL</td>
+<td>负责人联系电话</td>
+</tr>
+<tr>
+<td>leader_email</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>YES</td>
+<td>NULL</td>
+<td>负责人邮箱</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>租户ID</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-岗位表-sys-post"><a href="#3-2-岗位表-sys-post" class="headerlink" title="3.2 岗位表 (sys_post)"></a>3.2 岗位表 (sys_post)</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>岗位ID</td>
+</tr>
+<tr>
+<td>post_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>岗位名称</td>
+</tr>
+<tr>
+<td>post_code</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>岗位编码</td>
+</tr>
+<tr>
+<td>dept_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>所属部门ID</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>租户ID</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-用户表-sys-user"><a href="#3-3-用户表-sys-user" class="headerlink" title="3.3 用户表 (sys_user)"></a>3.3 用户表 (sys_user)</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>username</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>NO</td>
+<td>-</td>
+<td>密码</td>
+</tr>
+<tr>
+<td>nickname</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>昵称</td>
+</tr>
+<tr>
+<td>real_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>真实姓名</td>
+</tr>
+<tr>
+<td>email</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>YES</td>
+<td>NULL</td>
+<td>邮箱</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>VARCHAR</td>
+<td>20</td>
+<td>YES</td>
+<td>NULL</td>
+<td>手机号</td>
+</tr>
+<tr>
+<td>avatar</td>
+<td>VARCHAR</td>
+<td>255</td>
+<td>YES</td>
+<td>NULL</td>
+<td>头像地址</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>CHAR</td>
+<td>1</td>
+<td>YES</td>
+<td>‘0’</td>
+<td>性别：0-未知，1-男，2-女</td>
+</tr>
+<tr>
+<td>birthday</td>
+<td>DATE</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>生日</td>
+</tr>
+<tr>
+<td>dept_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>部门ID</td>
+</tr>
+<tr>
+<td>post_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>岗位ID</td>
+</tr>
+<tr>
+<td>address</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>地址</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR</td>
+<td>500</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>last_login_time</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>最后登录时间</td>
+</tr>
+<tr>
+<td>last_login_ip</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>最后登录IP</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>租户ID</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-角色表-sys-role"><a href="#3-4-角色表-sys-role" class="headerlink" title="3.4 角色表 (sys_role)"></a>3.4 角色表 (sys_role)</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>角色ID</td>
+</tr>
+<tr>
+<td>role_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>角色名称</td>
+</tr>
+<tr>
+<td>role_code</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>角色编码</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>data_scope</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>数据权限：1-全部，2-本部门，3-本部门及下级，4-自定义</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>租户ID</td>
+</tr>
+</tbody></table>
+<h3 id="3-5-菜单表-sys-menu"><a href="#3-5-菜单表-sys-menu" class="headerlink" title="3.5 菜单表 (sys_menu)"></a>3.5 菜单表 (sys_menu)</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>菜单ID</td>
+</tr>
+<tr>
+<td>menu_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>菜单名称</td>
+</tr>
+<tr>
+<td>menu_code</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>NO</td>
+<td>-</td>
+<td>菜单编码&#x2F;权限标识</td>
+</tr>
+<tr>
+<td>parent_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>父菜单ID</td>
+</tr>
+<tr>
+<td>menu_type</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>菜单类型：1-目录，2-菜单，3-按钮</td>
+</tr>
+<tr>
+<td>path</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>路由路径</td>
+</tr>
+<tr>
+<td>component</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>组件路径</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>YES</td>
+<td>NULL</td>
+<td>图标</td>
+</tr>
+<tr>
+<td>permission</td>
+<td>VARCHAR</td>
+<td>100</td>
+<td>YES</td>
+<td>NULL</td>
+<td>权限标识</td>
+</tr>
+<tr>
+<td>target</td>
+<td>VARCHAR</td>
+<td>20</td>
+<td>NO</td>
+<td>‘_self’</td>
+<td>打开方式：_self-当前页，_blank-新页</td>
+</tr>
+<tr>
+<td>is_cache</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否缓存：0-否，1-是</td>
+</tr>
+<tr>
+<td>is_visible</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>是否显示：0-否，1-是</td>
+</tr>
+<tr>
+<td>is_external</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否外链：0-否，1-是</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>租户ID</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-日志表"><a href="#3-6-日志表" class="headerlink" title="3.6 日志表"></a>3.6 日志表</h3><h4 id="3-6-1-登录日志表-sys-login-log"><a href="#3-6-1-登录日志表-sys-login-log" class="headerlink" title="3.6.1 登录日志表 (sys_login_log)"></a>3.6.1 登录日志表 (sys_login_log)</h4><p>| 字段名 | 类型 | 长度 | 允许空 | 默认值 | 说明 |<br>| — | — | — | — | — |<br>| id | BIGINT | - | NO | AUTO_INCREMENT | 日志ID |<br>| user_id | BIGINT | - | YES | NULL | 用户ID |<br>| username | VARCHAR | 50 | NO | - | 用户名 |<br>| ipaddr | VARCHAR | 50 | NO | - | 登录IP地址 |<br>| login_location | VARCHAR | 255 | YES | NULL | 登录地点 |<br>| browser | VARCHAR | 50 | YES | NULL | 浏览器类型 |<br>| os | VARCHAR | 50 | YES | NULL | 操作系统 |<br>| status | TINYINT | - | NO | 0 | 登录状态：0-失败，1-成功 |<br>| msg | VARCHAR | 255 | YES | NULL | 提示信息 |<br>| login_time | DATETIME | - | NO | CURRENT_TIMESTAMP | 登录时间 |<br>| create_at | DATETIME | - | NO | CURRENT_TIMESTAMP | 创建时间 |</p>
+<h4 id="3-6-2-操作日志表-sys-operation-log"><a href="#3-6-2-操作日志表-sys-operation-log" class="headerlink" title="3.6.2 操作日志表 (sys_operation_log)"></a>3.6.2 操作日志表 (sys_operation_log)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>日志ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>操作用户ID</td>
+</tr>
+<tr>
+<td>username</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>操作用户名</td>
+</tr>
+<tr>
+<td>business_type</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>业务类型（0-其他 1-新增 2-修改 3-删除）</td>
+</tr>
+<tr>
+<td>method</td>
+<td>VARCHAR</td>
+<td>10</td>
+<td>NO</td>
+<td>-</td>
+<td>请求方式</td>
+</tr>
+<tr>
+<td>request_method</td>
+<td>VARCHAR</td>
+<td>10</td>
+<td>NO</td>
+<td>-</td>
+<td>请求类型</td>
+</tr>
+<tr>
+<td>operator_type</td>
+<td>TINYINT</td>
+<td>NO</td>
+<td>-</td>
+<td>0</td>
+<td>操作类别（0-其它 1-后台用户 2-手机端用户）</td>
+</tr>
+<tr>
+<td>oper_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>操作人员</td>
+</tr>
+<tr>
+<td>dept_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>部门名称</td>
+</tr>
+<tr>
+<td>oper_url</td>
+<td>VARCHAR</td>
+<td>255</td>
+<td>YES</td>
+<td>NULL</td>
+<td>请求URL</td>
+</tr>
+<tr>
+<td>oper_ip</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>操作地址</td>
+</tr>
+<tr>
+<td>oper_location</td>
+<td>VARCHAR</td>
+<td>255</td>
+<td>YES</td>
+<td>NULL</td>
+<td>操作地点</td>
+</tr>
+<tr>
+<td>oper_param</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>请求参数</td>
+</tr>
+<tr>
+<td>json_result</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>返回参数</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>NO</td>
+<td>NO</td>
+<td>0</td>
+<td>操作状态：0-正常，1-异常</td>
+</tr>
+<tr>
+<td>error_msg</td>
+<td>VARCHAR</td>
+<td>2000</td>
+<td>YES</td>
+<td>NULL</td>
+<td>错误消息</td>
+</tr>
+<tr>
+<td>oper_time</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>操作时间</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+</tbody></table>
+<h4 id="3-3-3-错误日志表-sys-error-log"><a href="#3-3-3-错误日志表-sys-error-log" class="headerlink" title="3.3.3 错误日志表 (sys_error_log)"></a>3.3.3 错误日志表 (sys_error_log)</h4><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>日志ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>username</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>YES</td>
+<td>NULL</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>request_url</td>
+<td>VARCHAR</td>
+<td>255</td>
+<td>NO</td>
+<td>-</td>
+<td>请求URL</td>
+</tr>
+<tr>
+<td>method</td>
+<td>VARCHAR</td>
+<td>10</td>
+<td>NO</td>
+<td>-</td>
+<td>请求方式</td>
+</tr>
+<tr>
+<td>params</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>请求参数</td>
+</tr>
+<tr>
+<td>error_message</td>
+<td>TEXT</td>
+<td>NO</td>
+<td>-</td>
+<td>错误消息</td>
+<td></td>
+</tr>
+<tr>
+<td>error_stack</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>错误堆栈</td>
+</tr>
+<tr>
+<td>line_number</td>
+<td>INT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>错误行号</td>
+</tr>
+<tr>
+<td>class_name</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>Java类名</td>
+</tr>
+<tr>
+<td>method_name</td>
+<td>VARCHAR</td>
+<td>200</td>
+<td>YES</td>
+<td>NULL</td>
+<td>方法名</td>
+</tr>
+<tr>
+<td>user_agent</td>
+<td>VARCHAR</td>
+<td>500</td>
+<td>YES</td>
+<td>NULL</td>
+<td>用户代理</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>VARCHAR</td>
+<td>128</td>
+<td>YES</td>
+<td>NULL</td>
+<td>操作IP地址</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>状态</td>
+</tr>
+<tr>
+<td>error_time</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>错误时间</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+</tbody></table>
+<h3 id="3-7-系统配置表"><a href="#3-7-系统配置表" class="headerlink" title="3.7 系统配置表"></a>3.7 系统配置表</h3><h4 id="3-7-1-租户表-sys-tenant"><a href="#3-7-1-租户表-sys-tenant" class="headerlink" title="3.7.1 租户表 (sys_tenant)"></a>3.7.1 租户表 (sys_tenant)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>租户ID</td>
+</tr>
+<tr>
+<td>tenant_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>租户名称</td>
+</tr>
+<tr>
+<td>tenant_code</td>
+<td>VARCHAR(20)</td>
+<td>NO</td>
+<td>-</td>
+<td>租户编码</td>
+<td></td>
+</tr>
+<tr>
+<td>contact_name</td>
+<td>VARCHAR(30)</td>
+<td>NO</td>
+<td>-</td>
+<td>联系人</td>
+<td></td>
+</tr>
+<tr>
+<td>contact_phone</td>
+<td>VARCHAR(20)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>联系电话</td>
+<td></td>
+</tr>
+<tr>
+<td>contact_email</td>
+<td>VARCHAR(50)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>联系邮箱</td>
+<td></td>
+</tr>
+<tr>
+<td>company_name</td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>企业名称</td>
+<td></td>
+</tr>
+<tr>
+<td>domain</td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>域名</td>
+<td></td>
+</tr>
+<tr>
+<td>address</td>
+<td>VARCHAR(200)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>地址</td>
+<td></td>
+</tr>
+<tr>
+<td>phone</td>
+<td>VARCHAR(20)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>电话</td>
+<td></td>
+</tr>
+<tr>
+<td>email</td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>邮箱</td>
+<td></td>
+</tr>
+<tr>
+<td>package_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>套餐ID</td>
+</tr>
+<tr>
+<td>expire_time</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>到期时间</td>
+</tr>
+<tr>
+<td>account_count</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>账号数量</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+</tbody></table>
+<h4 id="3-7-2-租户套餐表-sys-tenant-package"><a href="#3-7-2-租户套餐表-sys-tenant-package" class="headerlink" title="3.7.2 租户套餐表 (sys_tenant_package)"></a>3.7.2 租户套餐表 (sys_tenant_package)</h4><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>套餐ID</td>
+</tr>
+<tr>
+<td>package_name</td>
+<td>VARCHAR</td>
+<td>50</td>
+<td>NO</td>
+<td>-</td>
+<td>套餐名称</td>
+</tr>
+<tr>
+<td>package_code</td>
+<td>VARCHAR(20)</td>
+<td>NO</td>
+<td>-</td>
+<td>套餐编码</td>
+<td></td>
+</tr>
+<tr>
+<td>max_users</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>10</td>
+<td>最大用户数</td>
+</tr>
+<tr>
+<td>max_storage</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1073741824</td>
+<td>最大存储空间（字节）</td>
+</tr>
+<tr>
+<td>price</td>
+<td>DECIMAL</td>
+<td>10,2</td>
+<td>-</td>
+<td>NO</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>cycle_unit</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>计费周期：1-月，2-季，3-年</td>
+</tr>
+<tr>
+<td>features</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>功能特性（JSON格式）</td>
+</tr>
+<tr>
+<td>description</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>套餐描述</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态：0-禁用，1-正常</td>
+</tr>
+<tr>
+<td>sort_order</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+</tbody></table>
+<h4 id="3-7-3-租户配置表-sys-tenant-config"><a href="#3-7-3-租户配置表-sys-tenant-config" class="headerlink" title="3.7.3 租户配置表 (sys_tenant_config)"></a>3.7.3 租户配置表 (sys_tenant_config)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>邮长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>配置ID</td>
+</tr>
+<tr>
+<td>tenant_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>租户ID</td>
+</tr>
+<tr>
+<td>config_key</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>配置键</td>
+<td></td>
+</tr>
+<tr>
+<td>config_value</td>
+<td>TEXT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>配置值</td>
+</tr>
+<tr>
+<td>config_type</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>系统内置（0-否 1-是）</td>
+</tr>
+<tr>
+<td>is_encrypted</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否加密（0-否 1-是）</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+<td></td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+</tbody></table>
+<h4 id="3-7-4-字典类型表-sys-dict-type"><a href="#3-7-4-字典类型表-sys-dict-type" class="headerlink" title="3.7.4 字典类型表 (sys_dict_type)"></a>3.7.4 字典类型表 (sys_dict_type)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>字典主键</td>
+</tr>
+<tr>
+<td>dict_name</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>字典名称</td>
+<td></td>
+</tr>
+<tr>
+<td>dict_type</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>字典类型</td>
+<td></td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态（0正常 1停用）</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="3-7-5-字典数据表-sys-dict-data"><a href="#3-7-5-字典数据表-sys-dict-data" class="headerlink" title="3.7.5 字典数据表 (sys_dict_data)"></a>3.7.5 字典数据表 (sys_dict_data)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>数据编号</td>
+</tr>
+<tr>
+<td>dict_sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>字典排序</td>
+</tr>
+<tr>
+<td>dict_label</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>字典标签</td>
+<td></td>
+</tr>
+<tr>
+<td>dict_value</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>字典键值</td>
+<td></td>
+</tr>
+<tr>
+<td>dict_type</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>字典类型</td>
+<td></td>
+</tr>
+<tr>
+<td>css_class</td>
+<td>VARCHAR(100</td>
+<td>YES</td>
+<td>NULL</td>
+<td>表格回显样式</td>
+<td></td>
+</tr>
+<tr>
+<td>list_class</td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>表格列表样式</td>
+<td></td>
+</tr>
+<tr>
+<td>is_default</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>N</td>
+<td>是否默认（Y是 N否）</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态（0正常 1停用）</td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="3-7-6-参数表-sys-params"><a href="#3-7-6-参数表-sys-params" class="headerlink" title="3.7.6 参数表 (sys_params)"></a>3.7.6 参数表 (sys_params)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>参数ID</td>
+</tr>
+<tr>
+<td>param_name</td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>-</td>
+<td>参数名称</td>
+<td></td>
+</tr>
+<tr>
+<td>param_key</td>
+<td>VARCHAR(100) NO</td>
+<td>-</td>
+<td>参数键名</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>param_value</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>参数键值</td>
+<td></td>
+</tr>
+<tr>
+<td>param_type</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>系统内置（0-否 1-是）</td>
+</tr>
+<tr>
+<td>is_encrypted</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否加密（0-否 1-是）</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>排序</td>
+</tr>
+<tr>
+<td>status</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>状态（0正常 1停用）</td>
+</tr>
+<tr>
+<td>remark</td>
+<td>VARCHAR(500)</td>
+<td>YES</td>
+<td>NULL</td>
+<td>备注</td>
+<td></td>
+</tr>
+<tr>
+<td>create_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>创建人ID</td>
+</tr>
+<tr>
+<td>update_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>NO</td>
+<td>CURRENT_TIMESTAMP ON UPDATE</td>
+<td>更新时间</td>
+</tr>
+<tr>
+<td>updater</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>更新人ID</td>
+</tr>
+<tr>
+<td>delete_flag</td>
+<td>TINYINT</td>
+<td>-</td>
+<td>NO</td>
+<td>0</td>
+<td>是否删除：0-否，1-是</td>
+</tr>
+<tr>
+<td>delete_at</td>
+<td>DATETIME</td>
+<td>-</td>
+<td>YES</td>
+<td>NULL</td>
+<td>删除时间</td>
+</tr>
+<tr>
+<td>version</td>
+<td>INT</td>
+<td>-</td>
+<td>NO</td>
+<td>1</td>
+<td>乐观锁版本号</td>
+</tr>
+</tbody></table>
+<h3 id="3-8-关联表"><a href="#3-8-关联表" class="headerlink" title="3.8 关联表"></a>3.8 关联表</h3><h4 id="3-8-1-用户角色关联表-sys-user-role"><a href="#3-8-1-用户角色关联表-sys-user-role" class="headerlink" title="3.8.1 用户角色关联表 (sys_user_role)"></a>3.8.1 用户角色关联表 (sys_user_role)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>主键ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>角色ID</td>
+</tr>
+</tbody></table>
+<h4 id="3-8-2-角色菜单关联表-sys-role-menu"><a href="#3-8-2-角色菜单关联表-sys-role-menu" class="headerlink" title="3.8.2 角色菜单关联表 (sys_role_menu)"></a>3.8.2 角色菜单关联表 (sys_role_menu)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>主键ID</td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>角色ID</td>
+</tr>
+<tr>
+<td>menu_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>菜单ID</td>
+</tr>
+</tbody></table>
+<h4 id="3-8-3-角色部门关联表-sys-role-dept"><a href="#3-8-3-角色部门关联表-sys-role-dept" class="headerlink" title="3.8.3 角色部门关联表 (sys_role_dept)"></a>3.8.3 角色部门关联表 (sys_role_dept)</h4><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>长度</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>AUTO_INCREMENT</td>
+<td>主键ID</td>
+</tr>
+<tr>
+<td>role_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>角色ID</td>
+</tr>
+<tr>
+<td>dept_id</td>
+<td>BIGINT</td>
+<td>-</td>
+<td>NO</td>
+<td>-</td>
+<td>部门ID</td>
+</tr>
+</tbody></table>
+<h2 id="4-索引设计"><a href="#4-索引设计" class="headerlink" title="4. 索引设计"></a>4. 索引设计</h2><h3 id="4-1-主键索引"><a href="#4-1-主键索引" class="headerlink" title="4.1 主键索引"></a>4.1 主键索引</h3><p>所有表的 <code>id</code> 字段自动创建主键索引（PRIMARY KEY）。</p>
+<h3 id="4-2-唯一索引"><a href="#4-2-唯一索引" class="headerlink" title="4.2 唯一索引"></a>4.2 唯一索引</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>索引名</th>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_user</td>
+<td>uk_username</td>
+<td>username</td>
+<td>用户名唯一</td>
+</tr>
+<tr>
+<td>sys_user</td>
+<td>uk_email</td>
+<td>email</td>
+<td>邮箱唯一</td>
+</tr>
+<tr>
+<td>sys_user</td>
+<td>uk_phone</td>
+<td>phone</td>
+<td>手机号唯一</td>
+</tr>
+<tr>
+<td>sys_role</td>
+<td>uk_role_code</td>
+<td>role_code</td>
+<td>角色编码唯一</td>
+</tr>
+<tr>
+<td>sys_dept</td>
+<td>uk_dept_code</td>
+<td>dept_code</td>
+<td>部门编码唯一</td>
+</tr>
+<tr>
+<td>sys_post</td>
+<td>uk_post_code</td>
+<td>post_code</td>
+<td>岗位编码唯一</td>
+</tr>
+<tr>
+<td>sys_menu</td>
+<td>uk_menu_code</td>
+<td>menu_code</td>
+<td>菜单编码唯一</td>
+</tr>
+<tr>
+<td>sys_tenant</td>
+<td>uk_tenant_code</td>
+<td>tenant_code</td>
+<td>租户编码唯一</td>
+</tr>
+<tr>
+<td>sys_dict_type</td>
+<td>uk_dict_type</td>
+<td>dict_type</td>
+<td>字典类型唯一</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-普通索引"><a href="#4-3-普通索引" class="headerlink" title="4.3 普通索引"></a>4.3 普通索引</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>索引名</th>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_user</td>
+<td>idx_dept_id</td>
+<td>dept_id</td>
+<td>部门查询</td>
+</tr>
+<tr>
+<td>sys_user</td>
+<td>idx_post_id</td>
+<td>post_id</td>
+<td>岗位查询</td>
+</tr>
+<tr>
+<td>sys_user</td>
+<td>idx_status</td>
+<td>status</td>
+<td>状态筛选</td>
+</tr>
+<tr>
+<td>sys_user</td>
+<td>idx_tenant_id</td>
+<td>tenant_id</td>
+<td>租户隔离</td>
+</tr>
+<tr>
+<td>sys_role</td>
+<td>idx_status</td>
+<td>status</td>
+<td>状态筛选</td>
+</tr>
+<tr>
+<td>sys_role</td>
+<td>idx_data_scope</td>
+<td>data_scope</td>
+<td>数据权限查询</td>
+</tr>
+<tr>
+<td>sys_menu</td>
+<td>idx_parent_id</td>
+<td>parent_id</td>
+<td>父菜单查询</td>
+</tr>
+<tr>
+<td>sys_menu</td>
+<td>idx_menu_type</td>
+<td>menu_type</td>
+<td>菜单类型筛选</td>
+</tr>
+<tr>
+<td>sys_dept</td>
+<td>idx_parent_id</td>
+<td>parent_id</td>
+<td>父部门查询</td>
+</tr>
+<tr>
+<td>sys_dept</td>
+<td>idx_status</td>
+<td>status</td>
+<td>状态筛选</td>
+</tr>
+<tr>
+<td>sys_post</td>
+<td>idx_dept_id</td>
+<td>dept_id</td>
+<td>部门岗位查询</td>
+</tr>
+<tr>
+<td>sys_tenant</td>
+<td>idx_package_id</td>
+<td>package_id</td>
+<td>套餐查询</td>
+</tr>
+</tbody></table>
+<h3 id="4-4-复合索引"><a href="#4-4-复合索引" class="headerlink" title="4.4 复合索引"></a>4.4 复合索引</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>索引名</th>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_user_role</td>
+<td>idx_user_role</td>
+<td>user_id, role_id</td>
+<td>用户角色查询</td>
+</tr>
+<tr>
+<td>sys_role_menu</td>
+<td>idx_role_menu</td>
+<td>role_id, menu_id</td>
+<td>角色菜单查询</td>
+</tr>
+<tr>
+<td>sys_role_dept</td>
+<td>idx_role_dept</td>
+<td>role_id, dept_id</td>
+<td>角色部门查询</td>
+</tr>
+<tr>
+<td>sys_dict_data</td>
+<td>idx_dict_type_status</td>
+<td>dict_type, status</td>
+<td>字典数据查询</td>
+</tr>
+<tr>
+<td>sys_login_log</td>
+<td>idx_user_time</td>
+<td>user_id, login_time</td>
+<td>用户登录记录</td>
+</tr>
+<tr>
+<td>sys_operation_log</td>
+<td>idx_user_time</td>
+<td>user_id, operation_time</td>
+<td>用户操作记录</td>
+</tr>
+<tr>
+<td>sys_tenant_config</td>
+<td>idx_tenant_key</td>
+<td>tenant_id, config_key</td>
+<td>租户配置查询</td>
+</tr>
+</tbody></table>
+<h3 id="4-5-日志表索引"><a href="#4-5-日志表索引" class="headerlink" title="4.5 日志表索引"></a>4.5 日志表索引</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>索引名</th>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_login_log</td>
+<td>idx_login_time</td>
+<td>login_time</td>
+<td>按登录时间查询</td>
+</tr>
+<tr>
+<td>sys_login_log</td>
+<td>idx_username_time</td>
+<td>username, login_time</td>
+<td>用户登录历史</td>
+</tr>
+<tr>
+<td>sys_operation_log</td>
+<td>idx_operation_time</td>
+<td>operation_time</td>
+<td>按操作时间查询</td>
+</tr>
+<tr>
+<td>sys_operation_log</td>
+<td>idx_business_type</td>
+<td>business_type</td>
+<td>按业务类型查询</td>
+</tr>
+<tr>
+<td>sys_error_log</td>
+<td>idx_create_time</td>
+<td>create_time</td>
+<td>按创建时间查询</td>
+</tr>
+<tr>
+<td>sys_error_log</td>
+<td>idx_status</td>
+<td>status</td>
+<td>按处理状态查询</td>
+</tr>
+</tbody></table>
+<h3 id="4-6-软删除索引"><a href="#4-6-软删除索引" class="headerlink" title="4.6 软删除索引"></a>4.6 软删除索引</h3><table>
+<thead>
+<tr>
+<th>表名</th>
+<th>索引名</th>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_user</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+<tr>
+<td>sys_role</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+<tr>
+<td>sys_menu</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+<tr>
+<td>sys_dept</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+<tr>
+<td>sys_post</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+<tr>
+<td>sys_tenant</td>
+<td>idx_delete_flag</td>
+<td>delete_flag</td>
+<td>软删除筛选</td>
+</tr>
+</tbody></table>
+<h2 id="5-安全设计"><a href="#5-安全设计" class="headerlink" title="5. 安全设计"></a>5. 安全设计</h2><h3 id="5-1-密码安全"><a href="#5-1-密码安全" class="headerlink" title="5.1 密码安全"></a>5.1 密码安全</h3><ul>
+<li>用户密码必须经过 <strong>bcrypt</strong> 或 <strong>PBKDF2</strong> 算法加密存储</li>
+<li>密码字段长度至少 255 字符，以支持加密后的字符串</li>
+<li>强制密码策略：最少 8 位，包含大小写字母、数字和特殊字符</li>
+</ul>
+<h3 id="5-2-数据脱敏"><a href="#5-2-数据脱敏" class="headerlink" title="5.2 数据脱敏"></a>5.2 数据脱敏</h3><ul>
+<li>手机号：显示前 3 位和后 4 位，中间用 * 替代（如：138****1234）</li>
+<li>邮箱：显示前 3 位和 @ 以后的内容（如：zha***@example.com）</li>
+<li>身份证号：显示前 6 位和后 4 位</li>
+<li>银行卡号：显示前 6 位和后 4 位</li>
+</ul>
+<h3 id="5-3-数据权限控制"><a href="#5-3-数据权限控制" class="headerlink" title="5.3 数据权限控制"></a>5.3 数据权限控制</h3><ul>
+<li>租户隔离：所有查询必须带 <code>tenant_id</code> 条件</li>
+<li>部门数据权限：根据角色的 <code>data_scope</code> 控制数据可见范围</li>
+<li>行级权限：重要业务表可扩展 <code>dept_id</code> 字段实现行级权限</li>
+</ul>
+<h3 id="5-4-审计日志"><a href="#5-4-审计日志" class="headerlink" title="5.4 审计日志"></a>5.4 审计日志</h3><ul>
+<li>关键操作必须记录操作日志（增删改）</li>
+<li>登录行为必须记录登录日志</li>
+<li>系统异常必须记录错误日志</li>
+<li>日志包含操作人、操作时间、操作内容、IP 地址等信息</li>
+</ul>
+<h2 id="6-性能优化建议"><a href="#6-性能优化建议" class="headerlink" title="6. 性能优化建议"></a>6. 性能优化建议</h2><h3 id="6-1-分区策略"><a href="#6-1-分区策略" class="headerlink" title="6.1 分区策略"></a>6.1 分区策略</h3><p>对数据量大的表建议按时间分区：</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>分区策略</th>
+<th>分区字段</th>
+<th>分区间隔</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sys_login_log</td>
+<td>RANGE</td>
+<td>login_time</td>
+<td>按月分区</td>
+</tr>
+<tr>
+<td>sys_operation_log</td>
+<td>RANGE</td>
+<td>operation_time</td>
+<td>按月分区</td>
+</tr>
+<tr>
+<td>sys_error_log</td>
+<td>RANGE</td>
+<td>create_time</td>
+<td>按月分区</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-查询优化"><a href="#6-2-查询优化" class="headerlink" title="6.2 查询优化"></a>6.2 查询优化</h3><ul>
+<li>使用覆盖索引减少回表查询</li>
+<li>避免 SELECT *，只查询需要的字段</li>
+<li>合理使用 JOIN，避免大表关联</li>
+<li>分页查询使用索引优化</li>
+</ul>
+<h3 id="6-3-读写分离"><a href="#6-3-读写分离" class="headerlink" title="6.3 读写分离"></a>6.3 读写分离</h3><ul>
+<li>日志类表可以考虑读写分离</li>
+<li>报表查询可以考虑只读从库</li>
+<li>主库负责写操作，从库负责读操作</li>
+</ul>
+<h3 id="6-4-缓存策略"><a href="#6-4-缓存策略" class="headerlink" title="6.4 缓存策略"></a>6.4 缓存策略</h3><ul>
+<li>用户角色权限信息缓存（Redis）</li>
+<li>字典数据缓存</li>
+<li>菜单树结构缓存</li>
+<li>部门树结构缓存</li>
+</ul>
+<h2 id="7-数据字典"><a href="#7-数据字典" class="headerlink" title="7. 数据字典"></a>7. 数据字典</h2><h3 id="7-1-通用状态值"><a href="#7-1-通用状态值" class="headerlink" title="7.1 通用状态值"></a>7.1 通用状态值</h3><ul>
+<li><strong>status</strong>: 0-禁用&#x2F;失败，1-正常&#x2F;成功</li>
+<li><strong>delete_flag</strong>: 0-未删除，1-已删除</li>
+<li><strong>is_default</strong>: 0-否，1-是</li>
+<li><strong>is_system</strong>: 0-否，1-是</li>
+</ul>
+<h3 id="7-2-用户性别-sex"><a href="#7-2-用户性别-sex" class="headerlink" title="7.2 用户性别 (sex)"></a>7.2 用户性别 (sex)</h3><ul>
+<li>0: 未知</li>
+<li>1: 男</li>
+<li>2: 女</li>
+</ul>
+<h3 id="7-3-菜单类型-menu-type"><a href="#7-3-菜单类型-menu-type" class="headerlink" title="7.3 菜单类型 (menu_type)"></a>7.3 菜单类型 (menu_type)</h3><ul>
+<li>1: 目录</li>
+<li>2: 菜单</li>
+<li>3: 按钮</li>
+</ul>
+<h3 id="7-4-数据权限范围-data-scope"><a href="#7-4-数据权限范围-data-scope" class="headerlink" title="7.4 数据权限范围 (data_scope)"></a>7.4 数据权限范围 (data_scope)</h3><ul>
+<li>1: 全部数据权限</li>
+<li>2: 本部门数据权限</li>
+<li>3: 本部门及下级部门数据权限</li>
+<li>4: 自定义数据权限</li>
+</ul>
+<h3 id="7-5-业务类型-business-type"><a href="#7-5-业务类型-business-type" class="headerlink" title="7.5 业务类型 (business_type)"></a>7.5 业务类型 (business_type)</h3><ul>
+<li>0: 其他</li>
+<li>1: 新增</li>
+<li>2: 修改</li>
+<li>3: 删除</li>
+<li>4: 授权</li>
+<li>5: 导出</li>
+<li>6: 导入</li>
+</ul>
+<h3 id="7-6-操作类别-operator-type"><a href="#7-6-操作类别-operator-type" class="headerlink" title="7.6 操作类别 (operator_type)"></a>7.6 操作类别 (operator_type)</h3><ul>
+<li>0: 其它</li>
+<li>1: 后台用户</li>
+<li>2: 手机端用户</li>
+</ul>
+<h3 id="7-7-租户套餐周期-cycle-unit"><a href="#7-7-租户套餐周期-cycle-unit" class="headerlink" title="7.7 租户套餐周期 (cycle_unit)"></a>7.7 租户套餐周期 (cycle_unit)</h3><ul>
+<li>1: 月</li>
+<li>2: 季</li>
+<li>3: 年</li>
+</ul>
+<h2 id="8-相关链接"><a href="#8-相关链接" class="headerlink" title="8. 相关链接"></a>8. 相关链接</h2><ul>
+<li>[[企业级权限管理系统数据库设计-MySQL版本]] - MySQL版本</li>
+<li>[[企业级权限管理系统数据库设计-PostgreSQL版本]] - PostgreSQL版本</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-chain-item">数据库</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="print-no-link">#数据库</a>
+      
+        <a href="/tags/RBAC/" class="print-no-link">#RBAC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>企业级权限管理系统数据库设计</div>
+      <div>https://jhyjhy.cn/posts/数据库/企业级权限管理系统数据库设计/13770/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hongyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1-PostgreSQL%E7%89%88%E6%9C%AC/61171/" title="企业级权限管理系统数据库设计-PostgreSQL版本">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">企业级权限管理系统数据库设计-PostgreSQL版本</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/AI/Cursor%E8%A7%84%E5%88%99/5829/" title="Cursor规则">
+                        <span class="hidden-mobile">Cursor规则</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://jhyjhy.cn/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/';
+          this.page.identifier = '/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2024115712号
+    </a>
+  </span>
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
