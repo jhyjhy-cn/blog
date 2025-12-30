@@ -19,18 +19,20 @@
   <meta name="author" content="Hongyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="以下是一份「可直接放进 .cursor&#x2F;rules&#x2F;000-always.mdc」的最前面、最优先、全局生效的 Cursor Rule 模板（2025-05 之后新版 MDC 格式）。它把「系统元指令 → 项目架构 → 代码风格 → 安全&#x2F;性能红线」一次性锁死，Agent 每次对话都会先读它，再动手写代码。把 &#123;&#123;project_name&#125;&#125; 和">
+    <meta name="description" content="Dify本地Docker部署拉取git代码: 1git clone http:&#x2F;&#x2F;github.com&#x2F;langgenius&#x2F;dify.git  安装项目路径下，搜索docker-compose.yaml，右键打开所在文件夹  应该在 dify&#x2F;docker&#x2F; 目录下  .env.example 复制并修改成.env 文件。找到REDIS_SENTINEL_SOCKET_TIM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cursor规则">
-<meta property="og:url" content="https://jhyjhy.cn/posts/AI/Cursor%E8%A7%84%E5%88%99/5829/index.html">
+<meta property="og:title" content="Dify本地Docker部署">
+<meta property="og:url" content="https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/index.html">
 <meta property="og:site_name" content="Hongyu&#39;s Blog">
-<meta property="og:description" content="以下是一份「可直接放进 .cursor&#x2F;rules&#x2F;000-always.mdc」的最前面、最优先、全局生效的 Cursor Rule 模板（2025-05 之后新版 MDC 格式）。它把「系统元指令 → 项目架构 → 代码风格 → 安全&#x2F;性能红线」一次性锁死，Agent 每次对话都会先读它，再动手写代码。把 &#123;&#123;project_name&#125;&#125; 和">
+<meta property="og:description" content="Dify本地Docker部署拉取git代码: 1git clone http:&#x2F;&#x2F;github.com&#x2F;langgenius&#x2F;dify.git  安装项目路径下，搜索docker-compose.yaml，右键打开所在文件夹  应该在 dify&#x2F;docker&#x2F; 目录下  .env.example 复制并修改成.env 文件。找到REDIS_SENTINEL_SOCKET_TIM">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
-<meta property="article:published_time" content="2025-11-27T16:22:35.000Z">
-<meta property="article:modified_time" content="2025-11-27T17:39:54.000Z">
+<meta property="article:published_time" content="2025-12-30T06:22:46.000Z">
+<meta property="article:modified_time" content="2025-12-30T06:27:02.384Z">
 <meta property="article:author" content="Hongyu">
-<meta property="article:tag" content="Cursor">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Dify">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
   
@@ -38,7 +40,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Cursor规则 - Hongyu&#39;s Blog</title>
+  <title>Dify本地Docker部署 - Hongyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Cursor规则"></span>
+            <span id="subtitle" data-typed-text="Dify本地Docker部署"></span>
           
         </div>
 
@@ -215,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-28 00:22" pubdate>
-          2025年11月28日 凌晨
+        <time datetime="2025-12-30 14:22" pubdate>
+          2025年12月30日 下午
         </time>
       </span>
     
@@ -228,7 +230,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          817 字
+          91 字
         
       </span>
     
@@ -240,7 +242,7 @@
         
         
           <!-- compatible with older versions-->
-          7 分钟
+          1 分钟
         
       </span>
     
@@ -286,17 +288,27 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Cursor规则</h1>
+            <h1 id="seo-header">Dify本地Docker部署</h1>
             
             
               <div class="markdown-body">
                 
-                <p>以下是一份「可直接放进 <code>.cursor/rules/000-always.mdc</code>」的最前面、最优先、全局生效的 Cursor Rule 模板（2025-05 之后新版 MDC 格式）。<br>它把「系统元指令 → 项目架构 → 代码风格 → 安全&#x2F;性能红线」一次性锁死，Agent 每次对话都会先读它，再动手写代码。<br>把 <code>&#123;&#123;project_name&#125;&#125;</code> 和 <code>&#123;&#123;tech_stack&#125;&#125;</code> 替换成自己的即可开箱即用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs mdc">---<br>description: &quot;000-ALWAYS：最优先全局规则，任何对话都强制注入&quot;<br>globs: [&quot;**/*&quot;]<br>type: &quot;always&quot;<br>---<br><br># 000-ALWAYS · 最前面生效的 Cursor Rule<br><br>## 0 语言与平台基线<br>- **必须全程用简体中文回答**（代码本身仍用英文命名）。  <br>- 当前运行环境：&#123;&#123;os_name&#125;&#125;（&#123;&#123;arch&#125;&#125;），默认 Shell 用 `&#123;&#123;shell_cmd&#125;&#125;`，包管理用 `&#123;&#123;pkg_cmd&#125;&#125;`，Node 版本 ≥&#123;&#123;node_ver&#125;&#125;，Python 版本 ≥&#123;&#123;py_ver&#125;&#125;。  <br>- 任何安装/启动/调试命令都先检测环境，再给出「一键复制」的完整指令块。<br><br>## 1 身份与行为<br>- 你是 **&#123;&#123;project_name&#125;&#125;** 的资深架构师，精通 &#123;&#123;tech_stack&#125;&#125;。  <br>- 采用“结对编程”模式：先思考→再摘要→再动手；任何改动必须可回滚。  <br>- 禁止直接输出代码块给用户；必须用 `edit_file`/`create_file` 工具提交变更，以便审查与 diff。<br><br>## 2 上下文纪律<br>- 修改文件前务必 `read_file` 对应内容；超过 50 行的改动须分片提交，每片仅改一个目的。  <br>- 若任务涉及多文件，先打印 **MVP 执行清单** 待用户确认后再进行。<br><br>## 3 代码可运行性<br>- 生成代码必须 **立即可运行**：依赖完整、类型安全、环境变量有默认值、README 同步更新。  <br>- 新建项目时自动创建依赖锁定文件（package-lock/poetry.lock/requirements.txt）与一键启动脚本。<br><br>## 4 风格与规范<br>- 严格遵循官方风格指南；命名用英文，禁止拼音；函数 ≤30 行，文件 ≤300 行，超出即拆分。  <br>- **每个导出函数**都必须有「函数级注释」：一句话描述职责、参数含义、返回值、可能的异常；复杂算法加「行内注释」。  <br>- 优先使用标准库与现有依赖；新增第三方包需注明理由并锁定版本。<br><br>## 5 安全与性能红线<br>- 默认防注入、防 XSS、CSRF、SQLi；所有用户输入先验后验。  <br>- 前端 bundle 体积 +20 % 以上须提示；后端 API 响应 &gt;200 ms 须给优化方案。  <br>- 秘钥、token 绝不硬编码，一律走环境变量；日志脱敏，不打印完整手机号/邮箱。<br><br>## 6 失败策略<br>- 同一任务连续 3 次仍报错即停止，向用户报告阻塞原因并给出替代方案。<br><br>&gt; 本规则全局始终注入，任何后续规则不得与之冲突；如有特殊场景需要覆盖，需在摘要中说明理由并征得用户确认。<br></code></pre></td></tr></table></figure>
+                <h2 id="Dify本地Docker部署"><a href="#Dify本地Docker部署" class="headerlink" title="Dify本地Docker部署"></a>Dify本地Docker部署</h2><p>拉取git代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> http://github.com/langgenius/dify.git<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">your-repo/<br>└── .cursor/<br>    └── rules/<br>        └── 000-always.mdc   // 文件名以 000- 开头确保最前加载<br></code></pre></td></tr></table></figure>
+<p>安装项目路径下，搜索<code>docker-compose.yaml</code>，右键打开所在文件夹</p>
+<ul>
+<li>应该在 dify&#x2F;docker&#x2F; 目录下</li>
+</ul>
+<p><code>.env.example</code> 复制并修改成<code>.env</code> 文件。<br>找到<code>REDIS_SENTINEL_SOCKET_TIMEOUT</code>和<code>CELERY_SENTINEL_SOCKET_TIMEOUT</code>修改为10即可。</p>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br></code></pre></td></tr></table></figure>
 
-<p>这样配置后，无论 Agent 模式还是普通对话，Cursor 都会先把这份“最前面的 AI Coding 提示词”读进上下文，再开始写代码，从根本上减少“乱改、风格漂移、安全漏洞”等常见问题。</p>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose down<br></code></pre></td></tr></table></figure>
+
+<h2 id="更新Dify"><a href="#更新Dify" class="headerlink" title="更新Dify"></a>更新Dify</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> dify/docker<br>docker compose down<br>git pull origin main<br>docker compose pull<br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="Dify配置"><a href="#Dify配置" class="headerlink" title="Dify配置"></a>Dify配置</h2><p>打开浏览器，本地访问：127.0.0.1</p>
 
                 
               </div>
@@ -330,7 +342,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Cursor/" class="print-no-link">#Cursor</a>
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/Docker/" class="print-no-link">#Docker</a>
+      
+        <a href="/tags/Dify/" class="print-no-link">#Dify</a>
       
     </div>
   
@@ -342,8 +358,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Cursor规则</div>
-      <div>https://jhyjhy.cn/posts/AI/Cursor规则/5829/</div>
+      <div>Dify本地Docker部署</div>
+      <div>https://jhyjhy.cn/posts/AI/Dify本地Docker部署/35265/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +371,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年11月28日</div>
+          <div>2025年12月30日</div>
         </div>
       
       
@@ -387,18 +403,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/13770/" title="企业级权限管理系统数据库设计">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">企业级权限管理系统数据库设计</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/%E5%89%8D%E7%AB%AF/Monorepo%E5%B7%A5%E7%A8%8B%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/41960/" title="Monorepo">
-                        <span class="hidden-mobile">Monorepo</span>
+                      <a href="/posts/AI/n8n%E6%B1%89%E5%8C%96%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/45178/" title="n8n汉化本地Docker部署">
+                        <span class="hidden-mobile">n8n汉化本地Docker部署</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -418,8 +428,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://jhyjhy.cn/posts/AI/Cursor%E8%A7%84%E5%88%99/5829/';
-          this.page.identifier = '/posts/AI/Cursor%E8%A7%84%E5%88%99/5829/';
+          this.page.url = 'https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/';
+          this.page.identifier = '/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
