@@ -2,7 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/</loc>
+    <loc>https://jhyjhy.cn/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/</loc>
+    
+    <lastmod>2026-01-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jhyjhy.cn/posts/AI/n8n%E6%B1%89%E5%8C%96%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/45178/</loc>
     
     <lastmod>2025-12-30</lastmod>
     
@@ -11,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://jhyjhy.cn/posts/AI/n8n%E6%B1%89%E5%8C%96%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/45178/</loc>
+    <loc>https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/</loc>
     
     <lastmod>2025-12-30</lastmod>
     
@@ -157,7 +166,7 @@
 
   <url>
     <loc>https://jhyjhy.cn/</loc>
-    <lastmod>2025-12-30</lastmod>
+    <lastmod>2026-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>

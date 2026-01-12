@@ -19,20 +19,21 @@
   <meta name="author" content="Hongyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Dify本地Docker部署拉取git代码: 1git clone http:&#x2F;&#x2F;github.com&#x2F;langgenius&#x2F;dify.git  安装项目路径下，搜索docker-compose.yaml，右键打开所在文件夹  应该在 dify&#x2F;docker&#x2F; 目录下  .env.example 复制并修改成.env 文件。找到REDIS_SENTINEL_SOCKET_TIM">
+    <meta name="description" content="前置准备：安装 Nerd FontOh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。  前往 Nerd Fonts 官网 下载字体 推荐选择 JetBrains Mono（按 Ctrl+F 搜索 JetBrains 即可找到） 下载后解压，双击安装 JetBrainsMonoNerdFont-Regular.ttf   💡 提示：安装完成后，需要在 Windows">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dify本地Docker部署">
-<meta property="og:url" content="https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/index.html">
+<meta property="og:title" content="Windows使用oh-my-posh美化PowerShell和Cmd">
+<meta property="og:url" content="https://jhyjhy.cn/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/index.html">
 <meta property="og:site_name" content="Hongyu&#39;s Blog">
-<meta property="og:description" content="Dify本地Docker部署拉取git代码: 1git clone http:&#x2F;&#x2F;github.com&#x2F;langgenius&#x2F;dify.git  安装项目路径下，搜索docker-compose.yaml，右键打开所在文件夹  应该在 dify&#x2F;docker&#x2F; 目录下  .env.example 复制并修改成.env 文件。找到REDIS_SENTINEL_SOCKET_TIM">
+<meta property="og:description" content="前置准备：安装 Nerd FontOh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。  前往 Nerd Fonts 官网 下载字体 推荐选择 JetBrains Mono（按 Ctrl+F 搜索 JetBrains 即可找到） 下载后解压，双击安装 JetBrainsMonoNerdFont-Regular.ttf   💡 提示：安装完成后，需要在 Windows">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
-<meta property="article:published_time" content="2025-12-30T06:22:46.000Z">
-<meta property="article:modified_time" content="2025-12-30T06:36:23.794Z">
+<meta property="article:published_time" content="2026-01-12T08:30:36.000Z">
+<meta property="article:modified_time" content="2026-01-12T08:51:28.322Z">
 <meta property="article:author" content="Hongyu">
-<meta property="article:tag" content="AI">
-<meta property="article:tag" content="Docker">
-<meta property="article:tag" content="Dify">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="PowerShell">
+<meta property="article:tag" content="Cmd">
+<meta property="article:tag" content="oh-my-posh">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
   
@@ -40,7 +41,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Dify本地Docker部署 - Hongyu&#39;s Blog</title>
+  <title>Windows使用oh-my-posh美化PowerShell和Cmd - Hongyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +207,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Dify本地Docker部署"></span>
+            <span id="subtitle" data-typed-text="Windows使用oh-my-posh美化PowerShell和Cmd"></span>
           
         </div>
 
@@ -217,8 +218,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-12-30 14:22" pubdate>
-          2025年12月30日 下午
+        <time datetime="2026-01-12 16:30" pubdate>
+          2026年1月12日 下午
         </time>
       </span>
     
@@ -230,7 +231,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          91 字
+          622 字
         
       </span>
     
@@ -242,7 +243,7 @@
         
         
           <!-- compatible with older versions-->
-          1 分钟
+          6 分钟
         
       </span>
     
@@ -288,27 +289,70 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Dify本地Docker部署</h1>
+            <h1 id="seo-header">Windows使用oh-my-posh美化PowerShell和Cmd</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Dify本地Docker部署"><a href="#Dify本地Docker部署" class="headerlink" title="Dify本地Docker部署"></a>Dify本地Docker部署</h2><p>拉取git代码:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> http://github.com/langgenius/dify.git<br></code></pre></td></tr></table></figure>
+                <h2 id="前置准备：安装-Nerd-Font"><a href="#前置准备：安装-Nerd-Font" class="headerlink" title="前置准备：安装 Nerd Font"></a>前置准备：安装 Nerd Font</h2><p>Oh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。</p>
+<ol>
+<li>前往 <a target="_blank" rel="noopener" href="https://www.nerdfonts.com/font-downloads">Nerd Fonts 官网</a> 下载字体</li>
+<li>推荐选择 <strong>JetBrains Mono</strong>（按 <code>Ctrl+F</code> 搜索 <code>JetBrains</code> 即可找到）</li>
+<li>下载后解压，双击安装 <code>JetBrainsMonoNerdFont-Regular.ttf</code></li>
+</ol>
+<blockquote>
+<p>💡 <strong>提示</strong>：安装完成后，需要在 Windows Terminal 的设置中将字体更改为刚安装的 Nerd Font，否则图标会显示为乱码。</p>
+</blockquote>
+<h2 id="美化-PowerShell"><a href="#美化-PowerShell" class="headerlink" title="美化 PowerShell"></a>美化 PowerShell</h2><h3 id="第一步：安装-Oh-My-Posh"><a href="#第一步：安装-Oh-My-Posh" class="headerlink" title="第一步：安装 Oh My Posh"></a>第一步：安装 Oh My Posh</h3><p><strong>方式一：使用 winget 命令安装（推荐）</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">winget install JanDeDobbeleer.OhMyPosh<br></code></pre></td></tr></table></figure>
 
-<p>安装项目路径下，搜索<code>docker-compose.yaml</code>，右键打开所在文件夹</p>
+<p><strong>方式二：手动安装</strong></p>
 <ul>
-<li>应该在 dify&#x2F;docker&#x2F; 目录下</li>
+<li>前往 <a target="_blank" rel="noopener" href="https://github.com/JanDeDobbeleer/oh-my-posh/releases">GitHub Releases</a> 下载最新版本的 <code>install-x64.msi</code></li>
+<li>双击运行安装程序</li>
 </ul>
-<p><code>.env.example</code> 复制并修改成<code>.env</code> 文件。<br>找到<code>REDIS_SENTINEL_SOCKET_TIMEOUT</code>和<code>CELERY_SENTINEL_SOCKET_TIMEOUT</code>修改为10即可。</p>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br></code></pre></td></tr></table></figure>
+<h3 id="第二步：配置-PowerShell"><a href="#第二步：配置-PowerShell" class="headerlink" title="第二步：配置 PowerShell"></a>第二步：配置 PowerShell</h3><ol>
+<li>查看 PowerShell 配置文件路径：</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$PROFILE</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose down<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用 VS Code 打开配置文件（如果文件不存在，创建后会自动打开）：</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">code <span class="hljs-variable">$PROFILE</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="更新Dify"><a href="#更新Dify" class="headerlink" title="更新Dify"></a>更新Dify</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> dify/docker<br>docker compose down<br>git pull origin main<br>docker compose pull<br>docker compose up -d<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>在配置文件中添加以下内容：</li>
+</ol>
+<p><strong>使用默认主题：</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">oh</span><span class="hljs-literal">-my-posh</span> init pwsh <span class="hljs-literal">--config</span> <span class="hljs-string">&quot;<span class="hljs-variable">$env:POSH_THEMES_PATH</span>\paradox.omp.json&quot;</span> | <span class="hljs-built_in">Invoke-Expression</span><br></code></pre></td></tr></table></figure>
 
+<p><strong>使用自定义主题（需要先下载主题文件）：</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">oh</span><span class="hljs-literal">-my-posh</span> init pwsh <span class="hljs-literal">--config</span> <span class="hljs-string">&quot;C:\oh-my-posh\themes\M365Princess.omp.json&quot;</span> | <span class="hljs-built_in">Invoke-Expression</span><br><span class="hljs-built_in">Import-Module</span> <span class="hljs-literal">-Name</span> Terminal<span class="hljs-literal">-Icons</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="Dify配置"><a href="#Dify配置" class="headerlink" title="Dify配置"></a>Dify配置</h2><p>打开浏览器，本地访问：127.0.0.1</p>
+<blockquote>
+<p>⚠️ <strong>注意</strong>：<code>$env:POSH_THEMES_PATH</code> 是 Oh My Posh 安装后的内置主题路径。如需使用自定义主题，需先从 <a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/themes">官方主题库</a> 下载 <code>.omp.json</code> 文件到指定目录。</p>
+</blockquote>
+<h3 id="第三步：设置执行策略"><a href="#第三步：设置执行策略" class="headerlink" title="第三步：设置执行策略"></a>第三步：设置执行策略</h3><p>如果打开新的 PowerShell 窗口时出现脚本错误，说明执行策略受到限制。需要以<strong>管理员身份</strong>运行 PowerShell，执行以下命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Set-ExecutionPolicy</span> <span class="hljs-literal">-ExecutionPolicy</span> Unrestricted<br></code></pre></td></tr></table></figure>
+
+<h3 id="第四步：安装-Terminal-Icons（可选）"><a href="#第四步：安装-Terminal-Icons（可选）" class="headerlink" title="第四步：安装 Terminal-Icons（可选）"></a>第四步：安装 Terminal-Icons（可选）</h3><p>Terminal-Icons 可以为文件和文件夹添加彩色图标，增强视觉效果。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Install-Module</span> <span class="hljs-literal">-Name</span> Terminal<span class="hljs-literal">-Icons</span> <span class="hljs-literal">-Repository</span> PSGallery<br></code></pre></td></tr></table></figure>
+
+<h3 id="验证效果"><a href="#验证效果" class="headerlink" title="验证效果"></a>验证效果</h3><p>重新打开 PowerShell 窗口，如果配置成功，你会看到带有图标和颜色的新命令提示符。</p>
+<h2 id="美化-Cmd"><a href="#美化-Cmd" class="headerlink" title="美化 Cmd"></a>美化 Cmd</h2><h3 id="第一步：安装-Clink"><a href="#第一步：安装-Clink" class="headerlink" title="第一步：安装 Clink"></a>第一步：安装 Clink</h3><p>Clink 是一个增强 Cmd 的工具，可以为 Cmd 添加类似 PowerShell 的自动补全等功能。</p>
+<ul>
+<li>前往 <a target="_blank" rel="noopener" href="https://github.com/chrisant996/clink/releases">Clink Releases</a> 下载最新版安装包</li>
+<li>双击 <code>clink.*_setup.exe</code> 完成安装</li>
+</ul>
+<h3 id="第二步：配置-Oh-My-Posh"><a href="#第二步：配置-Oh-My-Posh" class="headerlink" title="第二步：配置 Oh My Posh"></a>第二步：配置 Oh My Posh</h3><ol>
+<li>在 <code>%LOCALAPPDATA%\clink</code> 目录下新建文件 <code>oh-my-posh.lua</code></li>
+<li>写入以下内容：</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- oh-my-posh.lua</span><br><span class="hljs-keyword">local</span> handle = <span class="hljs-built_in">io</span>.<span class="hljs-built_in">popen</span>(<span class="hljs-string">&#x27;oh-my-posh init cmd --config &quot;C:\\oh-my-posh\\themes\\M365Princess.omp.json&quot;&#x27;</span>)<br><span class="hljs-keyword">if</span> handle <span class="hljs-keyword">then</span><br>    <span class="hljs-keyword">local</span> code = handle:<span class="hljs-built_in">read</span>(<span class="hljs-string">&#x27;*a&#x27;</span>):<span class="hljs-built_in">gsub</span>(<span class="hljs-string">&#x27;\r&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)   <span class="hljs-comment">-- 去掉 \r</span><br>    handle:<span class="hljs-built_in">close</span>()<br>    <span class="hljs-built_in">load</span>(code)()                                    <span class="hljs-comment">-- 安全加载</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="验证效果-1"><a href="#验证效果-1" class="headerlink" title="验证效果"></a>验证效果</h3><p>重新打开 Cmd 窗口，即可看到美化后的命令提示符。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上配置，你的 PowerShell 和 Cmd 现在都拥有了一个美观且信息丰富的命令提示符。如果想要更换主题，只需修改配置文件中的 <code>.omp.json</code> 路径即可。</p>
 
                 
               </div>
@@ -327,7 +371,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/AI/" class="category-chain-item">AI</a>
+  <a href="/categories/oh-my-posh/" class="category-chain-item">oh-my-posh</a>
   
   
 
@@ -342,11 +386,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/AI/" class="print-no-link">#AI</a>
+        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
       
-        <a href="/tags/Docker/" class="print-no-link">#Docker</a>
+        <a href="/tags/PowerShell/" class="print-no-link">#PowerShell</a>
       
-        <a href="/tags/Dify/" class="print-no-link">#Dify</a>
+        <a href="/tags/Cmd/" class="print-no-link">#Cmd</a>
+      
+        <a href="/tags/oh-my-posh/" class="print-no-link">#oh-my-posh</a>
       
     </div>
   
@@ -358,8 +404,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Dify本地Docker部署</div>
-      <div>https://jhyjhy.cn/posts/AI/Dify本地Docker部署/35265/</div>
+      <div>Windows使用oh-my-posh美化PowerShell和Cmd</div>
+      <div>https://jhyjhy.cn/posts/Windows/Windows使用oh-my-posh美化PowerShell和Cmd/46872/</div>
     </div>
     <div class="license-meta">
       
@@ -371,7 +417,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年12月30日</div>
+          <div>2026年1月12日</div>
         </div>
       
       
@@ -403,18 +449,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/" title="Windows使用oh-my-posh美化PowerShell和Cmd">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Windows使用oh-my-posh美化PowerShell和Cmd</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/AI/n8n%E6%B1%89%E5%8C%96%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/45178/" title="n8n汉化本地Docker部署">
-                        <span class="hidden-mobile">n8n汉化本地Docker部署</span>
+                      <a href="/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/" title="Dify本地Docker部署">
+                        <span class="hidden-mobile">Dify本地Docker部署</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -434,8 +474,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://jhyjhy.cn/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/';
-          this.page.identifier = '/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/';
+          this.page.url = 'https://jhyjhy.cn/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/';
+          this.page.identifier = '/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
