@@ -19,21 +19,19 @@
   <meta name="author" content="Hongyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前置准备：安装 Nerd FontOh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。  前往 Nerd Fonts 官网 下载字体 推荐选择 JetBrains Mono（按 Ctrl+F 搜索 JetBrains 即可找到） 下载后解压，双击安装 JetBrainsMonoNerdFont-Regular.ttf   💡 提示：安装完成后，需要在 Windows">
+    <meta name="description" content="简介Claude Code 是 Anthropic 官方推出的 AI 命令行工具，能够直接在终端中进行代码编写、调试和项目管理。本文整理了常用的命令行参数，帮助你更高效地使用这个工具。  基础操作安装1npm install -g @anthropic-ai&#x2F;claude-code  查看版本1claude --version  更新到最新版本1claude update  查看帮助信息1clau">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows使用oh-my-posh美化PowerShell和Cmd">
-<meta property="og:url" content="https://jhyjhy.cn/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/index.html">
+<meta property="og:title" content="ClaudeCode 命令行参数完全指南">
+<meta property="og:url" content="https://jhyjhy.cn/posts/AI/ClaudeCode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/53406/index.html">
 <meta property="og:site_name" content="Hongyu&#39;s Blog">
-<meta property="og:description" content="前置准备：安装 Nerd FontOh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。  前往 Nerd Fonts 官网 下载字体 推荐选择 JetBrains Mono（按 Ctrl+F 搜索 JetBrains 即可找到） 下载后解压，双击安装 JetBrainsMonoNerdFont-Regular.ttf   💡 提示：安装完成后，需要在 Windows">
+<meta property="og:description" content="简介Claude Code 是 Anthropic 官方推出的 AI 命令行工具，能够直接在终端中进行代码编写、调试和项目管理。本文整理了常用的命令行参数，帮助你更高效地使用这个工具。  基础操作安装1npm install -g @anthropic-ai&#x2F;claude-code  查看版本1claude --version  更新到最新版本1claude update  查看帮助信息1clau">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
-<meta property="article:published_time" content="2026-01-12T08:30:36.000Z">
-<meta property="article:modified_time" content="2026-01-12T08:53:49.634Z">
+<meta property="article:published_time" content="2026-01-13T13:34:29.000Z">
+<meta property="article:modified_time" content="2026-01-14T03:13:44.494Z">
 <meta property="article:author" content="Hongyu">
-<meta property="article:tag" content="Windows">
-<meta property="article:tag" content="PowerShell">
-<meta property="article:tag" content="Cmd">
-<meta property="article:tag" content="oh-my-posh">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="ClaudeCode">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
   
@@ -41,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Windows使用oh-my-posh美化PowerShell和Cmd - Hongyu&#39;s Blog</title>
+  <title>ClaudeCode 命令行参数完全指南 - Hongyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -207,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Windows使用oh-my-posh美化PowerShell和Cmd"></span>
+            <span id="subtitle" data-typed-text="ClaudeCode 命令行参数完全指南"></span>
           
         </div>
 
@@ -218,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-12 16:30" pubdate>
-          2026年1月12日 下午
+        <time datetime="2026-01-13 21:34" pubdate>
+          2026年1月13日 晚上
         </time>
       </span>
     
@@ -231,7 +229,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          622 字
+          787 字
         
       </span>
     
@@ -243,7 +241,7 @@
         
         
           <!-- compatible with older versions-->
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -289,70 +287,109 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Windows使用oh-my-posh美化PowerShell和Cmd</h1>
+            <h1 id="seo-header">ClaudeCode 命令行参数完全指南</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="前置准备：安装-Nerd-Font"><a href="#前置准备：安装-Nerd-Font" class="headerlink" title="前置准备：安装 Nerd Font"></a>前置准备：安装 Nerd Font</h2><p>Oh My Posh 需要使用 Nerd Font 才能正常显示图标和特殊字符。</p>
-<ol>
-<li>前往 <a target="_blank" rel="noopener" href="https://www.nerdfonts.com/font-downloads">Nerd Fonts 官网</a> 下载字体</li>
-<li>推荐选择 <strong>JetBrains Mono</strong>（按 <code>Ctrl+F</code> 搜索 <code>JetBrains</code> 即可找到）</li>
-<li>下载后解压，双击安装 <code>JetBrainsMonoNerdFont-Regular.ttf</code></li>
-</ol>
-<blockquote>
-<p>💡 <strong>提示</strong>：安装完成后，需要在 Windows Terminal 的设置中将字体更改为刚安装的 Nerd Font，否则图标会显示为乱码。</p>
-</blockquote>
-<h2 id="美化-PowerShell"><a href="#美化-PowerShell" class="headerlink" title="美化 PowerShell"></a>美化 PowerShell</h2><h3 id="第一步：安装-Oh-My-Posh"><a href="#第一步：安装-Oh-My-Posh" class="headerlink" title="第一步：安装 Oh My Posh"></a>第一步：安装 Oh My Posh</h3><p><strong>方式一：使用 winget 命令安装（推荐）</strong></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">winget install JanDeDobbeleer.OhMyPosh<br></code></pre></td></tr></table></figure>
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a target="_blank" rel="noopener" href="https://claude.com/claude-code">Claude Code</a> 是 Anthropic 官方推出的 AI 命令行工具，能够直接在终端中进行代码编写、调试和项目管理。本文整理了常用的命令行参数，帮助你更高效地使用这个工具。</p>
+<hr>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g @anthropic-ai/claude-code<br></code></pre></td></tr></table></figure>
 
-<p><strong>方式二：手动安装</strong></p>
+<h3 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --version<br></code></pre></td></tr></table></figure>
+
+<h3 id="更新到最新版本"><a href="#更新到最新版本" class="headerlink" title="更新到最新版本"></a>更新到最新版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude update<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看帮助信息"><a href="#查看帮助信息" class="headerlink" title="查看帮助信息"></a>查看帮助信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --<span class="hljs-built_in">help</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="快速问答模式"><a href="#快速问答模式" class="headerlink" title="快速问答模式"></a>快速问答模式</h2><p>使用 <code>-p</code> 或 <code>--print</code> 参数可以快速向 Claude 提问，无需进入交互式对话。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 简写形式</span><br>claude -p <span class="hljs-string">&quot;解释一下什么是闭包？&quot;</span><br><br><span class="hljs-comment"># 完整形式</span><br>claude --<span class="hljs-built_in">print</span> <span class="hljs-string">&quot;如何优化 React 组件性能？&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="指定输出格式"><a href="#指定输出格式" class="headerlink" title="指定输出格式"></a>指定输出格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 以 JSON 格式输出</span><br>claude -p <span class="hljs-string">&quot;什么是 RESTful API？&quot;</span> --output-format=json<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h2><h3 id="继续上次对话"><a href="#继续上次对话" class="headerlink" title="继续上次对话"></a>继续上次对话</h3><p>从当前目录中最后一次对话继续：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 简写形式</span><br>claude -c<br><br><span class="hljs-comment"># 完整形式</span><br>claude --<span class="hljs-built_in">continue</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="恢复指定会话"><a href="#恢复指定会话" class="headerlink" title="恢复指定会话"></a>恢复指定会话</h3><p>回到之前的某一次对话继续：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 简写形式</span><br>claude -r [会话标识]<br><br><span class="hljs-comment"># 完整形式</span><br>claude --resume [会话标识]<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="权限控制"><a href="#权限控制" class="headerlink" title="权限控制"></a>权限控制</h2><h3 id="跳过权限检查（危险）"><a href="#跳过权限检查（危险）" class="headerlink" title="跳过权限检查（危险）"></a>跳过权限检查（危险）</h3><p><strong>注意</strong>：此选项会跳过所有权限确认，请谨慎使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --dangerously-skip-permissions<br></code></pre></td></tr></table></figure>
+
+<h3 id="允许绕过权限模式"><a href="#允许绕过权限模式" class="headerlink" title="允许绕过权限模式"></a>允许绕过权限模式</h3><p>允许在会话中动态切换到 bypass permissions 模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --allow-dangerously-skip-permissions<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="提示词配置"><a href="#提示词配置" class="headerlink" title="提示词配置"></a>提示词配置</h2><h3 id="设置系统提示词"><a href="#设置系统提示词" class="headerlink" title="设置系统提示词"></a>设置系统提示词</h3><p>为当前会话设置自定义系统提示词：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --system-prompt<br></code></pre></td></tr></table></figure>
+
+<h3 id="追加系统提示词"><a href="#追加系统提示词" class="headerlink" title="追加系统提示词"></a>追加系统提示词</h3><p>在默认系统提示词基础上追加额外指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --append-system-prompt<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="模式配置"><a href="#模式配置" class="headerlink" title="模式配置"></a>模式配置</h2><h3 id="设置默认进入模式"><a href="#设置默认进入模式" class="headerlink" title="设置默认进入模式"></a>设置默认进入模式</h3><p>指定启动时的默认工作模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 设置为计划模式</span><br>claude --permission-mode=plan<br></code></pre></td></tr></table></figure>
+
+<p>可用模式包括：</p>
 <ul>
-<li>前往 <a target="_blank" rel="noopener" href="https://github.com/JanDeDobbeleer/oh-my-posh/releases">GitHub Releases</a> 下载最新版本的 <code>install-x64.msi</code></li>
-<li>双击运行安装程序</li>
+<li><code>plan</code> - 计划模式，适合复杂任务规划</li>
+<li><code>auto</code> - 自动模式</li>
 </ul>
-<h3 id="第二步：配置-PowerShell"><a href="#第二步：配置-PowerShell" class="headerlink" title="第二步：配置 PowerShell"></a>第二步：配置 PowerShell</h3><ol>
-<li>查看 PowerShell 配置文件路径：</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$PROFILE</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><h3 id="指定使用的模型"><a href="#指定使用的模型" class="headerlink" title="指定使用的模型"></a>指定使用的模型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用 Opus 模型（最强能力）</span><br>claude --model=opus<br><br><span class="hljs-comment"># 使用 Sonnet 模型（平衡性能）</span><br>claude --model=sonnet<br><br><span class="hljs-comment"># 使用 Haiku 模型（最快速度）</span><br>claude --model=haiku<br></code></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>使用 VS Code 打开配置文件（如果文件不存在，创建后会自动打开）：</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">code <span class="hljs-variable">$PROFILE</span><br></code></pre></td></tr></table></figure>
+<p><strong>模型对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>特点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Opus</td>
+<td>最强推理能力，速度较慢</td>
+<td>复杂架构设计、深度代码重构</td>
+</tr>
+<tr>
+<td>Sonnet</td>
+<td>平衡性能与速度</td>
+<td>日常开发、Bug 修复</td>
+</tr>
+<tr>
+<td>Haiku</td>
+<td>极快响应速度</td>
+<td>快速问答、简单任务</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><h3 id="1-项目工作流"><a href="#1-项目工作流" class="headerlink" title="1. 项目工作流"></a>1. 项目工作流</h3><p>在项目根目录使用 <code>--continue</code> 参数，Claude 会记住项目上下文：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /path/to/project<br>claude -c<br></code></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>在配置文件中添加以下内容：</li>
-</ol>
-<p><strong>使用默认主题：</strong></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">oh</span><span class="hljs-literal">-my-posh</span> init pwsh <span class="hljs-literal">--config</span> <span class="hljs-string">&quot;<span class="hljs-variable">$env:POSH_THEMES_PATH</span>\paradox.omp.json&quot;</span> | <span class="hljs-built_in">Invoke-Expression</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-快速代码审查"><a href="#2-快速代码审查" class="headerlink" title="2. 快速代码审查"></a>2. 快速代码审查</h3><p>使用 <code>-p</code> 快速获取代码建议：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude -p <span class="hljs-string">&quot;审查这段代码的问题&quot;</span> &lt; myfile.js<br></code></pre></td></tr></table></figure>
 
-<p><strong>使用自定义主题（需要先下载主题文件）：</strong></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">oh</span><span class="hljs-literal">-my-posh</span> init pwsh <span class="hljs-literal">--config</span> <span class="hljs-string">&quot;C:\oh-my-posh\themes\M365Princess.omp.json&quot;</span> | <span class="hljs-built_in">Invoke-Expression</span><br><span class="hljs-built_in">Import-Module</span> <span class="hljs-literal">-Name</span> Terminal<span class="hljs-literal">-Icons</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-不同场景的模型选择"><a href="#3-不同场景的模型选择" class="headerlink" title="3. 不同场景的模型选择"></a>3. 不同场景的模型选择</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 快速查文档 - 用 Haiku</span><br>claude -p <span class="hljs-string">&quot;Python 的 list comprehension 语法&quot;</span> --model=haiku<br><br><span class="hljs-comment"># 系统重构 - 用 Opus</span><br>claude --model=opus<br></code></pre></td></tr></table></figure>
 
-<blockquote>
-<p>⚠️ <strong>注意</strong>：<code>$env:POSH_THEMES_PATH</code> 是 Oh My Posh 安装后的内置主题路径。如需使用自定义主题，需先从 <a target="_blank" rel="noopener" href="https://ohmyposh.dev/docs/themes">官方主题库</a> 下载 <code>.omp.json</code> 文件到指定目录。</p>
-</blockquote>
-<h3 id="第三步：设置执行策略"><a href="#第三步：设置执行策略" class="headerlink" title="第三步：设置执行策略"></a>第三步：设置执行策略</h3><p>如果打开新的 PowerShell 窗口时出现脚本错误，说明执行策略受到限制。需要以<strong>管理员身份</strong>运行 PowerShell，执行以下命令：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Set-ExecutionPolicy</span> <span class="hljs-literal">-ExecutionPolicy</span> Unrestricted<br></code></pre></td></tr></table></figure>
+<h3 id="4-自定义系统提示词"><a href="#4-自定义系统提示词" class="headerlink" title="4. 自定义系统提示词"></a>4. 自定义系统提示词</h3><p>创建特定的助手角色：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude --system-prompt=<span class="hljs-string">&quot;你是一位专注于代码质量的审查专家，特别关注安全性和性能&quot;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="第四步：安装-Terminal-Icons（可选）"><a href="#第四步：安装-Terminal-Icons（可选）" class="headerlink" title="第四步：安装 Terminal-Icons（可选）"></a>第四步：安装 Terminal-Icons（可选）</h3><p>Terminal-Icons 可以为文件和文件夹添加彩色图标，增强视觉效果。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Install-Module</span> <span class="hljs-literal">-Name</span> Terminal<span class="hljs-literal">-Icons</span> <span class="hljs-literal">-Repository</span> PSGallery<br></code></pre></td></tr></table></figure>
-
-<h3 id="验证效果"><a href="#验证效果" class="headerlink" title="验证效果"></a>验证效果</h3><p>重新打开 PowerShell 窗口，如果配置成功，你会看到带有图标和颜色的新命令提示符。</p>
-<h2 id="美化-Cmd"><a href="#美化-Cmd" class="headerlink" title="美化 Cmd"></a>美化 Cmd</h2><h3 id="第一步：安装-Clink"><a href="#第一步：安装-Clink" class="headerlink" title="第一步：安装 Clink"></a>第一步：安装 Clink</h3><p>Clink 是一个增强 Cmd 的工具，可以为 Cmd 添加类似 PowerShell 的自动补全等功能。</p>
-<ul>
-<li>前往 <a target="_blank" rel="noopener" href="https://github.com/chrisant996/clink/releases">Clink Releases</a> 下载最新版安装包</li>
-<li>双击 <code>clink.*_setup.exe</code> 完成安装</li>
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Q: 如何查看所有可用参数？</strong></p>
+<p>A: 运行 <code>claude --help</code> 查看完整参数列表。</p>
+<p><strong>Q: 会话历史保存在哪里？</strong></p>
+<p>A: 会话历史存储在项目目录的 <code>.claude</code> 文件夹中。</p>
+<p><strong>Q: 如何清除会话历史？</strong></p>
+<p>A: 删除项目目录下的 <code>.claude</code> 文件夹即可。</p>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.anthropic.com/en/docs/claude-code">Claude Code 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/anthropics/claude-code">GitHub 仓库</a></li>
 </ul>
-<h3 id="第二步：配置-Oh-My-Posh"><a href="#第二步：配置-Oh-My-Posh" class="headerlink" title="第二步：配置 Oh My Posh"></a>第二步：配置 Oh My Posh</h3><ol>
-<li>在 <code>%LOCALAPPDATA%\clink</code> 目录下新建文件 <code>oh-my-posh.lua</code></li>
-<li>写入以下内容：</li>
-</ol>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- oh-my-posh.lua</span><br><span class="hljs-keyword">local</span> handle = <span class="hljs-built_in">io</span>.<span class="hljs-built_in">popen</span>(<span class="hljs-string">&#x27;oh-my-posh init cmd --config &quot;C:\\oh-my-posh\\themes\\M365Princess.omp.json&quot;&#x27;</span>)<br><span class="hljs-keyword">if</span> handle <span class="hljs-keyword">then</span><br>    <span class="hljs-keyword">local</span> code = handle:<span class="hljs-built_in">read</span>(<span class="hljs-string">&#x27;*a&#x27;</span>):<span class="hljs-built_in">gsub</span>(<span class="hljs-string">&#x27;\r&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)   <span class="hljs-comment">-- 去掉 \r</span><br>    handle:<span class="hljs-built_in">close</span>()<br>    <span class="hljs-built_in">load</span>(code)()                                    <span class="hljs-comment">-- 安全加载</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="验证效果-1"><a href="#验证效果-1" class="headerlink" title="验证效果"></a>验证效果</h3><p>重新打开 Cmd 窗口，即可看到美化后的命令提示符。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上配置，你的 PowerShell 和 Cmd 现在都拥有了一个美观且信息丰富的命令提示符。如果想要更换主题，只需修改配置文件中的 <code>.omp.json</code> 路径即可。</p>
 
                 
               </div>
@@ -371,8 +408,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/oh-my-posh/" class="category-chain-item">oh-my-posh</a>
+  <a href="/categories/AI/" class="category-chain-item">AI</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/AI/ClaudeCode/" class="category-chain-item">ClaudeCode</a>
+  
+  
+
   
 
       </span>
@@ -386,13 +430,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
       
-        <a href="/tags/PowerShell/" class="print-no-link">#PowerShell</a>
-      
-        <a href="/tags/Cmd/" class="print-no-link">#Cmd</a>
-      
-        <a href="/tags/oh-my-posh/" class="print-no-link">#oh-my-posh</a>
+        <a href="/tags/ClaudeCode/" class="print-no-link">#ClaudeCode</a>
       
     </div>
   
@@ -404,8 +444,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Windows使用oh-my-posh美化PowerShell和Cmd</div>
-      <div>https://jhyjhy.cn/posts/Windows/Windows使用oh-my-posh美化PowerShell和Cmd/46872/</div>
+      <div>ClaudeCode 命令行参数完全指南</div>
+      <div>https://jhyjhy.cn/posts/AI/ClaudeCode命令行参数/53406/</div>
     </div>
     <div class="license-meta">
       
@@ -417,7 +457,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月12日</div>
+          <div>2026年1月13日</div>
         </div>
       
       
@@ -449,18 +489,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/AI/ClaudeCode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/53406/" title="ClaudeCode 命令行参数完全指南">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ClaudeCode 命令行参数完全指南</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/AI/Dify%E6%9C%AC%E5%9C%B0Docker%E9%83%A8%E7%BD%B2/35265/" title="Dify本地Docker部署">
-                        <span class="hidden-mobile">Dify本地Docker部署</span>
+                      <a href="/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/" title="Windows使用oh-my-posh美化PowerShell和Cmd">
+                        <span class="hidden-mobile">Windows使用oh-my-posh美化PowerShell和Cmd</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -480,8 +514,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'https://jhyjhy.cn/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/';
-          this.page.identifier = '/posts/Windows/Windows%E4%BD%BF%E7%94%A8oh-my-posh%E7%BE%8E%E5%8C%96PowerShell%E5%92%8CCmd/46872/';
+          this.page.url = 'https://jhyjhy.cn/posts/AI/ClaudeCode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/53406/';
+          this.page.identifier = '/posts/AI/ClaudeCode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/53406/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
