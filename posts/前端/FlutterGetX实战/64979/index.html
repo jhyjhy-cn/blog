@@ -1,0 +1,1009 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en-US,default" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="jhy">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="安装get_cliflutter pub global activate get_cli 临时: flutter pub global activate -s git https:&#x2F;&#x2F;github.com&#x2F;jonataslaw&#x2F;get_cli win: 安装路径添加进path环境变量 集成创建完项目执行get init 123456789101112131415161718E:\CoreCode\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter GetX 实战&lt;小米商城&gt;">
+<meta property="og:url" content="https://jhyjhy.cn/posts/%E5%89%8D%E7%AB%AF/FlutterGetX%E5%AE%9E%E6%88%98/64979/index.html">
+<meta property="og:site_name" content="Hongyu&#39;s Blog">
+<meta property="og:description" content="安装get_cliflutter pub global activate get_cli 临时: flutter pub global activate -s git https:&#x2F;&#x2F;github.com&#x2F;jonataslaw&#x2F;get_cli win: 安装路径添加进path环境变量 集成创建完项目执行get init 123456789101112131415161718E:\CoreCode\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+<meta property="article:published_time" content="2024-08-07T11:57:04.000Z">
+<meta property="article:modified_time" content="2025-05-28T03:05:15.000Z">
+<meta property="article:author" content="Hongyu">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="Getx">
+<meta property="article:tag" content="Dio">
+<meta property="article:tag" content="flutter_screenutil">
+<meta property="article:tag" content="flutter_swiper_view">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Flutter GetX 实战&lt;小米商城&gt; - Hongyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jhyjhy.cn","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hongyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/assets/images/index/index.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flutter GetX 实战&lt;小米商城&gt;"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-07 19:57" pubdate>
+          2024年8月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          21k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          177 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Flutter GetX 实战&lt;小米商城&gt;</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="安装get-cli"><a href="#安装get-cli" class="headerlink" title="安装get_cli"></a>安装get_cli</h2><p><code>flutter pub global activate get_cli</code></p>
+<p>临时: <code>flutter pub global activate -s git https://github.com/jonataslaw/get_cli</code></p>
+<p>win: <code>安装路径添加进path环境变量</code></p>
+<h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><p>创建完项目执行<code>get init</code></p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-symbol">E:</span>\CoreCode\GS\XDS\xmshop&gt;<span class="hljs-keyword">get</span> init<br>? Which architecture <span class="hljs-keyword">do</span> you want <span class="hljs-keyword">to</span> use? (Use arrow keys)<br>&gt; GetX Pattern (<span class="hljs-keyword">by</span> Kauê)<br>  CLEAN (<span class="hljs-keyword">by</span> Arktekko)<br>? 你的 <span class="hljs-keyword">lib</span> 文件夹不是空的。你确定要覆盖你的应用吗？ <br> 警告:操作不可逆 (Use arrow keys)<br>&gt; 是的!<br>  不<br>✓  <span class="hljs-comment">&#x27;Package: get 已安装！</span><br>✓  文件: main.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\\main.dart<br>✓  文件: home_controller.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\app\modules\home\\controllers\\home_controller.dart<br>✓  文件: home_view.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\app\modules\home\\views\\home_view.dart<br>✓  文件: home_binding.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\app\modules\home\\bindings\\home_binding.dart<br>✓  文件: app_routes.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\\app\\routes\\app_routes.dart<br>✓  文件: app_pages.dart 创建成功，路径: <span class="hljs-keyword">lib</span>\\app\\routes\\app_pages.dart<br>✓  home route 创建成功.<br>✓  Home page 创建成功.<br>✓  GetX 结构生成成功。<br></code></pre></td></tr></table></figure>
+
+<h3 id="get命令创建页面"><a href="#get命令创建页面" class="headerlink" title="get命令创建页面"></a>get命令创建页面</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:tabs<br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:home<br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:category<br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:service<br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:cart<br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:<span class="hljs-keyword">user</span><br><span class="hljs-keyword">get</span> <span class="hljs-keyword">create</span> page:serach<br></code></pre></td></tr></table></figure>
+
+<h2 id="路由设置"><a href="#路由设置" class="headerlink" title="路由设置"></a>路由设置</h2><ol>
+<li><p>优化页面路由 只留tabs</p>
+</li>
+<li><p>在tabs 的bindings里加载其他页面</p>
+<p> <a href="E:\CoreCode\GS\XDS\xmshop\lib\app\modules\tabs\bindings\tabs_binding.dart">tabs_binding.dart</a> </p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../controllers/tabs_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../home/controllers/home_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../category/controllers/category_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../give/controllers/give_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../cart/controllers/cart_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../user/controllers/user_controller.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TabsBinding</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Bindings</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">dependencies</span>() &#123;<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">TabsController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">TabsController</span>(),<br>    );<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">HomeController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">HomeController</span>(),<br>    );<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">CategoryController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">CategoryController</span>(),<br>    );<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">GiveController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">GiveController</span>(),<br>    );<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">CartController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">CartController</span>(),<br>    );<br>    <span class="hljs-title class_">Get</span>.lazyPut&lt;<span class="hljs-title class_">UserController</span>&gt;(<br>      () =&gt; <span class="hljs-title class_">UserController</span>(),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="配置tab切换"><a href="#配置tab切换" class="headerlink" title="配置tab切换"></a>配置tab切换</h2><p>   bottomNavigationBar</p>
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../controllers/tabs_controller.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TabsView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetView</span>&lt;<span class="hljs-title">TabsController</span>&gt; </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">TabsView</span>(&#123;<span class="hljs-title class_">Key</span>? key&#125;) : <span class="hljs-title function_">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Obx</span>(() =&gt; <span class="hljs-title class_">Scaffold</span>(<br>          appBar: <span class="hljs-title class_">AppBar</span>(<br>            title: <span class="hljs-keyword">const</span> <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;TabsView&#x27;</span>),<br>            centerTitle: <span class="hljs-keyword">true</span>,<br>          ),<br>          body: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&quot;tab&quot;</span>),<br>          bottomNavigationBar: <span class="hljs-title class_">BottomNavigationBar</span>(<br>            fixedColor: <span class="hljs-title class_">Colors</span>.red,<br>            currentIndex: controller.currentIndex.value,<br>            type: <span class="hljs-title class_">BottomNavigationBarType</span>.fixed,<br>            onTap: (index) &#123;<br>              controller.<span class="hljs-title function_">setCurrentIndex</span>(index);<br>            &#125;,<br>            items: <span class="hljs-keyword">const</span> [<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.home),<br>                label: <span class="hljs-string">&quot;首页&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.category),<br>                label: <span class="hljs-string">&quot;分类&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.room_service),<br>                label: <span class="hljs-string">&quot;服务&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.shopping_cart),<br>                label: <span class="hljs-string">&quot;购物车&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.people),<br>                label: <span class="hljs-string">&quot;我的&quot;</span>,<br>              )<br>            ],<br>          ),<br>        ));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TabsController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetxController</span> </span>&#123;<br>  <span class="hljs-title class_">RxInt</span> currentIndex = <span class="hljs-number">0</span>.obs;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onInit</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onInit</span>();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClose</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onClose</span>();<br>  &#125;<br><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">setCurrentIndex</span>(index) &#123;<br>    currentIndex.value = index;<br>    <span class="hljs-title function_">update</span>();<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="切换页面"><a href="#切换页面" class="headerlink" title="切换页面"></a>切换页面</h2>   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../controllers/tabs_controller.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TabsView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetView</span>&lt;<span class="hljs-title">TabsController</span>&gt; </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">TabsView</span>(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Obx</span>(() =&gt; <span class="hljs-title class_">Scaffold</span>(<br>          <span class="hljs-comment">// 简单切换页面</span><br>          <span class="hljs-comment">// body: controller.pages[controller.currentIndex.value],</span><br>          <span class="hljs-comment">// 可左右滑动切换</span><br>          body: <span class="hljs-title class_">PageView</span>(<br>            controller: controller.pageController,<br>            children: controller.pages,<br>            onPageChanged: (index) &#123;<br>              controller.<span class="hljs-title function_">setCurrentIndex</span>(index);<br>            &#125;,<br>          ),<br>          bottomNavigationBar: <span class="hljs-title class_">BottomNavigationBar</span>(<br>            fixedColor: <span class="hljs-title class_">Colors</span>.red,<br>            currentIndex: controller.currentIndex.value,<br>            type: <span class="hljs-title class_">BottomNavigationBarType</span>.fixed,<br>            onTap: (index) &#123;<br>              controller.<span class="hljs-title function_">setCurrentIndex</span>(index);<br>              controller.pageController.<span class="hljs-title function_">jumpToPage</span>(index);<br>            &#125;,<br>            items: <span class="hljs-keyword">const</span> [<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.home),<br>                label: <span class="hljs-string">&quot;首页&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.category),<br>                label: <span class="hljs-string">&quot;分类&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.room_service),<br>                label: <span class="hljs-string">&quot;服务&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.shopping_cart),<br>                label: <span class="hljs-string">&quot;购物车&quot;</span>,<br>              ),<br>              <span class="hljs-title class_">BottomNavigationBarItem</span>(<br>                icon: <span class="hljs-title class_">Icon</span>(<span class="hljs-title class_">Icons</span>.people),<br>                label: <span class="hljs-string">&quot;我的&quot;</span>,<br>              )<br>            ],<br>          ),<br>        ));<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../cart/views/cart_view.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../category/views/category_view.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../give/views/give_view.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../home/views/home_view.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../user/views/user_view.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TabsController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetxController</span> </span>&#123;<br>  <span class="hljs-comment">// 当前选中tab的索引</span><br>  <span class="hljs-title class_">RxInt</span> currentIndex = <span class="hljs-number">0</span>.obs;<br><br>  <span class="hljs-comment">// 页面列表</span><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">Widget</span>&gt; pages = <span class="hljs-keyword">const</span> [<br>    <span class="hljs-title class_">HomeView</span>(),<br>    <span class="hljs-title class_">CategoryView</span>(),<br>    <span class="hljs-title class_">GiveView</span>(),<br>    <span class="hljs-title class_">UserView</span>(),<br>    <span class="hljs-title class_">CartView</span>()<br>  ];<br><br>  <span class="hljs-title class_">PageController</span> pageController = <span class="hljs-title class_">PageController</span>(initialPage: <span class="hljs-number">0</span>);<br><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">setCurrentIndex</span>(index) &#123;<br>    currentIndex.value = index;<br>    <span class="hljs-title function_">update</span>();<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../controllers/home_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../../services/keepAliveWrapper.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetView</span>&lt;<span class="hljs-title">HomeController</span>&gt; </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">HomeView</span>(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-comment">// 页面缓存</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">KeepAliveWrapper</span>(<br>        child: <span class="hljs-title class_">Scaffold</span>(<br>            appBar: <span class="hljs-title class_">AppBar</span>(<br>              title: <span class="hljs-keyword">const</span> <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;HomeView&#x27;</span>),<br>              centerTitle: <span class="hljs-keyword">true</span>,<br>            ),<br>            body: <span class="hljs-title class_">ListView</span>(<br>              children: <span class="hljs-keyword">const</span> [<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;2222&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;567567567566666666666666666666&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;567567567&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;5675675667567&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>                <span class="hljs-title class_">ListTile</span>(<br>                  title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;111111111111&#x27;</span>),<br>                ),<br>              ],<br>            )));<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+   <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KeepAliveWrapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">KeepAliveWrapper</span>(<br>      &#123;<span class="hljs-keyword">super</span>.key, <span class="hljs-meta">@required</span> <span class="hljs-keyword">this</span>.child, <span class="hljs-keyword">this</span>.keepAlive = <span class="hljs-keyword">true</span>&#125;);<br><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">Widget</span>? child;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">bool</span> keepAlive;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">State</span>&lt;<span class="hljs-title class_">KeepAliveWrapper</span>&gt; <span class="hljs-title function_">createState</span>() =&gt; <span class="hljs-title class_">_KeepAliveWrapperState</span>();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_KeepAliveWrapperState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">KeepAliveWrapper</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-title">with</span> <span class="hljs-title">AutomaticKeepAliveClientMixin</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> widget.child!;<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-built_in">bool</span> <span class="hljs-keyword">get</span> wantKeepAlive =&gt; widget.keepAlive;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="不同终端屏幕适配"><a href="#不同终端屏幕适配" class="headerlink" title="不同终端屏幕适配"></a>不同终端屏幕适配</h2><p><a target="_blank" rel="noopener" href="https://pub.dev/packages/flutter_screenutil">https://pub.dev/packages/flutter_screenutil</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OpenFlutter/flutter_screenutil/blob/master/README_CN.md">https://github.com/OpenFlutter/flutter_screenutil/blob/master/README_CN.md</a></p>
+<p>pubspec.yaml</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">dependencies:</span><br><span class="hljs-symbol">  flutter:</span><br><span class="hljs-symbol">    sdk:</span> flutter<br>  <span class="hljs-meta"># add flutter_screenutil</span><br><span class="hljs-symbol">  flutter_screenutil:</span> ^<span class="hljs-number">5.9</span><span class="hljs-number">.3</span><br></code></pre></td></tr></table></figure>
+
+<p>使用的地方引入</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_screenutil/flutter_screenutil.dart&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span>() =&gt; <span class="hljs-title function_">runApp</span>(<span class="hljs-title class_">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-comment">//填入设计稿中设备的屏幕尺寸,单位dp</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">ScreenUtilInit</span>(<br>      designSize: <span class="hljs-keyword">const</span> <span class="hljs-title class_">Size</span>(<span class="hljs-number">360</span>, <span class="hljs-number">690</span>),<br>      minTextAdapt: <span class="hljs-keyword">true</span>,<br>      splitScreenMode: <span class="hljs-keyword">true</span>,<br>      builder: (context , child) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-title class_">MaterialApp</span>(<br>          debugShowCheckedModeBanner: <span class="hljs-keyword">false</span>,<br>          title: <span class="hljs-string">&#x27;First Method&#x27;</span>,<br>          <span class="hljs-comment">// You can use the library anywhere in the app even in theme</span><br>          theme: <span class="hljs-title class_">ThemeData</span>(<br>            primarySwatch: <span class="hljs-title class_">Colors</span>.blue,<br>            textTheme: <span class="hljs-title class_">Typography</span>.englishLike2018.<span class="hljs-title function_">apply</span>(fontSizeFactor: <span class="hljs-number">1</span>.sp),<br>          ),<br>          home: child,<br>        );<br>      &#125;,<br>      child: <span class="hljs-keyword">const</span> <span class="hljs-title class_">HomePage</span>(title: <span class="hljs-string">&#x27;First Method&#x27;</span>),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="封装screenutil"><a href="#封装screenutil" class="headerlink" title="封装screenutil"></a>封装screenutil</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_screenutil/flutter_screenutil.dart&#x27;</span>;<br><br><span class="hljs-comment">/// <span class="language-markdown">屏幕适配</span></span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScreenAdapter</span> </span>&#123;<br>  <span class="hljs-comment">/// <span class="language-markdown">获取对象的高度属性</span></span><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">height</span>(<span class="hljs-built_in">num</span> v) &#123;<br>    <span class="hljs-keyword">return</span> v.h;<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">获取对象的宽度属性</span></span><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">width</span>(<span class="hljs-built_in">num</span> v) &#123;<br>    <span class="hljs-keyword">return</span> v.w;<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">获取对象的字体大小属性</span></span><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">fontSize</span>(<span class="hljs-built_in">num</span> v) &#123;<br>    <span class="hljs-keyword">return</span> v.sp;<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">获取屏幕宽度</span></span><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">getScreenWidth</span>() &#123;<br>    <span class="hljs-comment">// return ScreenUtil().screenWidth;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>.sw;<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">获取屏幕高度</span></span><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">getScreenHeight</span>() &#123;<br>    <span class="hljs-comment">// return ScreenUtil().screenHeight;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>.sh;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="透明状态栏"><a href="#透明状态栏" class="headerlink" title="透明状态栏"></a>透明状态栏</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">// 配置透明的状态栏</span><br><span class="hljs-title class_">SystemUiOverlayStyle</span> systemUiOverlayStyle =<br>    <span class="hljs-keyword">const</span> <span class="hljs-title class_">SystemUiOverlayStyle</span>(statusBarColor: <span class="hljs-title class_">Colors</span>.transparent);<br><span class="hljs-title class_">SystemChrome</span>.<span class="hljs-title function_">setSystemUIOverlayStyle</span>(systemUiOverlayStyle);<br></code></pre></td></tr></table></figure>
+
+<h2 id="透明顶部导航-上下滑动切换动画"><a href="#透明顶部导航-上下滑动切换动画" class="headerlink" title="透明顶部导航 &amp; 上下滑动切换动画"></a>透明顶部导航 &amp; 上下滑动切换动画</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">// home_view.dart</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:xmshop/app/services/hyIcon.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:xmshop/app/services/screenAdapter.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../controllers/home_controller.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;../../../services/keepAliveWrapper.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetView</span>&lt;<span class="hljs-title">HomeController</span>&gt; </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">HomeView</span>(&#123;<span class="hljs-keyword">super</span>.key&#125;);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-comment">// 页面缓存</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">KeepAliveWrapper</span>(<br>        child: <span class="hljs-title class_">Scaffold</span>(<br>            body: <span class="hljs-title class_">Stack</span>(children: [<br>      <span class="hljs-title class_">ListView</span>.<span class="hljs-title function_">builder</span>(<br>          controller: controller.scrollController, <span class="hljs-comment">// 绑定控制器</span><br>          itemCount: <span class="hljs-number">20</span>,<br>          itemBuilder: (context, index) &#123;<br>            <span class="hljs-keyword">if</span> (index == <span class="hljs-number">0</span>) &#123;<br>              <span class="hljs-keyword">return</span> <span class="hljs-title class_">SizedBox</span>(<br>                width: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">1080</span>),<br>                height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">682</span>),<br>                child: <span class="hljs-title class_">Image</span>.<span class="hljs-title function_">network</span>(<br>                  <span class="hljs-string">&quot;https://www.itying.com/images/focus/focus02.png&quot;</span>,<br>                  fit: <span class="hljs-title class_">BoxFit</span>.cover,<br>                ),<br>              );<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-title class_">ListTile</span>(title: <span class="hljs-title class_">Text</span>(<span class="hljs-string">&#x27;第<span class="hljs-subst">$index</span>个元素&#x27;</span>));<br>          &#125;),<br>      <span class="hljs-title class_">Positioned</span>(<br>          top: <span class="hljs-number">0</span>,<br>          left: <span class="hljs-number">0</span>,<br>          right: <span class="hljs-number">0</span>,<br>          child: <span class="hljs-title class_">Obx</span>(() =&gt; <span class="hljs-title class_">AppBar</span>(<br>                leading: controller.flag.value<br>                    ? <span class="hljs-keyword">const</span> <span class="hljs-title class_">Text</span>(<span class="hljs-string">&quot;&quot;</span>)<br>                    : <span class="hljs-keyword">const</span> <span class="hljs-title class_">Icon</span>(<br>                        <span class="hljs-title class_">HyIcon</span>.xiaomi,<br>                        color: <span class="hljs-title class_">Colors</span>.white,<br>                      ),<br>                <span class="hljs-comment">// leading 宽度</span><br>                leadingWidth:<br>                    controller.flag.value ? <span class="hljs-number">10</span> : <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">140</span>),<br>                <span class="hljs-comment">// 动画容器</span><br>                title: <span class="hljs-title class_">AnimatedContainer</span>(<br>                  <span class="hljs-comment">// 改变宽度</span><br>                  width: controller.flag.value<br>                      ? <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">800</span>)<br>                      : <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">620</span>),<br>                  height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">96</span>),<br>                  decoration: <span class="hljs-title class_">BoxDecoration</span>(<br>                      color: <span class="hljs-keyword">const</span> <span class="hljs-title class_">Color</span>.<span class="hljs-title function_">fromARGB</span>(<span class="hljs-number">200</span>, <span class="hljs-number">241</span>, <span class="hljs-number">236</span>, <span class="hljs-number">225</span>),<br>                      borderRadius:<br>                          <span class="hljs-title class_">BorderRadius</span>.<span class="hljs-title function_">circular</span>(<span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">50</span>))),<br>                  duration: <span class="hljs-keyword">const</span> <span class="hljs-title class_">Duration</span>(milliseconds: <span class="hljs-number">300</span>),<br>                  child: <span class="hljs-title class_">Row</span>(<br>                    crossAxisAlignment: <span class="hljs-title class_">CrossAxisAlignment</span>.center,<br>                    children: [<br>                      <span class="hljs-title class_">Padding</span>(<br>                        padding: <span class="hljs-title class_">EdgeInsets</span>.<span class="hljs-title function_">fromLTRB</span>(<span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">34</span>), <span class="hljs-number">0</span>,<br>                            <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">10</span>), <span class="hljs-number">0</span>),<br>                        child: <span class="hljs-title class_">Icon</span>(<br>                          <span class="hljs-title class_">Icons</span>.search,<br>                          size: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">fontSize</span>(<span class="hljs-number">40</span>),<br>                        ),<br>                      ),<br>                      <span class="hljs-title class_">Text</span>(<br>                        <span class="hljs-string">&quot;手机&quot;</span>,<br>                        style: <span class="hljs-title class_">TextStyle</span>(<br>                            fontSize: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">fontSize</span>(<span class="hljs-number">32</span>),<br>                            color: <span class="hljs-title class_">Colors</span>.black54),<br>                      )<br>                    ],<br>                  ),<br>                ),<br>                centerTitle: <span class="hljs-keyword">true</span>,<br>                backgroundColor:<br>                    controller.flag.value ? <span class="hljs-title class_">Colors</span>.white : <span class="hljs-title class_">Colors</span>.transparent,<br>                elevation: <span class="hljs-number">0</span>,<br>                actions: [<br>                  <span class="hljs-title class_">IconButton</span>(<br>                      onPressed: () &#123;<br>                        <span class="hljs-title class_">Get</span>.<span class="hljs-title function_">toNamed</span>(<span class="hljs-string">&#x27;/cart&#x27;</span>);<br>                      &#125;,<br>                      icon: <span class="hljs-title class_">Icon</span>(<br>                        <span class="hljs-title class_">Icons</span>.qr_code,<br>                        color: controller.flag.value<br>                            ? <span class="hljs-title class_">Colors</span>.black87<br>                            : <span class="hljs-title class_">Colors</span>.white,<br>                      )),<br>                  <span class="hljs-title class_">IconButton</span>(<br>                      onPressed: () &#123;<br>                        <span class="hljs-title class_">Get</span>.<span class="hljs-title function_">toNamed</span>(<span class="hljs-string">&#x27;/cart&#x27;</span>);<br>                      &#125;,<br>                      icon: <span class="hljs-title class_">Icon</span>(<br>                        <span class="hljs-title class_">Icons</span>.message,<br>                        color: controller.flag.value<br>                            ? <span class="hljs-title class_">Colors</span>.black87<br>                            : <span class="hljs-title class_">Colors</span>.white,<br>                      ))<br>                ],<br>              )))<br>    ])));<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">// home_controller.dart</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetxController</span> </span>&#123;<br>  <span class="hljs-comment">// 滚动条控制器</span><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">ScrollController</span> scrollController = <span class="hljs-title class_">ScrollController</span>();<br><br>  <span class="hljs-comment">// 开关</span><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">RxBool</span> flag = <span class="hljs-keyword">false</span>.obs;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onInit</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onInit</span>();<br>    <span class="hljs-comment">// 监听滚动条滚动</span><br>    scrollController.<span class="hljs-title function_">addListener</span>(() &#123;<br>      <span class="hljs-comment">// 下拉高度大于10时，显示返回顶部按钮</span><br>      <span class="hljs-keyword">final</span> pixels = scrollController.position.pixels;<br>      <span class="hljs-comment">// 根据滚动位置更新 flag 值</span><br>      <span class="hljs-keyword">if</span> (pixels &gt;= <span class="hljs-number">10</span> &amp;&amp; !flag.value) &#123;<br>        flag.value = <span class="hljs-keyword">true</span>;<br>        <span class="hljs-title function_">update</span>(); <span class="hljs-comment">// 显示返回顶部按钮</span><br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pixels &lt; <span class="hljs-number">10</span> &amp;&amp; flag.value) &#123;<br>        flag.value = <span class="hljs-keyword">false</span>;<br>        <span class="hljs-title function_">update</span>(); <span class="hljs-comment">// 隐藏返回顶部按钮</span><br>      &#125;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onReady</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onReady</span>();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClose</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onClose</span>();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h2><h3 id="swiper-插件"><a href="#swiper-插件" class="headerlink" title="swiper 插件"></a>swiper 插件</h3><p><a target="_blank" rel="noopener" href="https://pub.dev/packages/flutter_swiper_view">https://pub.dev/packages/flutter_swiper_view</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/feicien/flutter_swiper_view/blob/master/README-ZH.md">https://github.com/feicien/flutter_swiper_view/blob/master/README-ZH.md</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dependencies:</span> <br>  <span class="hljs-attr">flutter_swiper_view:</span> <span class="hljs-string">^1.1.8</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter_swiper_view/flutter_swiper_view.dart&#x27;</span>;<br><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span>() =&gt; <span class="hljs-title function_">runApp</span>(<span class="hljs-keyword">const</span> <span class="hljs-title class_">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">MyApp</span>(&#123;<span class="hljs-title class_">Key</span>? key&#125;) : <span class="hljs-title function_">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">MaterialApp</span>(<br>      title: <span class="hljs-string">&#x27;Flutter Demo&#x27;</span>,<br>      theme: <span class="hljs-title class_">ThemeData</span>(<br>        primarySwatch: <span class="hljs-title class_">Colors</span>.blue,<br>      ),<br>      home: <span class="hljs-keyword">const</span> <span class="hljs-title class_">MyHomePage</span>(title: <span class="hljs-string">&#x27;Flutter Demo Home Page&#x27;</span>),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyHomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-title class_">MyHomePage</span>(&#123;<span class="hljs-title class_">Key</span>? key, <span class="hljs-keyword">required</span> <span class="hljs-keyword">this</span>.title&#125;) : <span class="hljs-title function_">super</span>(key: key);<br><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">String</span> title;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">State</span>&lt;<span class="hljs-title class_">MyHomePage</span>&gt; <span class="hljs-title function_">createState</span>() =&gt; <span class="hljs-title class_">_MyHomePageState</span>();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_MyHomePageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">MyHomePage</span>&gt; </span>&#123;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">build</span>(<span class="hljs-title class_">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Scaffold</span>(<br>      appBar: <span class="hljs-title class_">AppBar</span>(<br>        title: <span class="hljs-title class_">Text</span>(widget.title),<br>      ),<br>      body: <span class="hljs-title class_">Swiper</span>(<br>        itemBuilder: (context, index)&#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-title class_">Image</span>.<span class="hljs-title function_">network</span>(<span class="hljs-string">&quot;https://via.placeholder.com/350x150&quot;</span>,fit: <span class="hljs-title class_">BoxFit</span>.fill,);<br>        &#125;,<br>        itemCount: <span class="hljs-number">3</span>,<br>        pagination: <span class="hljs-keyword">const</span> <span class="hljs-title class_">SwiperPagination</span>(),<br>        control: <span class="hljs-keyword">const</span> <span class="hljs-title class_">SwiperControl</span>(),<br>      ),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Dio-网络请求"><a href="#Dio-网络请求" class="headerlink" title="Dio 网络请求"></a>Dio 网络请求</h3><p><a target="_blank" rel="noopener" href="https://pub.dev/packages/dio">https://pub.dev/packages/dio</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dependencies:</span> <br>  <span class="hljs-attr">dio:</span> <span class="hljs-string">^5.5.0+1</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">/// <span class="language-markdown">内容区域</span></span><br> <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">_homePage</span>() &#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-title class_">Positioned</span>(<br>       top: -<span class="hljs-number">40</span>,<br>       left: <span class="hljs-number">0</span>,<br>       right: <span class="hljs-number">0</span>,<br>       bottom: <span class="hljs-number">0</span>,<br>       <span class="hljs-comment">// https://www.itying.com/images/focus/focus02.png</span><br>       child: <span class="hljs-title class_">ListView</span>(<br>         controller: controller.scrollController,<br>         children: [<br>           <span class="hljs-title class_">SizedBox</span>(<br>             width: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">getScreenWidth</span>(),<br>             height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">682</span>),<br>             child: <span class="hljs-title class_">Obx</span>(() =&gt; <span class="hljs-title class_">Swiper</span>(<br>                   itemBuilder: (context, index) &#123;<br>                     <span class="hljs-title class_">String</span> picUrl =<br>                         <span class="hljs-string">&quot;https://miapp.itying.com/<span class="hljs-subst">$&#123;controller.swiperList[index][<span class="hljs-string">&#x27;pic&#x27;</span>]&#125;</span>&quot;</span>;<br>                     <span class="hljs-keyword">return</span> <span class="hljs-title class_">Image</span>.<span class="hljs-title function_">network</span>(<br>                       picUrl.<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">&quot;\\&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>),<br>                       fit: <span class="hljs-title class_">BoxFit</span>.fill,<br>                     );<br>                   &#125;,<br>                   itemCount: controller.swiperList.length,<br><br>                   pagination:<br>                       <span class="hljs-keyword">const</span> <span class="hljs-title class_">SwiperPagination</span>(builder: <span class="hljs-title class_">SwiperPagination</span>.rect),<br>                   <span class="hljs-comment">// 自动轮播</span><br>                   autoplay: <span class="hljs-keyword">true</span>,<br>                   <span class="hljs-comment">// 循环轮播</span><br>                   loop: <span class="hljs-keyword">true</span>,<br>                   <span class="hljs-comment">// 动画切换时间</span><br>                   duration: <span class="hljs-number">2000</span>,<br>                 )),<br>           )<br>         ],<br>       ));<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">// controller</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:get/get.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:dio/dio.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GetxController</span> </span>&#123;<br>  <span class="hljs-comment">// 滚动条控制器</span><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">ScrollController</span> scrollController = <span class="hljs-title class_">ScrollController</span>();<br><br>  <span class="hljs-comment">// 浮动导航开关</span><br>  <span class="hljs-keyword">final</span> <span class="hljs-title class_">RxBool</span> flag = <span class="hljs-keyword">false</span>.obs;<br><br>  <span class="hljs-comment">// https://miapp.itying.com/api/focus</span><br>  <span class="hljs-title class_">RxList</span> swiperList = [].obs;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> <span class="hljs-title function_">onInit</span>() &#123;<br>    <span class="hljs-keyword">super</span>.<span class="hljs-title function_">onInit</span>();<br>    <span class="hljs-comment">// 监听滚动条滚动</span><br>    <span class="hljs-title function_">scrollControllerListener</span>();<br>    <span class="hljs-comment">// 获取焦点数据</span><br>    <span class="hljs-title function_">getFocusData</span>();<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">监听滚动条滚动</span></span><br>  <span class="hljs-title function_">scrollControllerListener</span>() &#123;<br>    scrollController.<span class="hljs-title function_">addListener</span>(() &#123;<br>      <span class="hljs-comment">// 下拉高度大于10时，显示返回顶部按钮</span><br>      <span class="hljs-keyword">final</span> pixels = scrollController.position.pixels;<br>      <span class="hljs-comment">// 根据滚动位置更新 flag 值</span><br>      <span class="hljs-keyword">if</span> (pixels &gt;= <span class="hljs-number">10</span> &amp;&amp; !flag.value) &#123;<br>        flag.value = <span class="hljs-keyword">true</span>;<br>        <span class="hljs-title function_">update</span>(); <span class="hljs-comment">// 显示返回顶部按钮</span><br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pixels &lt; <span class="hljs-number">10</span> &amp;&amp; flag.value) &#123;<br>        flag.value = <span class="hljs-keyword">false</span>;<br>        <span class="hljs-title function_">update</span>(); <span class="hljs-comment">// 隐藏返回顶部按钮</span><br>      &#125;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-comment">/// <span class="language-markdown">获取焦点数据</span></span><br>  <span class="hljs-title function_">getFocusData</span>() <span class="hljs-keyword">async</span> &#123;<br>    <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Dio</span>().<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;https://miapp.itying.com/api/focus&quot;</span>);<br>    swiperList.value = response.data[<span class="hljs-string">&quot;result&quot;</span>];<br>    <span class="hljs-title function_">update</span>();<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="模型类"><a href="#模型类" class="headerlink" title="模型类"></a>模型类</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">/// <span class="language-markdown">焦点数据模型</span></span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FocusModel</span> </span>&#123;<br>  <span class="hljs-title class_">String</span>? sId;<br>  <span class="hljs-title class_">String</span>? title;<br>  <span class="hljs-title class_">String</span>? status;<br>  <span class="hljs-title class_">String</span>? pic;<br>  <span class="hljs-title class_">String</span>? url;<br><br>  <span class="hljs-title class_">FocusModel</span>(&#123;<span class="hljs-keyword">this</span>.sId, <span class="hljs-keyword">this</span>.title, <span class="hljs-keyword">this</span>.status, <span class="hljs-keyword">this</span>.pic, <span class="hljs-keyword">this</span>.url&#125;);<br><br>  <span class="hljs-title class_">FocusModel</span>.<span class="hljs-title function_">fromJson</span>(<span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; json) &#123;<br>    sId = json[<span class="hljs-string">&#x27;_id&#x27;</span>];<br>    title = json[<span class="hljs-string">&#x27;title&#x27;</span>];<br>    status = json[<span class="hljs-string">&#x27;status&#x27;</span>];<br>    pic = json[<span class="hljs-string">&#x27;pic&#x27;</span>];<br>    url = json[<span class="hljs-string">&#x27;url&#x27;</span>];<br>  &#125;<br><br>  <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; <span class="hljs-title function_">toJson</span>() &#123;<br>    <span class="hljs-keyword">final</span> <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; data = &lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt;&#123;&#125;;<br>    data[<span class="hljs-string">&#x27;_id&#x27;</span>] = sId;<br>    data[<span class="hljs-string">&#x27;title&#x27;</span>] = title;<br>    data[<span class="hljs-string">&#x27;status&#x27;</span>] = status;<br>    data[<span class="hljs-string">&#x27;pic&#x27;</span>] = pic;<br>    data[<span class="hljs-string">&#x27;url&#x27;</span>] = url;<br>    <span class="hljs-keyword">return</span> data;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="在线网站生成"><a href="#在线网站生成" class="headerlink" title="在线网站生成"></a>在线网站生成</h3><p><a target="_blank" rel="noopener" href="https://autocode.icu/jsontodart">https://autocode.icu/jsontodart</a></p>
+<h3 id="get-cli-生成"><a href="#get-cli-生成" class="headerlink" title="get_cli 生成"></a>get_cli 生成</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs verilog">get <span class="hljs-keyword">generate</span> model on models from <span class="hljs-string">&quot;https://miapp.itying.com/api/focus&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Focus</span> </span>&#123;<br>  <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">Result</span>&gt;? result;<br><br>  <span class="hljs-title class_">Focus</span>(&#123;<span class="hljs-keyword">this</span>.result&#125;);<br><br>  <span class="hljs-title class_">Focus</span>.<span class="hljs-title function_">fromJson</span>(<span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; json) &#123;<br>    <span class="hljs-keyword">if</span> (json[<span class="hljs-string">&#x27;result&#x27;</span>] != <span class="hljs-keyword">null</span>) &#123;<br>      result = &lt;<span class="hljs-title class_">Result</span>&gt;[];<br>      json[<span class="hljs-string">&#x27;result&#x27;</span>].<span class="hljs-title function_">forEach</span>((v) &#123;<br>        result?.<span class="hljs-title function_">add</span>(<span class="hljs-title class_">Result</span>.<span class="hljs-title function_">fromJson</span>(v));<br>      &#125;);<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; <span class="hljs-title function_">toJson</span>() &#123;<br>    <span class="hljs-keyword">final</span> data = &lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt;&#123;&#125;;<br>    <span class="hljs-keyword">if</span> (result != <span class="hljs-keyword">null</span>) &#123;<br>      data[<span class="hljs-string">&#x27;result&#x27;</span>] = result?.<span class="hljs-title function_">map</span>((v) =&gt; v.<span class="hljs-title function_">toJson</span>()).<span class="hljs-title function_">toList</span>();<br>    &#125;<br>    <span class="hljs-keyword">return</span> data;<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Result</span> </span>&#123;<br>  <span class="hljs-title class_">String</span>? sId;<br>  <span class="hljs-title class_">String</span>? title;<br>  <span class="hljs-title class_">String</span>? status;<br>  <span class="hljs-title class_">String</span>? pic;<br>  <span class="hljs-title class_">String</span>? url;<br>  <span class="hljs-built_in">int?</span> position;<br><br>  <span class="hljs-title class_">Result</span>(<br>      &#123;<span class="hljs-keyword">this</span>.sId, <span class="hljs-keyword">this</span>.title, <span class="hljs-keyword">this</span>.status, <span class="hljs-keyword">this</span>.pic, <span class="hljs-keyword">this</span>.url, <span class="hljs-keyword">this</span>.position&#125;);<br><br>  <span class="hljs-title class_">Result</span>.<span class="hljs-title function_">fromJson</span>(<span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; json) &#123;<br>    sId = json[<span class="hljs-string">&#x27;_id&#x27;</span>];<br>    title = json[<span class="hljs-string">&#x27;title&#x27;</span>];<br>    status = json[<span class="hljs-string">&#x27;status&#x27;</span>];<br>    pic = json[<span class="hljs-string">&#x27;pic&#x27;</span>];<br>    url = json[<span class="hljs-string">&#x27;url&#x27;</span>];<br>    position = json[<span class="hljs-string">&#x27;position&#x27;</span>];<br>  &#125;<br><br>  <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt; <span class="hljs-title function_">toJson</span>() &#123;<br>    <span class="hljs-keyword">final</span> data = &lt;<span class="hljs-title class_">String</span>, <span class="hljs-built_in">dynamic</span>&gt;&#123;&#125;;<br>    data[<span class="hljs-string">&#x27;_id&#x27;</span>] = sId;<br>    data[<span class="hljs-string">&#x27;title&#x27;</span>] = title;<br>    data[<span class="hljs-string">&#x27;status&#x27;</span>] = status;<br>    data[<span class="hljs-string">&#x27;pic&#x27;</span>] = pic;<br>    data[<span class="hljs-string">&#x27;url&#x27;</span>] = url;<br>    data[<span class="hljs-string">&#x27;position&#x27;</span>] = position;<br>    <span class="hljs-keyword">return</span> data;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用第三方库生成"><a href="#使用第三方库生成" class="headerlink" title="使用第三方库生成"></a>使用第三方库生成</h3><p><a target="_blank" rel="noopener" href="https://doc.flutterchina.club/json/">https://doc.flutterchina.club/json/</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">/// <span class="language-markdown">获取焦点数据</span></span><br>  <span class="hljs-title function_">getFocusData</span>() <span class="hljs-keyword">async</span> &#123;<br>    <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Dio</span>().<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;https://miapp.itying.com/api/focus&quot;</span>);<br>    <span class="hljs-title function_">print</span>(response.data[<span class="hljs-string">&quot;result&quot;</span>]);<br>    <span class="hljs-title class_">FocusModel</span> focusModel = <span class="hljs-title class_">FocusModel</span>.<span class="hljs-title function_">fromJson</span>(response.data);<br>    swiperList.value = focusModel.result!;<br>    <span class="hljs-title function_">update</span>();<br>  &#125;<br><br><span class="hljs-title class_">String</span> picUrl = <span class="hljs-string">&quot;https://miapp.itying.com/<span class="hljs-subst">$&#123;controller.swiperList[index].pic&#125;</span>&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="轮播分类数据渲染"><a href="#轮播分类数据渲染" class="headerlink" title="轮播分类数据渲染"></a>轮播分类数据渲染</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 配置本地资源图片</span><br><span class="hljs-attr">flutter:</span><br>  <span class="hljs-attr">assets:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">assets/images/xiaomiBanner.png</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">assets/images/2.0x/xiaomiBanner.png</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">assets/images/3.0x/xiaomiBanner.png</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-comment">/// <span class="language-markdown">分类</span></span><br>  <span class="hljs-title class_">Widget</span> <span class="hljs-title function_">_category</span>() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">SizedBox</span>(<br>      width: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">getScreenWidth</span>(),<br>      height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">470</span>),<br>      child: <span class="hljs-title class_">Obx</span>(() =&gt; <span class="hljs-title class_">Swiper</span>(<br>            itemBuilder: (context, index) &#123;<br>              <span class="hljs-keyword">return</span> <span class="hljs-title class_">GridView</span>.<span class="hljs-title function_">builder</span>(<br>                  itemCount: <span class="hljs-number">10</span>,<br>                  gridDelegate: <span class="hljs-title class_">SliverGridDelegateWithFixedCrossAxisCount</span>(<br>                    crossAxisCount: <span class="hljs-number">5</span>,<br>                    crossAxisSpacing: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">width</span>(<span class="hljs-number">20</span>),<br>                    mainAxisSpacing: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">20</span>),<br>                  ),<br>                  itemBuilder: (context, i) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Column</span>(<br>                      children: [<br>                        <span class="hljs-title class_">Container</span>(<br>                          alignment: <span class="hljs-title class_">Alignment</span>.center,<br>                          width: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">140</span>),<br>                          height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">140</span>),<br>                          child: <span class="hljs-title class_">Image</span>.<span class="hljs-title function_">network</span>(<br>                            <span class="hljs-string">&quot;https://miapp.itying.com/<span class="hljs-subst">$&#123;controller.categoryList[index * <span class="hljs-number">10</span> + i].pic&#125;</span>&quot;</span>,<br>                            fit: <span class="hljs-title class_">BoxFit</span>.fitHeight,<br>                          ),<br>                        ),<br>                        <span class="hljs-title class_">Padding</span>(<br>                          padding: <span class="hljs-title class_">EdgeInsets</span>.<span class="hljs-title function_">fromLTRB</span>(<br>                              <span class="hljs-number">0</span>, <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">4</span>), <span class="hljs-number">0</span>, <span class="hljs-number">0</span>),<br>                          child: <span class="hljs-title class_">Text</span>(<br>                            <span class="hljs-string">&quot;<span class="hljs-subst">$&#123;controller.categoryList[index * <span class="hljs-number">10</span> + i].title&#125;</span>&quot;</span>,<br>                            style:<br>                                <span class="hljs-title class_">TextStyle</span>(fontSize: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">fontSize</span>(<span class="hljs-number">34</span>)),<br>                          ),<br>                        )<br>                      ],<br>                    );<br>                  &#125;);<br>            &#125;,<br>            itemCount: controller.categoryList.length ~/ <span class="hljs-number">10</span>, <span class="hljs-comment">// 取整</span><br>            <span class="hljs-comment">// 自定义指示器</span><br>            pagination: <span class="hljs-title class_">SwiperPagination</span>(<br>              margin: <span class="hljs-keyword">const</span> <span class="hljs-title class_">EdgeInsets</span>.<span class="hljs-title function_">all</span>(<span class="hljs-number">0.0</span>),<br>              builder: <span class="hljs-title class_">SwiperCustomPagination</span>(<br>                  builder: (<span class="hljs-title class_">BuildContext</span> context, <span class="hljs-title class_">SwiperPluginConfig</span> config) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-title class_">ConstrainedBox</span>(<br>                    constraints:<br>                        <span class="hljs-title class_">BoxConstraints</span>.<span class="hljs-title function_">expand</span>(height: <span class="hljs-title class_">ScreenAdapter</span>.<span class="hljs-title function_">height</span>(<span class="hljs-number">20</span>)),<br>                    child: <span class="hljs-title class_">Row</span>(<br>                      children: &lt;<span class="hljs-title class_">Widget</span>&gt;[<br>                        <span class="hljs-title class_">Expanded</span>(<br>                          child: <span class="hljs-title class_">Align</span>(<br>                            alignment: <span class="hljs-title class_">Alignment</span>.center,<br>                            child: <span class="hljs-keyword">const</span> <span class="hljs-title class_">RectSwiperPaginationBuilder</span>(<br>                                    color: <span class="hljs-title class_">Colors</span>.black12,<br>                                    activeColor: <span class="hljs-title class_">Colors</span>.black54)<br>                                .<span class="hljs-title function_">build</span>(context, config),<br>                          ),<br>                        )<br>                      ],<br>                    ));<br>              &#125;),<br>            ),<br>          )),<br>    );<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="封装Dio"><a href="#封装Dio" class="headerlink" title="封装Dio"></a>封装Dio</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:dio/dio.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:fluttertoast/fluttertoast.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HttpsClient</span> </span>&#123;<br>  <span class="hljs-keyword">static</span> <span class="hljs-title class_">String</span> domain = <span class="hljs-string">&quot;https://miapp.itying.com/&quot;</span>;<br>  <span class="hljs-keyword">static</span> <span class="hljs-title class_">Dio</span> dio = <span class="hljs-title class_">Dio</span>();<br><br>  <span class="hljs-title class_">HttpsClient</span>() &#123;<br>    <span class="hljs-title class_">BaseOptions</span> options = <span class="hljs-title class_">BaseOptions</span>();<br>    options.baseUrl = domain;<br>    <span class="hljs-comment">// 超时时间</span><br>    options.connectTimeout = <span class="hljs-keyword">const</span> <span class="hljs-title class_">Duration</span>(seconds: <span class="hljs-number">5</span>);<br>    <span class="hljs-comment">// 接收数据超时时间</span><br>    options.receiveTimeout = <span class="hljs-keyword">const</span> <span class="hljs-title class_">Duration</span>(seconds: <span class="hljs-number">5</span>);<br>    <span class="hljs-comment">// 响应数据格式</span><br>    options.responseType = <span class="hljs-title class_">ResponseType</span>.json;<br>    dio.options = options;<br>  &#125;<br><br>  <span class="hljs-title class_">Future</span>&lt;<span class="hljs-built_in">dynamic</span>&gt; <span class="hljs-title function_">get</span>(<span class="hljs-title class_">String</span> url) <span class="hljs-keyword">async</span> &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">var</span> response = dio.<span class="hljs-title function_">get</span>(url);<br>      <span class="hljs-keyword">return</span> response;<br>    &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>      <span class="hljs-title class_">Fluttertoast</span>.<span class="hljs-title function_">showToast</span>(<br>          msg: <span class="hljs-string">&quot;请求数据异常&quot;</span>,<br>          toastLength: <span class="hljs-title class_">Toast</span>.LENGTH_SHORT,<br>          gravity: <span class="hljs-title class_">ToastGravity</span>.CENTER,<br>          timeInSecForIosWeb: <span class="hljs-number">1</span>,<br>          backgroundColor: <span class="hljs-title class_">Colors</span>.red,<br>          textColor: <span class="hljs-title class_">Colors</span>.white,<br>          fontSize: <span class="hljs-number">16.0</span>);<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">static</span> <span class="hljs-title function_">replaceUri</span>(pic) &#123;<br>    <span class="hljs-title class_">String</span> picUrl = domain + pic;<br>    <span class="hljs-keyword">return</span> picUrl.<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">&quot;\\&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>);<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="封装GetX"><a href="#封装GetX" class="headerlink" title="封装GetX"></a>封装GetX</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/Flutter/" class="category-chain-item">Flutter</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%89%8D%E7%AB%AF/Flutter/Dart/" class="category-chain-item">Dart</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Flutter/" class="print-no-link">#Flutter</a>
+      
+        <a href="/tags/Getx/" class="print-no-link">#Getx</a>
+      
+        <a href="/tags/Dio/" class="print-no-link">#Dio</a>
+      
+        <a href="/tags/flutter-screenutil/" class="print-no-link">#flutter_screenutil</a>
+      
+        <a href="/tags/flutter-swiper-view/" class="print-no-link">#flutter_swiper_view</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flutter GetX 实战&lt;小米商城&gt;</div>
+      <div>https://jhyjhy.cn/posts/前端/FlutterGetX实战/64979/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>jhy</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E5%89%8D%E7%AB%AF/Flutter/get_cli%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/40222/" title="get_cli安装和使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">get_cli安装和使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://jhyjhy.cn/posts/%E5%89%8D%E7%AB%AF/FlutterGetX%E5%AE%9E%E6%88%98/64979/';
+          this.page.identifier = '/posts/%E5%89%8D%E7%AB%AF/FlutterGetX%E5%AE%9E%E6%88%98/64979/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2024115712号
+    </a>
+  </span>
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

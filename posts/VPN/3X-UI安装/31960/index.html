@@ -1,0 +1,1342 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en-US,default" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hongyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录一下 Ubuntu 24.04 VPS 安装 3X-UI 3.7.0 的过程，以及三种入站的配置：VLESS + TCP + REALITY、Hysteria2、VLESS + WebSocket + TLS。 本文按现有入站整理成可复用步骤。域名统一替换为 node.example.com，UUID、密码和密钥需要重新生成。文中的命令在 VPS 的 Ubuntu Bash 终端执行，不是在本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 24.04 安装 3X-UI 3.7.0：REALITY、Hysteria2 与 VLESS-WS 配置笔记">
+<meta property="og:url" content="https://jhyjhy.cn/posts/VPN/3X-UI%E5%AE%89%E8%A3%85/31960/index.html">
+<meta property="og:site_name" content="Hongyu&#39;s Blog">
+<meta property="og:description" content="记录一下 Ubuntu 24.04 VPS 安装 3X-UI 3.7.0 的过程，以及三种入站的配置：VLESS + TCP + REALITY、Hysteria2、VLESS + WebSocket + TLS。 本文按现有入站整理成可复用步骤。域名统一替换为 node.example.com，UUID、密码和密钥需要重新生成。文中的命令在 VPS 的 Ubuntu Bash 终端执行，不是在本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+<meta property="article:published_time" content="2026-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T16:00:00.000Z">
+<meta property="article:author" content="Hongyu">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="3X-UI">
+<meta property="article:tag" content="Xray">
+<meta property="article:tag" content="VPS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Ubuntu 24.04 安装 3X-UI 3.7.0：REALITY、Hysteria2 与 VLESS-WS 配置笔记 - Hongyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jhyjhy.cn","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hongyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/assets/images/index/index.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Ubuntu 24.04 安装 3X-UI 3.7.0：REALITY、Hysteria2 与 VLESS-WS 配置笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-05 00:00" pubdate>
+          2026年9月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          8.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          68 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Ubuntu 24.04 安装 3X-UI 3.7.0：REALITY、Hysteria2 与 VLESS-WS 配置笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>记录一下 Ubuntu 24.04 VPS 安装 3X-UI 3.7.0 的过程，以及三种入站的配置：VLESS + TCP + REALITY、Hysteria2、VLESS + WebSocket + TLS。</p>
+<p>本文按现有入站整理成可复用步骤。域名统一替换为 <code>node.example.com</code>，UUID、密码和密钥需要重新生成。文中的命令在 <strong>VPS 的 Ubuntu Bash 终端</strong>执行，不是在本地 Windows PowerShell 中执行。</p>
+<span id="more"></span>
+
+<p>下图来自已搭建的 3X-UI 3.7.0 面板。截图中的节点标识、域名、路径、密码等已遮盖，正文使用示例值；截图展示原有配置，基础搭建建议以各节文字说明为准。</p>
+<p><img src="/assets/images/3x-ui/overview.png" srcset="/img/loading.gif" lazyload alt="3X-UI 三种入站总览，节点 ID、备注及流量已脱敏"></p>
+<h2 id="一、先规划域名和端口"><a href="#一、先规划域名和端口" class="headerlink" title="一、先规划域名和端口"></a>一、先规划域名和端口</h2><p>准备一台 Ubuntu 24.04 VPS、可使用 sudo 的 SSH 账号，以及一个自己管理的域名。给 <code>node.example.com</code> 添加 A 记录，指向 VPS 公网 IPv4。只有服务器确实能使用 IPv6 时才添加 AAAA 记录。</p>
+<p>本文采用直接连接 VPS 的方式。使用 Cloudflare DNS 时，节点域名设为 <strong>仅 DNS（灰云）</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>端口</th>
+<th>协议</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SSH</td>
+<td>实际 SSH 端口，通常为 22</td>
+<td>TCP</td>
+<td>启用防火墙前先放行</td>
+</tr>
+<tr>
+<td>HTTP-01 证书验证</td>
+<td>80</td>
+<td>TCP</td>
+<td>本文使用 standalone 申请及续期</td>
+</tr>
+<tr>
+<td>3X-UI 面板</td>
+<td>自定义，例如 2053</td>
+<td>TCP</td>
+<td>与三个入站端口分开</td>
+</tr>
+<tr>
+<td>VLESS + REALITY</td>
+<td>443</td>
+<td>TCP</td>
+<td>不需要自己的域名证书</td>
+</tr>
+<tr>
+<td>Hysteria2</td>
+<td>10001</td>
+<td>UDP</td>
+<td>使用域名证书</td>
+</tr>
+<tr>
+<td>VLESS + WS + TLS</td>
+<td>10002</td>
+<td>TCP</td>
+<td>使用域名证书</td>
+</tr>
+<tr>
+<td>Hysteria2 跳端口，可选</td>
+<td>48000–50000</td>
+<td>UDP</td>
+<td>还需要转发到 10001</td>
+</tr>
+</tbody></table>
+<p>VPS 厂商的安全组和 Ubuntu 的 UFW 是两层规则，上述需要从公网访问的端口，两边都要放行。面板端口建议只允许自己的管理公网 IP。</p>
+<h2 id="二、系统准备和防火墙"><a href="#二、系统准备和防火墙" class="headerlink" title="二、系统准备和防火墙"></a>二、系统准备和防火墙</h2><p>先进入 root 会话：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> -i<br>apt update<br>apt install -y curl ca-certificates openssl socat ufw<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-先确认并放行-SSH"><a href="#1-先确认并放行-SSH" class="headerlink" title="1. 先确认并放行 SSH"></a>1. 先确认并放行 SSH</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -lntp<br>ufw status verbose<br></code></pre></td></tr></table></figure>
+
+<p>在输出中确认 sshd 的实际监听端口。下面假定是 <code>22</code>，如果修改过 SSH 端口，必须把命令一起修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw allow 22/tcp comment <span class="hljs-string">&#x27;SSH&#x27;</span><br>ufw default deny incoming<br>ufw default allow outgoing<br>ufw allow 80/tcp comment <span class="hljs-string">&#x27;ACME HTTP-01&#x27;</span><br>ufw allow 443/tcp comment <span class="hljs-string">&#x27;VLESS REALITY&#x27;</span><br>ufw allow 10001/udp comment <span class="hljs-string">&#x27;Hysteria2&#x27;</span><br>ufw allow 10002/tcp comment <span class="hljs-string">&#x27;VLESS WS TLS&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>面板计划使用 <code>2053</code>。把以下 <code>198.51.100.10</code> 替换为自己的管理公网 IP；它只是文档示例地址，不能直接照抄：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw allow from 198.51.100.10 to any port 2053 proto tcp comment <span class="hljs-string">&#x27;3X-UI admin&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>检查规则后启用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw show added<br>ufw <span class="hljs-built_in">enable</span><br>ufw status verbose<br></code></pre></td></tr></table></figure>
+
+<p><strong>保留当前 SSH 窗口，再新开一个窗口测试 SSH 登录。</strong> 确认能重新登录后再关闭旧会话。已有其他业务的 VPS，需要先补齐它们的入站规则。</p>
+<p>UFW 的开启和按来源 IP 放行方式见 <a target="_blank" rel="noopener" href="https://ubuntu.com/server/docs/how-to/security/firewalls/">Ubuntu 官方防火墙文档</a>。</p>
+<h2 id="三、安装指定版本-3X-UI"><a href="#三、安装指定版本-3X-UI" class="headerlink" title="三、安装指定版本 3X-UI"></a>三、安装指定版本 3X-UI</h2><p>这里固定安装 <code>v3.7.0</code>，脚本和版本参数都指定版本，避免将来重复执行时装成其他版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fL https://raw.githubusercontent.com/MHSanaei/3x-ui/v3.7.0/install.sh -o /root/install-3x-ui-v3.7.0.sh<br>bash /root/install-3x-ui-v3.7.0.sh v3.7.0<br></code></pre></td></tr></table></figure>
+
+<p>下载成功后再运行第二条命令。安装时根据提示设置账号、密码、面板端口和访问路径。本文端口规划为 <code>2053</code>，如果选择其他端口，要同步修改 UFW 和安全组。</p>
+<p>域名已经解析好、80 端口已放行时，可以按安装器提示申请域名证书。记录安装完成输出的完整访问地址，包括协议、端口和随机路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl status x-ui --no-pager<br>systemctl is-enabled x-ui<br>x-ui<br></code></pre></td></tr></table></figure>
+
+<p>在面板中确认版本为 <strong>3.7.0</strong>，同时记录实际 Xray 内核版本。面板版本和内核版本不是同一个东西，后面的高级选项也受客户端和内核版本影响。</p>
+<p>安装器的版本参数和证书流程可查看 <a target="_blank" rel="noopener" href="https://github.com/MHSanaei/3x-ui/blob/v3.7.0/install.sh">v3.7.0 官方安装脚本</a>。</p>
+<h2 id="四、申请-TLS-证书"><a href="#四、申请-TLS-证书" class="headerlink" title="四、申请 TLS 证书"></a>四、申请 TLS 证书</h2><p>REALITY 不使用自己的域名证书；Hysteria2、VLESS-WS 和面板 HTTPS 可以使用同一域名对应的证书文件。</p>
+<p>如果安装器已经成功生成下面两个文件，可以直接复用：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">/root/cert/node.example.com/fullchain.pem<br>/root/cert/node.example.com/privkey.pem<br></code></pre></td></tr></table></figure>
+
+<p>如果尚未申请，可运行 <code>x-ui</code>，进入证书管理功能；也可以按下面的 acme.sh 流程手动申请。两种方法选择一种即可。</p>
+<p>下图展示入站安全页的证书路径填写位置。面板这里的“公钥”字段填写完整证书链文件路径，“私钥”字段填写对应私钥文件路径，不是填写 REALITY 公钥。</p>
+<p><img src="/assets/images/3x-ui/cert.png" srcset="/img/loading.gif" lazyload alt="TLS 数字证书路径配置，实际路径已遮盖"></p>
+<h3 id="1-申请并安装证书"><a href="#1-申请并安装证书" class="headerlink" title="1. 申请并安装证书"></a>1. 申请并安装证书</h3><p>确认域名解析正确，公网 TCP 80 可以访问，并且本机没有其他服务占用 80：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -lntp <span class="hljs-string">&#x27;( sport = :80 )&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>下面所有 <code>node.example.com</code> 和邮箱都要替换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -fL https://get.acme.sh -o /root/install-acme.sh<br>sh /root/install-acme.sh email=your-email@example.com<br>/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt<br>/root/.acme.sh/acme.sh --issue -d node.example.com --standalone --keylength ec-256<br><span class="hljs-built_in">mkdir</span> -p /root/cert/node.example.com<br>/root/.acme.sh/acme.sh --install-cert -d node.example.com --ecc \<br>  --key-file /root/cert/node.example.com/privkey.pem \<br>  --fullchain-file /root/cert/node.example.com/fullchain.pem \<br>  --reloadcmd <span class="hljs-string">&#x27;systemctl restart x-ui&#x27;</span><br><span class="hljs-built_in">chmod</span> 600 /root/cert/node.example.com/privkey.pem<br></code></pre></td></tr></table></figure>
+
+<p>每一步成功后再继续。不要直接引用 acme.sh 内部工作目录中的证书，使用 <code>--install-cert</code> 部署到固定路径，续期时才能同步更新并执行重载命令。这也是 <a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh#3-issue-a-cert">acme.sh 官方说明</a> 推荐的使用方式。</p>
+<h3 id="2-配置面板-HTTPS-和续期"><a href="#2-配置面板-HTTPS-和续期" class="headerlink" title="2. 配置面板 HTTPS 和续期"></a>2. 配置面板 HTTPS 和续期</h3><p>在面板设置中填写完整证书链和私钥路径，保存并按提示重启。后续使用安装器或面板显示的 HTTPS 地址访问。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">openssl x509 -<span class="hljs-keyword">in</span> /root/cert/node.example.com/fullchain.pem -noout -dates -issuer -ext subjectAltName<br>crontab -l<br></code></pre></td></tr></table></figure>
+
+<p>确认有 acme.sh 的定时任务。本文使用 HTTP-01 standalone，<strong>后续续期仍需要 TCP 80 可访问且可被验证程序绑定</strong>。以后增加 Nginx 占用 80 时，应同步调整验证方式，不能只看第一次申请成功。</p>
+<p>续期重启 <code>x-ui</code> 会短暂影响连接。若自行修改过服务运行用户，还要确认该用户能读取证书和私钥。</p>
+<h2 id="五、VLESS-TCP-REALITY"><a href="#五、VLESS-TCP-REALITY" class="headerlink" title="五、VLESS + TCP + REALITY"></a>五、VLESS + TCP + REALITY</h2><p>在入站列表中新建入站，按以下字段填写：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>备注</td>
+<td>reality-demo</td>
+</tr>
+<tr>
+<td>协议</td>
+<td>VLESS</td>
+</tr>
+<tr>
+<td>监听地址</td>
+<td>留空，使用默认监听</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>443</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>在面板中新生成</td>
+</tr>
+<tr>
+<td>Flow</td>
+<td>留空，与原配置一致</td>
+</tr>
+<tr>
+<td>Decryption &#x2F; Encryption</td>
+<td>none &#x2F; none</td>
+</tr>
+<tr>
+<td>传输</td>
+<td>TCP，部分内核称 RAW</td>
+</tr>
+<tr>
+<td>TCP 伪装</td>
+<td>none</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>REALITY</td>
+</tr>
+<tr>
+<td>Target</td>
+<td>经检测可用的目标域名:443</td>
+</tr>
+<tr>
+<td>Server Names</td>
+<td>目标站实际接受的 SNI</td>
+</tr>
+<tr>
+<td>Private Key &#x2F; Public Key</td>
+<td>面板生成一对新的密钥</td>
+</tr>
+<tr>
+<td>Short ID</td>
+<td>面板生成</td>
+</tr>
+<tr>
+<td>Fingerprint</td>
+<td>chrome</td>
+</tr>
+<tr>
+<td>SpiderX</td>
+<td>可保留默认值或自行设置路径</td>
+</tr>
+</tbody></table>
+<p><img src="/assets/images/3x-ui/reality.png" srcset="/img/loading.gif" lazyload alt="REALITY 安全配置，目标域名、SNI、Short ID 和 SpiderX 已遮盖"></p>
+<p>图中保留原配置的最小客户端版本供对照；密钥区域未纳入截图。原配置使用 Cloudflare 目标站，并填写了多个 SNI。整理笔记时不要把这些域名当成通用模板：<strong>先检测目标站支持 TLS 1.3 和 H2，并确认 SNI 与目标站证书及握手行为匹配。</strong> 未确认的 SNI 不加入列表。</p>
+<p>另外，REALITY 会把未通过认证的连接转给目标站。官方特别提醒使用 Cloudflare 等 CDN 目标可能带来转发滥用问题，选目标时应考虑这一点。字段含义见 <a target="_blank" rel="noopener" href="https://xtls.github.io/config/transports/reality.html">REALITY 配置说明</a> 和 <a target="_blank" rel="noopener" href="https://github.com/XTLS/REALITY/blob/main/README.en.md">目标站选择说明</a>。</p>
+<p>原配置的 <code>minClientVer: 1.8.2</code> 不代表所有客户端都适用；它限制的是 Xray 内核版本。新建时按当前内核默认设置和实际客户端兼容性配置，不盲目沿用旧值。</p>
+<p>嗅探可沿用原配置：开启，目标覆盖选择 <code>http</code>、<code>tls</code>、<code>quic</code>，并开启 <code>routeOnly</code>。</p>
+<h3 id="客户端需要对应什么"><a href="#客户端需要对应什么" class="headerlink" title="客户端需要对应什么"></a>客户端需要对应什么</h3><p>保存后用面板生成的分享链接或二维码导入，再检查：</p>
+<ul>
+<li>服务器：VPS 公网 IP，或直连 VPS 的灰云域名。</li>
+<li>端口：443；协议：VLESS；传输：TCP&#x2F;RAW；安全：REALITY。</li>
+<li>UUID：与服务端一致。</li>
+<li>SNI：服务端 Server Names 列表中的一个有效值。</li>
+<li>Public Key：服务端公钥；Short ID：服务端列表中的一个值。</li>
+<li>Fingerprint：chrome；Flow：与服务端一致，本文留空。</li>
+</ul>
+<p>私钥只保留在服务器端。若要启用 <code>xtls-rprx-vision</code>，需要两端一起修改，不能把留空的配置写成“已经启用 Vision”。</p>
+<h2 id="六、Hysteria2-入站"><a href="#六、Hysteria2-入站" class="headerlink" title="六、Hysteria2 入站"></a>六、Hysteria2 入站</h2><p>3X-UI 中协议名称是 <code>hysteria</code>，版本为 <code>2</code>，分享链接使用 <code>hysteria2://</code>。不能因为协议名没有数字 2，就改装另一套 Hysteria 服务。对应关系可以在 <a target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/mhsanaei/3x-ui/v3@v3.7.0/internal/database/model">3X-UI v3.7.0 数据模型</a> 中核对。</p>
+<h3 id="1-先配置固定端口"><a href="#1-先配置固定端口" class="headerlink" title="1. 先配置固定端口"></a>1. 先配置固定端口</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>备注</td>
+<td>hysteria-demo</td>
+</tr>
+<tr>
+<td>协议 &#x2F; 版本</td>
+<td>hysteria &#x2F; 2</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>10001，UDP</td>
+</tr>
+<tr>
+<td>客户端认证 Auth</td>
+<td>新生成的强密码</td>
+</tr>
+<tr>
+<td>传输 &#x2F; 版本</td>
+<td>hysteria &#x2F; 2</td>
+</tr>
+<tr>
+<td>UDP Idle Timeout</td>
+<td>60</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>TLS</td>
+</tr>
+<tr>
+<td>Server Name</td>
+<td>node.example.com</td>
+</tr>
+<tr>
+<td>证书 &#x2F; 私钥</td>
+<td>上文两个固定路径</td>
+</tr>
+<tr>
+<td>ALPN</td>
+<td>h3</td>
+</tr>
+<tr>
+<td>Salamander</td>
+<td>开启时生成独立混淆密码</td>
+</tr>
+<tr>
+<td>Sniffing</td>
+<td>关闭，与原配置一致</td>
+</tr>
+</tbody></table>
+<p><img src="/assets/images/3x-ui/hysteria.png" srcset="/img/loading.gif" lazyload alt="Hysteria2 传输与 Salamander 混淆设置，密码已遮盖"></p>
+<p>图中的 Password 是 Salamander 混淆密码。用户 Auth 在客户端管理中设置，并不在此处填写。</p>
+<p>原导出中的 <code>auth</code>、<code>password</code> 和 Salamander 的 <code>password</code> 不要混用。Hysteria 用户认证使用客户端记录的 <code>auth</code>；Salamander 是额外的混淆密码，两端都要一致。共享用户记录可能带有其他协议的字段，不代表它们都参与当前协议认证。</p>
+<p>原配置使用 <code>finalmask.quicParams.congestion: bbr</code>，可以作为已有配置记录保留。QUIC 的 BBR 与系统 TCP BBR 不是同一项开关。</p>
+<p>原窗口参数为流窗口 <code>8388608</code>、连接窗口 <code>20971520</code>，空闲超时 <code>30</code>、KeepAlive <code>10</code>、最大入站流 <code>1024</code>。首次搭建可先用面板默认窗口值，连通后再按需要调整，不把这些数字当成任何 VPS 都适用的提速参数。参见 <a target="_blank" rel="noopener" href="https://xtls.github.io/config/transports/hysteria.html">Xray Hysteria 传输</a> 和 <a target="_blank" rel="noopener" href="https://xtls.github.io/config/transports/finalmask.html">FinalMask 配置</a>。</p>
+<h3 id="2-客户端配置"><a href="#2-客户端配置" class="headerlink" title="2. 客户端配置"></a>2. 客户端配置</h3><p>先关闭跳端口，用固定 <code>10001</code> 验证：</p>
+<ul>
+<li>服务器：node.example.com；端口：10001；协议：Hysteria2。</li>
+<li>认证密码：服务端用户 Auth。</li>
+<li>SNI：node.example.com；ALPN：h3。</li>
+<li>开启证书校验，不启用 Allow insecure &#x2F; 跳过验证。</li>
+<li>如果服务端启用 Salamander，客户端也选择 Salamander 并填相同混淆密码。</li>
+</ul>
+<p>优先导入面板分享链接，检查当前客户端是否支持 Hysteria2、混淆和跳端口参数。TCP 连通测试不能验证 UDP 节点是否可用。</p>
+<h3 id="3-可选：48000–50000-端口跳跃"><a href="#3-可选：48000–50000-端口跳跃" class="headerlink" title="3. 可选：48000–50000 端口跳跃"></a>3. 可选：48000–50000 端口跳跃</h3><p><img src="/assets/images/3x-ui/hysteria-hop.png" srcset="/img/loading.gif" lazyload alt="Hysteria2 QUIC 与 UDP Hop 设置，展示端口范围及跳跃间隔"></p>
+<p>原配置中的 <code>udpHop.ports</code> 为 <code>48000-50000</code>，<code>interval</code> 为 <code>5-10</code>。不能只保存这一项、放行一段端口，就认定服务端的跳端口链路已经完成。</p>
+<p>本文采用明确的路径：<strong>客户端访问 48000–50000&#x2F;UDP，服务器将这些端口转发到 Hysteria2 的 10001&#x2F;UDP。</strong> 先检查是否已有面板或系统规则，避免重复配置。官方 Hysteria 独立服务的自动跳端口功能，不等于所有 Xray 安装都会自动创建同样的规则。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw allow 48000:50000/udp comment <span class="hljs-string">&#x27;Hysteria2 hopping&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>厂商安全组同步放行这段 UDP 端口。使用 UFW 管理持久规则时，可以在 <code>/etc/ufw/before.rules</code> 的 <code>*filter</code> 块前增加一个独立 NAT 块；如果已有 <code>*nat</code>，把规则合并到已有块中，不要覆盖原文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">*nat<br>:PREROUTING ACCEPT [0:0]<br>-A PREROUTING -i ens3 -p udp --dport 48000:50000 -j REDIRECT --to-ports 10001<br>COMMIT<br></code></pre></td></tr></table></figure>
+
+<p><code>ens3</code> 是示例网卡名，先运行 <code>ip route show default</code> 查看实际公网入口网卡，再替换。使用 IPv6 时，在 <code>/etc/ufw/before6.rules</code> 配置相应规则，并确认 IPv6 UFW 已启用；只使用 IPv4 时无需添加 IPv6 节点解析。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw reload<br>iptables -t nat -L PREROUTING -n -v<br></code></pre></td></tr></table></figure>
+
+<p>这里转发到本机监听端口，不需要为它开启跨主机 IP forwarding。不要同时叠加多套 UFW、iptables-persistent 和独立 nftables 持久化管理。</p>
+<p>客户端还要实际设置端口范围及跳跃间隔，或确认导入链接保留了这些选项。若客户端不支持随机 <code>5-10</code> 秒区间，可在其支持的设置中使用固定间隔，例如 10 秒。用真实客户端连接后查看 NAT 计数，并在重启 VPS 后再次测试。转发原理见 <a target="_blank" rel="noopener" href="https://v2.hysteria.network/docs/advanced/Port-Hopping/">Hysteria 官方 Port Hopping 文档</a>。</p>
+<h2 id="七、VLESS-WebSocket-TLS"><a href="#七、VLESS-WebSocket-TLS" class="headerlink" title="七、VLESS + WebSocket + TLS"></a>七、VLESS + WebSocket + TLS</h2><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>备注</td>
+<td>vless-ws-demo</td>
+</tr>
+<tr>
+<td>协议</td>
+<td>VLESS</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>10002，TCP</td>
+</tr>
+<tr>
+<td>UUID</td>
+<td>面板生成；客户端保持一致</td>
+</tr>
+<tr>
+<td>Flow</td>
+<td>留空</td>
+</tr>
+<tr>
+<td>Decryption &#x2F; Encryption</td>
+<td>none &#x2F; none</td>
+</tr>
+<tr>
+<td>传输</td>
+<td>ws</td>
+</tr>
+<tr>
+<td>Path</td>
+<td>&#x2F;vless-ws-demo</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>可留空；客户端使用 node.example.com</td>
+</tr>
+<tr>
+<td>安全</td>
+<td>TLS</td>
+</tr>
+<tr>
+<td>Server Name</td>
+<td>node.example.com</td>
+</tr>
+<tr>
+<td>证书 &#x2F; 私钥</td>
+<td>上文两个固定路径</td>
+</tr>
+<tr>
+<td>ALPN</td>
+<td>基础配置使用 http&#x2F;1.1</td>
+</tr>
+<tr>
+<td>Sniffing</td>
+<td>关闭</td>
+</tr>
+</tbody></table>
+<p><img src="/assets/images/3x-ui/ws.png" srcset="/img/loading.gif" lazyload alt="VLESS WebSocket 传输配置，实际 WS 路径已遮盖"></p>
+<p>截图中的 WS 路径已遮盖，正文以 <code>/vless-ws-demo</code> 为例，部署时自行设置并保持两端一致。</p>
+<p><img src="/assets/images/3x-ui/tls.png" srcset="/img/loading.gif" lazyload alt="VLESS-WS TLS 安全设置，实际 SNI 域名已遮盖"></p>
+<p>截图保留原有 ALPN 选项，方便与基础方案对照。原配置 ALPN 是 <code>h2</code>、<code>http/1.1</code>。本文基础 WS 配置先使用 <code>http/1.1</code>，避免把 TLS 协商出 H2 理解成普通 WebSocket 自动变成 HTTP&#x2F;2 传输。</p>
+<p>客户端填写：地址 <code>node.example.com</code>、端口 <code>10002</code>、VLESS、相同 UUID、传输 WS、相同 Path、Host 与 TLS SNI 均为 <code>node.example.com</code>。开启 TLS 和证书校验，Flow 留空。</p>
+<h3 id="关于-Cloudflare-和-ECH"><a href="#关于-Cloudflare-和-ECH" class="headerlink" title="关于 Cloudflare 和 ECH"></a>关于 Cloudflare 和 ECH</h3><p>当前 <code>10002</code> 是直接访问 VPS 的端口，<strong>不在 Cloudflare 标准 HTTPS 代理端口列表中</strong>，所以本文使用灰云。以后若接橙云，需要重新规划 Cloudflare 支持的入口端口，以及源站与证书策略，不能只切换 DNS 开关。参见 <a target="_blank" rel="noopener" href="https://developers.cloudflare.com/fundamentals/reference/network-ports/">Cloudflare 支持的代理端口</a>。</p>
+<p>原导出还带有 <code>echServerKeys</code> 和 <code>echConfigList</code>。它们属于可选 ECH 配置：先不填，完成普通 WS + TLS 连通测试；确实需要 ECH 时，再使用兼容客户端生成和配置新的配套参数。服务端 ECH 密钥不能贴进公开博客，也不要使用原导出中的密钥。</p>
+<h2 id="八、原始-JSON-中哪些内容不需要照抄"><a href="#八、原始-JSON-中哪些内容不需要照抄" class="headerlink" title="八、原始 JSON 中哪些内容不需要照抄"></a>八、原始 JSON 中哪些内容不需要照抄</h2><p>面板导出的对象含有数据库信息、用户管理字段、统计值和客户端分享参数，并不是完整的 Xray <code>config.json</code>，不能直接整段覆盖到内核配置文件。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>笔记中的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>up、down、clientStats、时间戳</td>
+<td>运行统计，不写入搭建模板</td>
+</tr>
+<tr>
+<td>id、userId、nodeId、originNodeGuid</td>
+<td>由目标面板管理</td>
+</tr>
+<tr>
+<td>UUID、subId、Auth、密码</td>
+<td>重新生成，不公布原值</td>
+</tr>
+<tr>
+<td>REALITY privateKey、ECH 服务端密钥</td>
+<td>不公开，重新生成</td>
+</tr>
+<tr>
+<td>REALITY publicKey、Short ID</td>
+<td>与新生成的服务端配置配套</td>
+</tr>
+<tr>
+<td>域名和证书路径</td>
+<td>替换为自己的实际值</td>
+</tr>
+<tr>
+<td>流量配额和重置字段</td>
+<td>在面板按实际需求设置</td>
+</tr>
+</tbody></table>
+<p>原用户额度 <code>1073741824000</code> 字节相当于 <code>1000 GiB</code>。原记录同时出现入站不重置、用户月度重置和旧的 <code>reset</code> 字段，不宜直接用一个字段判断最终结算规则。若希望每月 4 日重置，在 3.7.0 面板对应用户的重置设置中明确选择并核对显示结果。</p>
+<h2 id="九、检查是否真正搭建完成"><a href="#九、检查是否真正搭建完成" class="headerlink" title="九、检查是否真正搭建完成"></a>九、检查是否真正搭建完成</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl status x-ui --no-pager<br>journalctl -u x-ui -n 100 --no-pager<br>ss -lntup<br>ufw status verbose<br></code></pre></td></tr></table></figure>
+
+<p>确认 REALITY 的 TCP 443、WS 的 TCP 10002 和 Hysteria2 的 UDP 10001 有对应监听。面板运行正常不代表每条入站都已经连通。</p>
+<p>WS 的证书可以这样检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">openssl s_client -connect node.example.com:10002 \<br>  -servername node.example.com -alpn http/1.1 \<br>  -verify_hostname node.example.com -verify_return_error &lt;/dev/null<br></code></pre></td></tr></table></figure>
+
+<p>普通 <code>openssl s_client</code> 不能完成 Hysteria2 的 QUIC 验证，也不能用来认证 REALITY 节点。最终分别导入三个节点，进行真实访问并观察客户端日志和流量统计；有跳端口时，再额外检查转发命中及重启后的连接。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开 UFW 后 SSH 连不上</td>
+<td>SSH 真实端口是否提前放行；必要时使用厂商控制台修复</td>
+</tr>
+<tr>
+<td>面板正常，节点都不通</td>
+<td>安全组、UFW、内核日志、是否监听正确地址</td>
+</tr>
+<tr>
+<td>REALITY 不通</td>
+<td>UUID、公钥、Short ID、SNI、Flow、系统时间</td>
+</tr>
+<tr>
+<td>Hysteria2 超时</td>
+<td>是否放行 UDP；Auth 和混淆密码；运营商是否限制 UDP</td>
+</tr>
+<tr>
+<td>固定端口通，跳端口不通</td>
+<td>范围放行、NAT、入口网卡、客户端参数、IPv4&#x2F;IPv6 是否一致</td>
+</tr>
+<tr>
+<td>WS 连接失败</td>
+<td>域名解析、证书、Path、Host、SNI、ALPN</td>
+</tr>
+<tr>
+<td>开启橙云后失效</td>
+<td>是否使用 Cloudflare 支持的协议和端口</td>
+</tr>
+<tr>
+<td>过一段时间证书失效</td>
+<td>acme.sh 定时任务、80 端口、续期部署和重载日志</td>
+</tr>
+</tbody></table>
+<p>这份笔记根据现有配置、实际面板截图和官方资料整理，未在新的 Ubuntu VPS 上重新执行全流程；实际部署以本机版本、日志和三个节点的真实连接结果为准。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/VPN/" class="category-chain-item">VPN</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Ubuntu/" class="print-no-link">#Ubuntu</a>
+      
+        <a href="/tags/3X-UI/" class="print-no-link">#3X-UI</a>
+      
+        <a href="/tags/Xray/" class="print-no-link">#Xray</a>
+      
+        <a href="/tags/VPS/" class="print-no-link">#VPS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Ubuntu 24.04 安装 3X-UI 3.7.0：REALITY、Hysteria2 与 VLESS-WS 配置笔记</div>
+      <div>https://jhyjhy.cn/posts/VPN/3X-UI安装/31960/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hongyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E9%A1%B9%E7%9B%AE%E5%BD%92%E6%A1%A3/PiLink%E8%B6%85%E9%93%BE%E6%8E%A5/pilink/" title="PiLink 超链接：让联系人与关系一目了然">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PiLink 超链接：让联系人与关系一目了然</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/AI/OpenClaw%E5%AE%89%E8%A3%85/46286/" title="OpenClaw安装指南">
+                        <span class="hidden-mobile">OpenClaw安装指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://jhyjhy.cn/posts/VPN/3X-UI%E5%AE%89%E8%A3%85/31960/';
+          this.page.identifier = '/posts/VPN/3X-UI%E5%AE%89%E8%A3%85/31960/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2024115712号
+    </a>
+  </span>
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

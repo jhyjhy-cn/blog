@@ -1,0 +1,1098 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en-US,default" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hongyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份前言在现代软件开发中，部署是一个频繁且重要的环节。传统的手动部署方式不仅效率低下，还容易出现人为错误。本文将详细介绍一个企业级的自动化部署脚本，它支持多项目并发部署、智能备份、文件校验等功能，大大提升了部署效率和可靠性。 脚本设计目标核心需求 多项目支持：从JSON配置文件读取多个项目的部署信息  智能备份：自动备份服务器上的现有项目，避免">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零构建企业级自动化部署脚本">
+<meta property="og:url" content="https://jhyjhy.cn/posts/%E5%90%8E%E7%AB%AF/Shell/%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/36122/index.html">
+<meta property="og:site_name" content="Hongyu&#39;s Blog">
+<meta property="og:description" content="从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份前言在现代软件开发中，部署是一个频繁且重要的环节。传统的手动部署方式不仅效率低下，还容易出现人为错误。本文将详细介绍一个企业级的自动化部署脚本，它支持多项目并发部署、智能备份、文件校验等功能，大大提升了部署效率和可靠性。 脚本设计目标核心需求 多项目支持：从JSON配置文件读取多个项目的部署信息  智能备份：自动备份服务器上的现有项目，避免">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+<meta property="article:published_time" content="2025-08-22T16:57:18.000Z">
+<meta property="article:modified_time" content="2026-08-07T07:56:27.629Z">
+<meta property="article:author" content="Hongyu">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jhyjhy.cn/assets/images/index/index.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>从零构建企业级自动化部署脚本 - Hongyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"jhyjhy.cn","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hongyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/assets/images/index/index.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="从零构建企业级自动化部署脚本"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-08-23 00:57" pubdate>
+          2025年8月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          20k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          165 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">从零构建企业级自动化部署脚本</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份"><a href="#从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份" class="headerlink" title="从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份"></a>从零构建企业级自动化部署脚本：支持多项目并发部署与智能备份</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在现代软件开发中，部署是一个频繁且重要的环节。传统的手动部署方式不仅效率低下，还容易出现人为错误。本文将详细介绍一个企业级的自动化部署脚本，它支持多项目并发部署、智能备份、文件校验等功能，大大提升了部署效率和可靠性。</p>
+<h2 id="脚本设计目标"><a href="#脚本设计目标" class="headerlink" title="脚本设计目标"></a>脚本设计目标</h2><h3 id="核心需求"><a href="#核心需求" class="headerlink" title="核心需求"></a>核心需求</h3><ol>
+<li><p><strong>多项目支持</strong>：从JSON配置文件读取多个项目的部署信息</p>
+</li>
+<li><p><strong>智能备份</strong>：自动备份服务器上的现有项目，避免数据丢失</p>
+</li>
+<li><p><strong>并发部署</strong>：多个项目同时部署，提升整体效率</p>
+</li>
+<li><p><strong>文件校验</strong>：部署完成后验证文件完整性</p>
+</li>
+<li><p><strong>用户友好</strong>：提供进度条和详细的状态反馈</p>
+</li>
+<li><p><strong>安全可靠</strong>：支持SSH密钥认证，防止意外交互</p>
+</li>
+</ol>
+<h3 id="技术特性"><a href="#技术特性" class="headerlink" title="技术特性"></a>技术特性</h3><ul>
+<li><p>支持断点续传（rsync的–partial选项）</p>
+</li>
+<li><p>彩色输出和进度条显示</p>
+</li>
+<li><p>详细的成功&#x2F;失败报告</p>
+</li>
+<li><p>可选的单项目或多项目部署</p>
+</li>
+</ul>
+<h2 id="核心架构设计"><a href="#核心架构设计" class="headerlink" title="核心架构设计"></a>核心架构设计</h2><h3 id="1-配置驱动"><a href="#1-配置驱动" class="headerlink" title="1. 配置驱动"></a>1. 配置驱动</h3><p>脚本采用JSON配置文件的方式管理部署信息，每个项目包含：</p>
+<ul>
+<li><p>项目名称</p>
+</li>
+<li><p>服务器信息（IP、端口、用户）</p>
+</li>
+<li><p>本地源码目录</p>
+</li>
+<li><p>远程目标目录</p>
+</li>
+</ul>
+<h3 id="2-并发控制"><a href="#2-并发控制" class="headerlink" title="2. 并发控制"></a>2. 并发控制</h3><p>使用bash的后台作业管理，通过<code>&amp;</code>和<code>wait</code>命令实现并发部署，同时限制最大并发数避免服务器过载。</p>
+<h3 id="3-状态管理"><a href="#3-状态管理" class="headerlink" title="3. 状态管理"></a>3. 状态管理</h3><p>通过临时文件在子进程和父进程之间传递状态信息，确保部署结果的准确记录。</p>
+<h2 id="代码实现详解"><a href="#代码实现详解" class="headerlink" title="代码实现详解"></a>代码实现详解</h2><h3 id="第一步：环境准备和依赖检查"><a href="#第一步：环境准备和依赖检查" class="headerlink" title="第一步：环境准备和依赖检查"></a>第一步：环境准备和依赖检查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment">#!/bin/bash</span><br><br><br><br><span class="hljs-comment"># 颜色输出函数</span><br><br><span class="hljs-function"><span class="hljs-title">green</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[32m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">red</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[31m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">yellow</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[33m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">blue</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[34m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br>  <br><br><span class="hljs-comment"># 依赖检查</span><br><br><span class="hljs-built_in">command</span> -v rsync &gt;/dev/null || &#123; red <span class="hljs-string">&quot;请先安装 rsync&quot;</span>; <span class="hljs-built_in">exit</span> 1; &#125;<br><br><span class="hljs-built_in">command</span> -v jq &gt;/dev/null || &#123; red <span class="hljs-string">&quot;请先安装 jq&quot;</span>; <span class="hljs-built_in">exit</span> 1; &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p>使用ANSI转义序列实现彩色输出，提升用户体验</p>
+</li>
+<li><p>在脚本开始时检查必要工具，避免运行时才发现依赖缺失</p>
+</li>
+</ul>
+<h3 id="第二步：进度条实现"><a href="#第二步：进度条实现" class="headerlink" title="第二步：进度条实现"></a>第二步：进度条实现</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-function"><span class="hljs-title">progress_bar</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> current=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> total=<span class="hljs-variable">$2</span><br><br><span class="hljs-built_in">local</span> width=50<br><br><span class="hljs-built_in">local</span> percentage=$((current * <span class="hljs-number">100</span> / total))<br><br><span class="hljs-built_in">local</span> filled=$((current * width / total))<br><br><span class="hljs-built_in">local</span> empty=$((width - filled))<br><br>  <br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\r\033[36m[&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;%*s&#x27;</span> <span class="hljs-variable">$filled</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-string">&#x27;#&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;%*s&#x27;</span> <span class="hljs-variable">$empty</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-string">&#x27;-&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;] %d%%\033[0m&#x27;</span> <span class="hljs-variable">$percentage</span><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p>使用<code>\r</code>实现同行刷新，避免输出过多行</p>
+</li>
+<li><p>通过计算填充和空白字符数量实现可视化进度</p>
+</li>
+<li><p>使用<code>#</code>和<code>-</code>字符确保在不同终端环境下的兼容性</p>
+</li>
+</ul>
+<h3 id="第三步：配置解析"><a href="#第三步：配置解析" class="headerlink" title="第三步：配置解析"></a>第三步：配置解析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 读取配置文件</span><br><br>DEPLOY_CONFIG=<span class="hljs-string">&quot;scripts/deploy.json&quot;</span><br><br>PROJECTS_DATA=$(jq -r <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$DEPLOY_CONFIG</span>&quot;</span>)<br><br>PROJECT_COUNT=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECTS_DATA</span>&quot;</span> | jq <span class="hljs-string">&#x27;length&#x27;</span>)<br><br>  <br><br><span class="hljs-comment"># 解析项目信息</span><br><br><span class="hljs-function"><span class="hljs-title">get_project_info</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> index=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> field=<span class="hljs-variable">$2</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECTS_DATA</span>&quot;</span> | jq -r <span class="hljs-string">&quot;.[<span class="hljs-variable">$index</span>].<span class="hljs-variable">$field</span>&quot;</span><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p>使用<code>jq</code>一次性读取整个JSON文件，避免多次文件IO</p>
+</li>
+<li><p>通过函数封装项目信息获取，提高代码复用性</p>
+</li>
+<li><p>预先计算项目总数，用于进度条显示</p>
+</li>
+</ul>
+<h3 id="第四步：用户交互"><a href="#第四步：用户交互" class="headerlink" title="第四步：用户交互"></a>第四步：用户交互</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;请选择部署方式：&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;a) 部署所有项目&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;s) 选择特定项目&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;q) 退出&quot;</span><br><br>  <br><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;请输入选择 (a/s/q): &quot;</span> choice<br><br>  <br><br><span class="hljs-keyword">case</span> <span class="hljs-variable">$choice</span> <span class="hljs-keyword">in</span><br><br>a) SELECTED_INDICES=$(<span class="hljs-built_in">seq</span> 0 $((PROJECT_COUNT - <span class="hljs-number">1</span>)));;<br><br>s)<br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;可用项目：&quot;</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 0 $((PROJECT_COUNT - <span class="hljs-number">1</span>))); <span class="hljs-keyword">do</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$i</span>) <span class="hljs-subst">$(get_project_info $i name)</span>&quot;</span><br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;请输入项目编号（多个用空格分隔）: &quot;</span> -a indices<br><br>SELECTED_INDICES=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;indices[@]&#125;</span>&quot;</span><br><br>;;<br><br>q) <span class="hljs-built_in">exit</span> 0;;<br><br>*) red <span class="hljs-string">&quot;无效选择&quot;</span>; <span class="hljs-built_in">exit</span> 1;;<br><br><span class="hljs-keyword">esac</span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p>提供灵活的部署选择，支持全量或选择性部署</p>
+</li>
+<li><p>使用数组存储用户选择，便于后续处理</p>
+</li>
+<li><p>清晰的用户界面，降低使用门槛</p>
+</li>
+</ul>
+<h3 id="第五步：核心部署函数"><a href="#第五步：核心部署函数" class="headerlink" title="第五步：核心部署函数"></a>第五步：核心部署函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-function"><span class="hljs-title">deploy_project</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> index=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> PROJECT_NAME=$(get_project_info <span class="hljs-variable">$index</span> name)<br><br><span class="hljs-built_in">local</span> SERVER=$(get_project_info <span class="hljs-variable">$index</span> server)<br><br><span class="hljs-built_in">local</span> PORT=$(get_project_info <span class="hljs-variable">$index</span> port)<br><br><span class="hljs-built_in">local</span> TARGET_DIR=$(get_project_info <span class="hljs-variable">$index</span> target_dir)<br><br><span class="hljs-built_in">local</span> SRC_DIR=$(get_project_info <span class="hljs-variable">$index</span> src_dir)<br><br><span class="hljs-built_in">local</span> SSH_KEY=<span class="hljs-string">&quot;~/.ssh/id_rsa&quot;</span><br><br><span class="hljs-built_in">local</span> log_file=<span class="hljs-string">&quot;/tmp/deploy_<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_$$.log&quot;</span><br><br><span class="hljs-built_in">local</span> exit_code=0<br><br><span class="hljs-comment"># 检查源目录</span><br><br><span class="hljs-keyword">if</span> [[ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:源目录不存在 (<span class="hljs-variable">$SRC_DIR</span>)&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-built_in">return</span> 1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 检查SSH连接</span><br><br><span class="hljs-keyword">if</span> ! ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;echo &#x27;SSH连接测试&#x27;&quot;</span> &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:SSH连接失败&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-built_in">return</span> 1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 备份现有目录</span><br><br><span class="hljs-keyword">if</span> ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;[ -d &#x27;<span class="hljs-variable">$TARGET_DIR</span>&#x27; ]&quot;</span>; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">local</span> backup_suffix=$(<span class="hljs-built_in">date</span> +%Y%m%d%H%M)<br><br><span class="hljs-built_in">local</span> dir_name=$(<span class="hljs-built_in">basename</span> <span class="hljs-string">&quot;<span class="hljs-variable">$TARGET_DIR</span>&quot;</span>)<br><br><span class="hljs-built_in">local</span> BACKUP_NAME=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;dir_name&#125;</span>_back<span class="hljs-variable">$&#123;backup_suffix&#125;</span>&quot;</span><br><br><span class="hljs-built_in">local</span> backup_path=$(<span class="hljs-built_in">dirname</span> <span class="hljs-string">&quot;<span class="hljs-variable">$TARGET_DIR</span>&quot;</span>)/<span class="hljs-variable">$BACKUP_NAME</span><br><br>ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;mv &#x27;<span class="hljs-variable">$TARGET_DIR</span>&#x27; &#x27;<span class="hljs-variable">$backup_path</span>&#x27;&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECT_NAME</span> -&gt; <span class="hljs-variable">$BACKUP_NAME</span>&quot;</span> &gt; <span class="hljs-string">&quot;/tmp/renamed_<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_$$.tmp&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 执行rsync同步</span><br><br><span class="hljs-keyword">if</span> rsync -avz --delete --progress \<br><br>-e <span class="hljs-string">&quot;ssh -i <span class="hljs-variable">$SSH_KEY</span> -p <span class="hljs-variable">$PORT</span> -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null&quot;</span> \<br><br>--iconv=UTF-8-MAC,UTF-8 \<br><br>--partial \<br><br>--partial-dir=.rsync-partial \<br><br><span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>/&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>:<span class="hljs-variable">$TARGET_DIR</span>/&quot;</span> &gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span> 2&gt;&amp;1; <span class="hljs-keyword">then</span><br><br><span class="hljs-comment"># 文件数量校验</span><br><br>local_file_count=$(find <span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>&quot;</span> -<span class="hljs-built_in">type</span> f \( -name <span class="hljs-string">&quot;.*&quot;</span> -o -name <span class="hljs-string">&quot;*.tmp&quot;</span> -o -name <span class="hljs-string">&quot;*.log&quot;</span> -o -name <span class="hljs-string">&quot;.DS_Store&quot;</span> \) -prune -o -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">print</span> | <span class="hljs-built_in">wc</span> -l)<br><br>remote_file_count=$(ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;find <span class="hljs-variable">$TARGET_DIR</span> -type f \( -name &#x27;.*&#x27; -o -name &#x27;*.tmp&#x27; -o -name &#x27;*.log&#x27; -o -name &#x27;.DS_Store&#x27; \) -prune -o -type f -print | wc -l&quot;</span> 2&gt;/dev/null)<br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$local_file_count</span>&quot;</span> == <span class="hljs-string">&quot;<span class="hljs-variable">$remote_file_count</span>&quot;</span> &amp;&amp; <span class="hljs-string">&quot;<span class="hljs-variable">$local_file_count</span>&quot;</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;SUCCESS:<span class="hljs-variable">$PROJECT_NAME</span>:<span class="hljs-variable">$local_file_count</span>&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-keyword">else</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:文件数量不匹配 (本地:<span class="hljs-variable">$local_file_count</span>, 远程:<span class="hljs-variable">$remote_file_count</span>)&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br>exit_code=1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-keyword">else</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:rsync同步失败&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br>exit_code=1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">return</span> <span class="hljs-variable">$exit_code</span><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p><strong>分层错误处理</strong>：每个关键步骤都有独立的错误检查</p>
+</li>
+<li><p><strong>智能备份</strong>：自动检测并备份现有目录，使用时间戳避免冲突</p>
+</li>
+<li><p><strong>断点续传</strong>：rsync的<code>--partial</code>选项支持中断后继续传输</p>
+</li>
+<li><p><strong>文件校验</strong>：通过文件数量对比验证部署完整性</p>
+</li>
+<li><p><strong>状态记录</strong>：使用临时文件记录详细状态，便于父进程处理</p>
+</li>
+</ul>
+<h3 id="第六步：并发管理和结果处理"><a href="#第六步：并发管理和结果处理" class="headerlink" title="第六步：并发管理和结果处理"></a>第六步：并发管理和结果处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 并发控制</span><br><br>MAX_CONCURRENT=3<br><br>current_jobs=0<br><br>job_pids=<span class="hljs-string">&quot;&quot;</span><br><br>job_names=<span class="hljs-string">&quot;&quot;</span><br><br>  <br><br><span class="hljs-comment"># 部署所有选中的项目</span><br><br><span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> <span class="hljs-variable">$SELECTED_INDICES</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-comment"># 控制并发数</span><br><br><span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$current_jobs</span> -ge <span class="hljs-variable">$MAX_CONCURRENT</span> ]]; <span class="hljs-keyword">do</span><br><br>wait_for_job<br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-comment"># 启动新任务</span><br><br>deploy_project <span class="hljs-variable">$index</span> &amp;<br><br><span class="hljs-built_in">local</span> pid=$!<br><br>job_pids=<span class="hljs-string">&quot;<span class="hljs-variable">$job_pids</span> <span class="hljs-variable">$pid</span>&quot;</span><br><br>job_names=<span class="hljs-string">&quot;<span class="hljs-variable">$job_names</span> <span class="hljs-variable">$index</span>&quot;</span><br><br>current_jobs=$((current_jobs + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br>  <br><br><span class="hljs-comment"># 等待所有任务完成</span><br><br><span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$current_jobs</span> -gt 0 ]]; <span class="hljs-keyword">do</span><br><br>wait_for_job<br><br><span class="hljs-keyword">done</span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p><strong>并发限制</strong>：通过<code>MAX_CONCURRENT</code>控制同时运行的任务数</p>
+</li>
+<li><p><strong>动态等待</strong>：使用<code>wait_for_job</code>函数处理完成的任务</p>
+</li>
+<li><p><strong>状态跟踪</strong>：通过字符串存储PID和项目名称，便于管理</p>
+</li>
+</ul>
+<h3 id="第七步：结果汇总和展示"><a href="#第七步：结果汇总和展示" class="headerlink" title="第七步：结果汇总和展示"></a>第七步：结果汇总和展示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 显示最终结果</span><br><br><span class="hljs-built_in">echo</span><br><br><span class="hljs-keyword">if</span> [[ -n <span class="hljs-string">&quot;<span class="hljs-variable">$RENAMED_DETAILS</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br>blue <span class="hljs-string">&quot;📁 重命名备份的项目：<span class="hljs-variable">$RENAMED_DETAILS</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$SUCCESS_COUNT</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br>green <span class="hljs-string">&quot;✅ 部署成功的项目：<span class="hljs-variable">$SUCCESS_PROJECTS</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$FAILED_COUNT</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br>red <span class="hljs-string">&quot;❌ 部署失败的项目：<span class="hljs-variable">$FAILED_PROJECTS</span>&quot;</span><br><br><span class="hljs-built_in">echo</span><br><br>red <span class="hljs-string">&quot;失败原因：&quot;</span><br><br><span class="hljs-keyword">for</span> reason <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;FAILED_REASONS[@]&#125;</span>&quot;</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot; - <span class="hljs-variable">$reason</span>&quot;</span><br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-comment"># 根据结果选择颜色</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$FAILED_COUNT</span> -eq 0 ]]; <span class="hljs-keyword">then</span><br><br>green <span class="hljs-string">&quot;部署完成！共部署 <span class="hljs-variable">$SUCCESS_COUNT</span> 个项目，失败 <span class="hljs-variable">$FAILED_COUNT</span> 个项目&quot;</span><br><br><span class="hljs-keyword">else</span><br><br>red <span class="hljs-string">&quot;部署完成！共部署 <span class="hljs-variable">$SUCCESS_COUNT</span> 个项目，失败 <span class="hljs-variable">$FAILED_COUNT</span> 个项目&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>设计思路</strong>：</p>
+<ul>
+<li><p><strong>分类展示</strong>：分别显示备份、成功、失败的项目</p>
+</li>
+<li><p><strong>详细反馈</strong>：提供具体的失败原因，便于问题排查</p>
+</li>
+<li><p><strong>动态颜色</strong>：根据部署结果选择不同的颜色显示</p>
+</li>
+</ul>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment">#!/bin/bash</span><br><br>  <br><br><span class="hljs-comment"># -------------------------------------------------</span><br><br><span class="hljs-comment"># deploy.sh — 一键把本地文件/目录推到远端 Linux 服务器</span><br><br><span class="hljs-comment"># 依赖: rsync (本地+远端都要有), jq (用于解析JSON)</span><br><br><span class="hljs-comment"># -------------------------------------------------</span><br><br><span class="hljs-comment"># 从 deploy.json 读取配置并遍历推送</span><br><br>  <br><br><span class="hljs-comment"># 颜色输出函数</span><br><br><span class="hljs-function"><span class="hljs-title">green</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[32m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">red</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[31m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">yellow</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[33m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br><span class="hljs-function"><span class="hljs-title">blue</span></span>() &#123; <span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\033[34m%b\033[0m\n&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span>; &#125;<br><br>  <br><br><span class="hljs-comment"># 进度条函数</span><br><br><span class="hljs-function"><span class="hljs-title">progress_bar</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> current=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> total=<span class="hljs-variable">$2</span><br><br><span class="hljs-built_in">local</span> width=50<br><br><span class="hljs-built_in">local</span> percentage=$((current * <span class="hljs-number">100</span> / total))<br><br><span class="hljs-built_in">local</span> filled=$((current * width / total))<br><br><span class="hljs-built_in">local</span> empty=$((width - filled))<br><br>  <br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;\r\033[36m[&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;%*s&#x27;</span> <span class="hljs-variable">$filled</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-string">&#x27;#&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;%*s&#x27;</span> <span class="hljs-variable">$empty</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-string">&#x27;-&#x27;</span><br><br><span class="hljs-built_in">printf</span> <span class="hljs-string">&#x27;] %d%%\033[0m&#x27;</span> <span class="hljs-variable">$percentage</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 检查依赖</span><br><br><span class="hljs-built_in">command</span> -v rsync &gt;/dev/null || &#123; red <span class="hljs-string">&quot;请先安装 rsync&quot;</span>; <span class="hljs-built_in">exit</span> 1; &#125;<br><br><span class="hljs-built_in">command</span> -v jq &gt;/dev/null || &#123; red <span class="hljs-string">&quot;请先安装 jq&quot;</span>; <span class="hljs-built_in">exit</span> 1; &#125;<br><br>  <br><br><span class="hljs-comment"># 配置文件</span><br><br>DEPLOY_CONFIG=<span class="hljs-string">&quot;scripts/deploy.json&quot;</span><br><br>[[ -f <span class="hljs-string">&quot;<span class="hljs-variable">$DEPLOY_CONFIG</span>&quot;</span> ]] || &#123; red <span class="hljs-string">&quot;配置文件不存在：<span class="hljs-variable">$DEPLOY_CONFIG</span>&quot;</span>; <span class="hljs-built_in">exit</span> 1; &#125;<br><br>  <br><br><span class="hljs-comment"># 读取项目数据</span><br><br>PROJECTS_DATA=$(jq -r <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$DEPLOY_CONFIG</span>&quot;</span>)<br><br>PROJECT_COUNT=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECTS_DATA</span>&quot;</span> | jq <span class="hljs-string">&#x27;length&#x27;</span>)<br><br>  <br><br><span class="hljs-comment"># 获取项目信息的辅助函数</span><br><br><span class="hljs-function"><span class="hljs-title">get_project_info</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> index=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> field=<span class="hljs-variable">$2</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECTS_DATA</span>&quot;</span> | jq -r <span class="hljs-string">&quot;.[<span class="hljs-variable">$index</span>].<span class="hljs-variable">$field</span>&quot;</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 获取项目名称的辅助函数</span><br><br><span class="hljs-function"><span class="hljs-title">get_project_name</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> pid=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> index=0<br><br><span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> <span class="hljs-variable">$job_pids</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$p</span> -eq <span class="hljs-variable">$pid</span> ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">local</span> name_index=0<br><br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-variable">$job_names</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$name_index</span> -eq <span class="hljs-variable">$index</span> ]]; <span class="hljs-keyword">then</span><br><br>get_project_info <span class="hljs-variable">$n</span> name<br><br><span class="hljs-built_in">return</span><br><br><span class="hljs-keyword">fi</span><br><br>name_index=$((name_index + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-keyword">fi</span><br><br>index=$((index + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 从PID列表中移除指定PID</span><br><br><span class="hljs-function"><span class="hljs-title">remove_pid</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> target_pid=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> new_pids=<span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-built_in">local</span> new_names=<span class="hljs-string">&quot;&quot;</span><br><br><span class="hljs-built_in">local</span> index=0<br><br><span class="hljs-keyword">for</span> pid <span class="hljs-keyword">in</span> <span class="hljs-variable">$job_pids</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$pid</span> -ne <span class="hljs-variable">$target_pid</span> ]]; <span class="hljs-keyword">then</span><br><br>new_pids=<span class="hljs-string">&quot;<span class="hljs-variable">$new_pids</span> <span class="hljs-variable">$pid</span>&quot;</span><br><br><span class="hljs-comment"># 获取对应的项目名称</span><br><br><span class="hljs-built_in">local</span> name_index=0<br><br><span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> <span class="hljs-variable">$job_names</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$name_index</span> -eq <span class="hljs-variable">$index</span> ]]; <span class="hljs-keyword">then</span><br><br>new_names=<span class="hljs-string">&quot;<span class="hljs-variable">$new_names</span> <span class="hljs-variable">$name</span>&quot;</span><br><br><span class="hljs-built_in">break</span><br><br><span class="hljs-keyword">fi</span><br><br>name_index=$((name_index + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-keyword">fi</span><br><br>index=$((index + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br>job_pids=<span class="hljs-string">&quot;<span class="hljs-variable">$new_pids</span>&quot;</span><br><br>job_names=<span class="hljs-string">&quot;<span class="hljs-variable">$new_names</span>&quot;</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 等待作业完成的函数</span><br><br><span class="hljs-function"><span class="hljs-title">wait_for_job</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> completed_pid<br><br><span class="hljs-keyword">for</span> pid <span class="hljs-keyword">in</span> <span class="hljs-variable">$job_pids</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-keyword">if</span> ! <span class="hljs-built_in">kill</span> -0 <span class="hljs-variable">$pid</span> 2&gt;/dev/null; <span class="hljs-keyword">then</span><br><br>completed_pid=<span class="hljs-variable">$pid</span><br><br><span class="hljs-built_in">break</span><br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-keyword">if</span> [[ -n <span class="hljs-string">&quot;<span class="hljs-variable">$completed_pid</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">local</span> project_name=$(get_project_name <span class="hljs-variable">$completed_pid</span>)<br><br><span class="hljs-built_in">local</span> log_file=<span class="hljs-string">&quot;/tmp/deploy_<span class="hljs-variable">$&#123;project_name&#125;</span>_$$.log&quot;</span><br><br><span class="hljs-comment"># 检查部署结果</span><br><br><span class="hljs-keyword">if</span> grep -q <span class="hljs-string">&quot;SUCCESS:<span class="hljs-variable">$project_name</span>:&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span>; <span class="hljs-keyword">then</span><br><br><span class="hljs-comment"># 获取文件数量信息</span><br><br>file_count=$(grep <span class="hljs-string">&quot;SUCCESS:<span class="hljs-variable">$project_name</span>:&quot;</span> <span class="hljs-string">&quot;/tmp/deploy_<span class="hljs-variable">$&#123;project_name&#125;</span>_$$.log&quot;</span> | <span class="hljs-built_in">cut</span> -d<span class="hljs-string">&#x27;:&#x27;</span> -f3)<br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$SUCCESS_COUNT</span> -eq 0 ]]; <span class="hljs-keyword">then</span><br><br>SUCCESS_PROJECTS=<span class="hljs-string">&quot;<span class="hljs-variable">$project_name</span> -&gt; 共<span class="hljs-variable">$&#123;file_count&#125;</span>个文件&quot;</span><br><br><span class="hljs-keyword">else</span><br><br>SUCCESS_PROJECTS=<span class="hljs-string">&quot;<span class="hljs-variable">$SUCCESS_PROJECTS</span>, <span class="hljs-variable">$project_name</span> -&gt; 共<span class="hljs-variable">$&#123;file_count&#125;</span>个文件&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>SUCCESS_COUNT=$((SUCCESS_COUNT + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">else</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$FAILED_COUNT</span> -eq 0 ]]; <span class="hljs-keyword">then</span><br><br>FAILED_PROJECTS=<span class="hljs-string">&quot;<span class="hljs-variable">$project_name</span>&quot;</span><br><br><span class="hljs-keyword">else</span><br><br>FAILED_PROJECTS=<span class="hljs-string">&quot;<span class="hljs-variable">$FAILED_PROJECTS</span>, <span class="hljs-variable">$project_name</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>FAILED_COUNT=$((FAILED_COUNT + <span class="hljs-number">1</span>))<br><br><span class="hljs-comment"># 获取失败原因</span><br><br><span class="hljs-built_in">local</span> reason=$(grep <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$project_name</span>:&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span> | <span class="hljs-built_in">cut</span> -d<span class="hljs-string">&#x27;:&#x27;</span> -f3-)<br><br>FAILED_REASONS+=(<span class="hljs-string">&quot;<span class="hljs-variable">$project_name</span>: <span class="hljs-variable">$reason</span>&quot;</span>)<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 检查是否有重命名记录</span><br><br><span class="hljs-keyword">if</span> [[ -f <span class="hljs-string">&quot;/tmp/renamed_<span class="hljs-variable">$&#123;project_name&#125;</span>_$$.tmp&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">local</span> renamed_info=$(<span class="hljs-built_in">cat</span> <span class="hljs-string">&quot;/tmp/renamed_<span class="hljs-variable">$&#123;project_name&#125;</span>_$$.tmp&quot;</span>)<br><br><span class="hljs-keyword">if</span> [[ -z <span class="hljs-string">&quot;<span class="hljs-variable">$RENAMED_DETAILS</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br>RENAMED_DETAILS=<span class="hljs-string">&quot;<span class="hljs-variable">$renamed_info</span>&quot;</span><br><br><span class="hljs-keyword">else</span><br><br>RENAMED_DETAILS=<span class="hljs-string">&quot;<span class="hljs-variable">$RENAMED_DETAILS</span>, <span class="hljs-variable">$renamed_info</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">rm</span> -f <span class="hljs-string">&quot;/tmp/renamed_<span class="hljs-variable">$&#123;project_name&#125;</span>_$$.tmp&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 清理日志文件</span><br><br><span class="hljs-built_in">rm</span> -f <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-comment"># 从PID列表中移除</span><br><br>remove_pid <span class="hljs-variable">$completed_pid</span><br><br>current_jobs=$((current_jobs - <span class="hljs-number">1</span>))<br><br><span class="hljs-comment"># 更新进度条</span><br><br><span class="hljs-built_in">local</span> completed=$((TOTAL_JOBS - current_jobs))<br><br>progress_bar <span class="hljs-variable">$completed</span> <span class="hljs-variable">$TOTAL_JOBS</span><br><br><span class="hljs-keyword">fi</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 部署单个项目的函数</span><br><br><span class="hljs-function"><span class="hljs-title">deploy_project</span></span>() &#123;<br><br><span class="hljs-built_in">local</span> index=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">local</span> PROJECT_NAME=$(get_project_info <span class="hljs-variable">$index</span> name)<br><br><span class="hljs-built_in">local</span> SERVER=$(get_project_info <span class="hljs-variable">$index</span> server)<br><br><span class="hljs-built_in">local</span> PORT=$(get_project_info <span class="hljs-variable">$index</span> port)<br><br><span class="hljs-built_in">local</span> TARGET_DIR=$(get_project_info <span class="hljs-variable">$index</span> target_dir)<br><br><span class="hljs-built_in">local</span> SRC_DIR=$(get_project_info <span class="hljs-variable">$index</span> src_dir)<br><br><span class="hljs-built_in">local</span> SSH_KEY=<span class="hljs-string">&quot;~/.ssh/id_rsa&quot;</span><br><br><span class="hljs-built_in">local</span> log_file=<span class="hljs-string">&quot;/tmp/deploy_<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_$$.log&quot;</span><br><br><span class="hljs-built_in">local</span> exit_code=0<br><br><span class="hljs-comment"># 检查源目录</span><br><br><span class="hljs-keyword">if</span> [[ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:源目录不存在 (<span class="hljs-variable">$SRC_DIR</span>)&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-built_in">return</span> 1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 检查SSH连接</span><br><br><span class="hljs-keyword">if</span> ! ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o ConnectTimeout=10 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;echo &#x27;SSH连接测试&#x27;&quot;</span> &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:SSH连接失败&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-built_in">return</span> 1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 备份现有目录</span><br><br><span class="hljs-keyword">if</span> ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;[ -d &#x27;<span class="hljs-variable">$TARGET_DIR</span>&#x27; ]&quot;</span>; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">local</span> backup_suffix=$(<span class="hljs-built_in">date</span> +%Y%m%d%H%M)<br><br><span class="hljs-built_in">local</span> dir_name=$(<span class="hljs-built_in">basename</span> <span class="hljs-string">&quot;<span class="hljs-variable">$TARGET_DIR</span>&quot;</span>)<br><br><span class="hljs-built_in">local</span> BACKUP_NAME=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;dir_name&#125;</span>_back<span class="hljs-variable">$&#123;backup_suffix&#125;</span>&quot;</span><br><br><span class="hljs-built_in">local</span> backup_path=$(<span class="hljs-built_in">dirname</span> <span class="hljs-string">&quot;<span class="hljs-variable">$TARGET_DIR</span>&quot;</span>)/<span class="hljs-variable">$BACKUP_NAME</span><br><br>ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;mv &#x27;<span class="hljs-variable">$TARGET_DIR</span>&#x27; &#x27;<span class="hljs-variable">$backup_path</span>&#x27;&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$PROJECT_NAME</span> -&gt; <span class="hljs-variable">$BACKUP_NAME</span>&quot;</span> &gt; <span class="hljs-string">&quot;/tmp/renamed_<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>_$$.tmp&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-comment"># 执行rsync同步</span><br><br><span class="hljs-keyword">if</span> rsync -avz --delete --progress \<br><br>-e <span class="hljs-string">&quot;ssh -i <span class="hljs-variable">$SSH_KEY</span> -p <span class="hljs-variable">$PORT</span> -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null&quot;</span> \<br><br>--iconv=UTF-8-MAC,UTF-8 \<br><br>--partial \<br><br>--partial-dir=.rsync-partial \<br><br><span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>/&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>:<span class="hljs-variable">$TARGET_DIR</span>/&quot;</span> &gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span> 2&gt;&amp;1; <span class="hljs-keyword">then</span><br><br><span class="hljs-comment"># 计算文件数量校验</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;计算文件数量...&quot;</span><br><br>local_file_count=$(find <span class="hljs-string">&quot;<span class="hljs-variable">$SRC_DIR</span>&quot;</span> -<span class="hljs-built_in">type</span> f \( -name <span class="hljs-string">&quot;.*&quot;</span> -o -name <span class="hljs-string">&quot;*.tmp&quot;</span> -o -name <span class="hljs-string">&quot;*.log&quot;</span> -o -name <span class="hljs-string">&quot;.DS_Store&quot;</span> \) -prune -o -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">print</span> | <span class="hljs-built_in">wc</span> -l)<br><br>remote_file_count=$(ssh -i <span class="hljs-string">&quot;<span class="hljs-variable">$SSH_KEY</span>&quot;</span> -p <span class="hljs-string">&quot;<span class="hljs-variable">$PORT</span>&quot;</span> -o BatchMode=<span class="hljs-built_in">yes</span> -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <span class="hljs-string">&quot;<span class="hljs-variable">$SERVER</span>&quot;</span> <span class="hljs-string">&quot;find <span class="hljs-variable">$TARGET_DIR</span> -type f \( -name &#x27;.*&#x27; -o -name &#x27;*.tmp&#x27; -o -name &#x27;*.log&#x27; -o -name &#x27;.DS_Store&#x27; \) -prune -o -type f -print | wc -l&quot;</span> 2&gt;/dev/null)<br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;本地文件数量: <span class="hljs-variable">$local_file_count</span>&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;远程文件数量: <span class="hljs-variable">$remote_file_count</span>&quot;</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-string">&quot;<span class="hljs-variable">$local_file_count</span>&quot;</span> == <span class="hljs-string">&quot;<span class="hljs-variable">$remote_file_count</span>&quot;</span> &amp;&amp; <span class="hljs-string">&quot;<span class="hljs-variable">$local_file_count</span>&quot;</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;✅ 文件数量匹配，部署成功&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;SUCCESS:<span class="hljs-variable">$PROJECT_NAME</span>:<span class="hljs-variable">$local_file_count</span>&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br><span class="hljs-keyword">else</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;❌ 文件数量不匹配，部署失败&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:文件数量不匹配 (本地:<span class="hljs-variable">$local_file_count</span>, 远程:<span class="hljs-variable">$remote_file_count</span>)&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br>exit_code=1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-keyword">else</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;FAILED:<span class="hljs-variable">$PROJECT_NAME</span>:rsync同步失败&quot;</span> &gt;&gt; <span class="hljs-string">&quot;<span class="hljs-variable">$log_file</span>&quot;</span><br><br>exit_code=1<br><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">return</span> <span class="hljs-variable">$exit_code</span><br><br>&#125;<br><br>  <br><br><span class="hljs-comment"># 主程序开始</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;🚀 自动化部署脚本启动&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;📋 发现 <span class="hljs-variable">$PROJECT_COUNT</span> 个配置项目&quot;</span><br><br>  <br><br><span class="hljs-comment"># 用户选择部署方式</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;请选择部署方式：&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;a) 部署所有项目&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;s) 选择特定项目&quot;</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;q) 退出&quot;</span><br><br>  <br><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;请输入选择 (a/s/q): &quot;</span> choice<br><br>  <br><br><span class="hljs-keyword">case</span> <span class="hljs-variable">$choice</span> <span class="hljs-keyword">in</span><br><br>a) SELECTED_INDICES=$(<span class="hljs-built_in">seq</span> 0 $((PROJECT_COUNT - <span class="hljs-number">1</span>)));;<br><br>s)<br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;可用项目：&quot;</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 0 $((PROJECT_COUNT - <span class="hljs-number">1</span>))); <span class="hljs-keyword">do</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$i</span>) <span class="hljs-subst">$(get_project_info $i name)</span>&quot;</span><br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;请输入项目编号（多个用空格分隔）: &quot;</span> -a indices<br><br>SELECTED_INDICES=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;indices[@]&#125;</span>&quot;</span><br><br>;;<br><br>q) <span class="hljs-built_in">exit</span> 0;;<br><br>*) red <span class="hljs-string">&quot;无效选择&quot;</span>; <span class="hljs-built_in">exit</span> 1;;<br><br><span class="hljs-keyword">esac</span><br><br>  <br><br><span class="hljs-comment"># 初始化变量</span><br><br>SUCCESS_COUNT=0<br><br>FAILED_COUNT=0<br><br>SUCCESS_PROJECTS=<span class="hljs-string">&quot;&quot;</span><br><br>FAILED_PROJECTS=<span class="hljs-string">&quot;&quot;</span><br><br>RENAMED_DETAILS=<span class="hljs-string">&quot;&quot;</span><br><br>FAILED_REASONS=()<br><br>MAX_CONCURRENT=3<br><br>current_jobs=0<br><br>job_pids=<span class="hljs-string">&quot;&quot;</span><br><br>job_names=<span class="hljs-string">&quot;&quot;</span><br><br>TOTAL_JOBS=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$SELECTED_INDICES</span> | <span class="hljs-built_in">wc</span> -w)<br><br>  <br><br><span class="hljs-built_in">echo</span><br><br>blue <span class="hljs-string">&quot;开始部署 <span class="hljs-variable">$TOTAL_JOBS</span> 个项目...&quot;</span><br><br>  <br><br><span class="hljs-comment"># 部署所有选中的项目</span><br><br><span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> <span class="hljs-variable">$SELECTED_INDICES</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-comment"># 控制并发数</span><br><br><span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$current_jobs</span> -ge <span class="hljs-variable">$MAX_CONCURRENT</span> ]]; <span class="hljs-keyword">do</span><br><br>wait_for_job<br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-comment"># 启动新任务</span><br><br>deploy_project <span class="hljs-variable">$index</span> &amp;<br><br><span class="hljs-built_in">local</span> pid=$!<br><br>job_pids=<span class="hljs-string">&quot;<span class="hljs-variable">$job_pids</span> <span class="hljs-variable">$pid</span>&quot;</span><br><br>job_names=<span class="hljs-string">&quot;<span class="hljs-variable">$job_names</span> <span class="hljs-variable">$index</span>&quot;</span><br><br>current_jobs=$((current_jobs + <span class="hljs-number">1</span>))<br><br><span class="hljs-keyword">done</span><br><br>  <br><br><span class="hljs-comment"># 等待所有任务完成</span><br><br><span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$current_jobs</span> -gt 0 ]]; <span class="hljs-keyword">do</span><br><br>wait_for_job<br><br><span class="hljs-keyword">done</span><br><br>  <br><br><span class="hljs-comment"># 显示最终结果</span><br><br><span class="hljs-built_in">echo</span><br><br><span class="hljs-keyword">if</span> [[ -n <span class="hljs-string">&quot;<span class="hljs-variable">$RENAMED_DETAILS</span>&quot;</span> ]]; <span class="hljs-keyword">then</span><br><br>blue <span class="hljs-string">&quot;📁 重命名备份的项目：<span class="hljs-variable">$RENAMED_DETAILS</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$SUCCESS_COUNT</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br>green <span class="hljs-string">&quot;✅ 部署成功的项目：<span class="hljs-variable">$SUCCESS_PROJECTS</span>&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$FAILED_COUNT</span> -gt 0 ]]; <span class="hljs-keyword">then</span><br><br>red <span class="hljs-string">&quot;❌ 部署失败的项目：<span class="hljs-variable">$FAILED_PROJECTS</span>&quot;</span><br><br><span class="hljs-built_in">echo</span><br><br>red <span class="hljs-string">&quot;失败原因：&quot;</span><br><br><span class="hljs-keyword">for</span> reason <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;FAILED_REASONS[@]&#125;</span>&quot;</span>; <span class="hljs-keyword">do</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot; - <span class="hljs-variable">$reason</span>&quot;</span><br><br><span class="hljs-keyword">done</span><br><br><span class="hljs-keyword">fi</span><br><br>  <br><br><span class="hljs-comment"># 根据结果选择颜色</span><br><br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$FAILED_COUNT</span> -eq 0 ]]; <span class="hljs-keyword">then</span><br><br>green <span class="hljs-string">&quot;部署完成！共部署 <span class="hljs-variable">$SUCCESS_COUNT</span> 个项目，失败 <span class="hljs-variable">$FAILED_COUNT</span> 个项目&quot;</span><br><br><span class="hljs-keyword">else</span><br><br>red <span class="hljs-string">&quot;部署完成！共部署 <span class="hljs-variable">$SUCCESS_COUNT</span> 个项目，失败 <span class="hljs-variable">$FAILED_COUNT</span> 个项目&quot;</span><br><br><span class="hljs-keyword">fi</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="配置文件示例"><a href="#配置文件示例" class="headerlink" title="配置文件示例"></a>配置文件示例</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs json"><br><span class="hljs-punctuation">[</span><br><br><span class="hljs-punctuation">&#123;</span><br><br><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;前端项目&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;server&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deploy@192.168.1.100&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2222</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;target_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/var/www/frontend&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;src_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist/frontend&quot;</span><br><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-punctuation">&#123;</span><br><br><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;管理后台&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;server&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deploy@192.168.1.100&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2222</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;target_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/var/www/admin&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;src_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist/admin&quot;</span><br><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-punctuation">&#123;</span><br><br><span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;API服务&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;server&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;deploy@192.168.1.101&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2222</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;target_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/var/www/api&quot;</span><span class="hljs-punctuation">,</span><br><br><span class="hljs-attr">&quot;src_dir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist/api&quot;</span><br><br><span class="hljs-punctuation">&#125;</span><br><br><span class="hljs-punctuation">]</span><br><br></code></pre></td></tr></table></figure>
+
+<p><strong>配置说明</strong>：</p>
+<ul>
+<li><p><code>name</code>: 项目名称，用于显示和日志记录</p>
+</li>
+<li><p><code>server</code>: 服务器地址，格式为 <code>用户@主机</code></p>
+</li>
+<li><p><code>port</code>: SSH端口号，建议使用非标准端口</p>
+</li>
+<li><p><code>target_dir</code>: 远程服务器上的目标目录</p>
+</li>
+<li><p><code>src_dir</code>: 本地源码目录，相对于脚本执行位置</p>
+</li>
+</ul>
+<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><h3 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1. 环境准备"></a>1. 环境准备</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 安装依赖工具</span><br><br><span class="hljs-comment"># Ubuntu/Debian</span><br><br><span class="hljs-built_in">sudo</span> apt-get install rsync jq<br><br>  <br><br><span class="hljs-comment"># CentOS/RHEL</span><br><br><span class="hljs-built_in">sudo</span> yum install rsync jq<br><br>  <br><br><span class="hljs-comment"># macOS</span><br><br>brew install rsync jq<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-SSH密钥配置"><a href="#2-SSH密钥配置" class="headerlink" title="2. SSH密钥配置"></a>2. SSH密钥配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 生成SSH密钥（如果还没有）</span><br><br>ssh-keygen -t rsa -b 4096<br><br>  <br><br><span class="hljs-comment"># 将公钥复制到服务器</span><br><br>ssh-copy-id user@server.example.com<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-配置文件设置"><a href="#3-配置文件设置" class="headerlink" title="3. 配置文件设置"></a>3. 配置文件设置</h3><p>在<code>scripts/deploy.json</code>中配置您的项目信息，注意脱敏处理：</p>
+<ul>
+<li><p>使用内网IP或域名替代公网IP</p>
+</li>
+<li><p>使用非标准端口</p>
+</li>
+<li><p>配置适当的用户权限</p>
+</li>
+</ul>
+<h3 id="4-执行部署"><a href="#4-执行部署" class="headerlink" title="4. 执行部署"></a>4. 执行部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><span class="hljs-comment"># 给脚本执行权限</span><br><br><span class="hljs-built_in">chmod</span> +x scripts/deploy.sh<br><br>  <br><br><span class="hljs-comment"># 执行部署</span><br><br>./scripts/deploy.sh<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="实际使用示例"><a href="#实际使用示例" class="headerlink" title="实际使用示例"></a>实际使用示例</h2><h3 id="1-脚本执行过程"><a href="#1-脚本执行过程" class="headerlink" title="1. 脚本执行过程"></a>1. 脚本执行过程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>$ ./scripts/deploy.sh<br><br>  <br><br>🚀 自动化部署脚本启动<br><br>📋 发现 3 个配置项目<br><br>  <br><br>请选择部署方式：<br><br>a) 部署所有项目<br><br>s) 选择特定项目<br><br>q) 退出<br><br>  <br><br>请输入选择 (a/s/q): a<br><br>  <br><br>开始部署 3 个项目...<br><br>  <br><br>[##################################################] 100%<br><br>  <br><br>📁 重命名备份的项目：前端项目 -&gt; frontend_back202412230145, 管理后台 -&gt; admin_back202412230145<br><br>✅ 部署成功的项目：前端项目 -&gt; 共1250个文件, 管理后台 -&gt; 共892个文件, API服务 -&gt; 共567个文件<br><br>部署完成！共部署 3 个项目，失败 0 个项目<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-选择性部署"><a href="#2-选择性部署" class="headerlink" title="2. 选择性部署"></a>2. 选择性部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>$ ./scripts/deploy.sh<br><br>  <br><br>🚀 自动化部署脚本启动<br><br>📋 发现 3 个配置项目<br><br>  <br><br>请选择部署方式：<br><br>a) 部署所有项目<br><br>s) 选择特定项目<br><br>q) 退出<br><br>  <br><br>请输入选择 (a/s/q): s<br><br>  <br><br>可用项目：<br><br>0) 前端项目<br><br>1) 管理后台<br><br>2) API服务<br><br>  <br><br>请输入项目编号（多个用空格分隔）: 0 2<br><br>  <br><br>开始部署 2 个项目...<br><br>  <br><br>[##################################################] 100%<br><br>  <br><br>✅ 部署成功的项目：前端项目 -&gt; 共1250个文件, API服务 -&gt; 共567个文件<br><br>部署完成！共部署 2 个项目，失败 0 个项目<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-部署失败处理"><a href="#3-部署失败处理" class="headerlink" title="3. 部署失败处理"></a>3. 部署失败处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>$ ./scripts/deploy.sh<br><br>  <br><br>🚀 自动化部署脚本启动<br><br>📋 发现 3 个配置项目<br><br>  <br><br>请选择部署方式：<br><br>a) 部署所有项目<br><br>s) 选择特定项目<br><br>q) 退出<br><br>  <br><br>请输入选择 (a/s/q): a<br><br>  <br><br>开始部署 3 个项目...<br><br>  <br><br>[##################################################] 100%<br><br>  <br><br>✅ 部署成功的项目：前端项目 -&gt; 共1250个文件<br><br>❌ 部署失败的项目：管理后台, API服务<br><br>  <br><br>失败原因：<br><br>- 管理后台: SSH连接失败<br><br>- API服务: 源目录不存在 (dist/api)<br><br>  <br><br>部署完成！共部署 1 个项目，失败 2 个项目<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="脚本优势"><a href="#脚本优势" class="headerlink" title="脚本优势"></a>脚本优势</h2><h3 id="1-高效性"><a href="#1-高效性" class="headerlink" title="1. 高效性"></a>1. 高效性</h3><ul>
+<li><p><strong>并发部署</strong>：多个项目同时进行，大幅提升效率</p>
+</li>
+<li><p><strong>断点续传</strong>：支持网络中断后继续传输</p>
+</li>
+<li><p><strong>增量同步</strong>：只传输变更的文件</p>
+</li>
+</ul>
+<h3 id="2-可靠性"><a href="#2-可靠性" class="headerlink" title="2. 可靠性"></a>2. 可靠性</h3><ul>
+<li><p><strong>智能备份</strong>：自动备份现有项目，避免数据丢失</p>
+</li>
+<li><p><strong>文件校验</strong>：部署完成后验证文件完整性</p>
+</li>
+<li><p><strong>错误处理</strong>：详细的错误信息和失败原因</p>
+</li>
+</ul>
+<h3 id="3-易用性"><a href="#3-易用性" class="headerlink" title="3. 易用性"></a>3. 易用性</h3><ul>
+<li><p><strong>配置驱动</strong>：通过JSON文件管理项目配置</p>
+</li>
+<li><p><strong>交互选择</strong>：支持全量或选择性部署</p>
+</li>
+<li><p><strong>进度显示</strong>：实时显示部署进度和状态</p>
+</li>
+</ul>
+<h3 id="4-安全性"><a href="#4-安全性" class="headerlink" title="4. 安全性"></a>4. 安全性</h3><ul>
+<li><p><strong>SSH密钥认证</strong>：避免密码明文传输</p>
+</li>
+<li><p><strong>批量模式</strong>：防止意外交互</p>
+</li>
+<li><p><strong>权限控制</strong>：支持不同用户和端口配置</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个自动化部署脚本通过合理的设计和实现，解决了传统部署方式中的效率低下、容易出错等问题。它支持多项目并发部署、智能备份、文件校验等企业级功能，大大提升了部署的效率和可靠性。</p>
+<p>脚本采用模块化设计，每个功能都有清晰的职责划分，便于维护和扩展。通过配置文件驱动的方式，使得添加新项目变得非常简单。同时，详细的错误处理和状态反馈，让用户能够快速定位和解决问题。</p>
+<p>在实际使用中，建议根据具体环境调整并发数量、SSH超时时间等参数，以获得最佳的性能和稳定性。</p>
+<hr>
+<p><em>本文详细介绍了从零构建企业级自动化部署脚本的完整过程，包括设计思路、实现细节和使用方法。希望对您的自动化部署实践有所帮助！</em></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%90%8E%E7%AB%AF/" class="category-chain-item">后端</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%90%8E%E7%AB%AF/Shell/" class="category-chain-item">Shell</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Shell/" class="print-no-link">#Shell</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>从零构建企业级自动化部署脚本</div>
+      <div>https://jhyjhy.cn/posts/后端/Shell/从零构建企业级自动化部署脚本/36122/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Hongyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年8月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/%E5%89%8D%E7%AB%AF/Monorepo%E5%B7%A5%E7%A8%8B%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/41960/" title="Monorepo">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Monorepo</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/%E5%90%8E%E7%AB%AF/Rust/Rust%E5%85%A5%E9%97%A8/29388/" title="Rust入门">
+                        <span class="hidden-mobile">Rust入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://jhyjhy.cn/posts/%E5%90%8E%E7%AB%AF/Shell/%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/36122/';
+          this.page.identifier = '/posts/%E5%90%8E%E7%AB%AF/Shell/%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC/36122/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      苏ICP备2024115712号
+    </a>
+  </span>
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
